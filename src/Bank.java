@@ -16,4 +16,8 @@ public abstract class Bank {
         if(balance<=0)
             balance = Config.getInt("bank.balance", 0);
     }
+
+    public static void print(){
+        System.out.printf("Bank: balance is %d$%n",balance);
+    }
 }
