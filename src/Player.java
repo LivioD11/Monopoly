@@ -1,3 +1,8 @@
+import cli.Color;
+import cli.TextColorizer;
+
+import javax.sound.midi.Soundbank;
+
 public class Player {
     private final String name;
     private final char sign;
@@ -13,11 +18,22 @@ public class Player {
     }
 
     public void print(){
-        System.out.printf("Player %s (%s): balance is %d$%n",this.name,this.sign,this.balance);
+        System.out.println(
+                String.format("Player %s (%s): balance is %s",
+                        this.name,
+                        this.sign,
+                        TextColorizer.color(this.balance + "$", Color.YELLOW))
+        );
     }
 
     public void changeBalance(int founds){
         this.balance += founds;
+        System.out.println(
+                String.format("Player %s (%s): obtained %s",
+                        this.name,
+                        this.sign,
+                        TextColorizer.color(founds + "$", Color.GREEN))
+        );
     }
 
     // GETTERS

@@ -1,0 +1,54 @@
+@startuml
+
+class Player {
+  - name: String
+  - sign: char
+  - balance: int
+  - position: int
+  + Player(name: String, sign: char): constructor
+  + move(): void
+  + print(): void
+  + isBroke(): boolean
+  + getSymbol(): char
+}
+
+abstract class Bank {
+  - {static} balance: int
+  + {static} distribute(player: Player): void
+  + {static} debit(player: Player, box: Box): void
+}
+
+abstract class Dice {
+  - {static} faces: int[]
+  + {static} launch(): int
+}
+
+class Game {
+  - PLAYER_NUMBER: int
+  - players: Player[]
+  - gameboard: GameBaord
+  - gameLoop(): void
+  + Game(): constructor
+}
+
+class Baord {
+  - boxes: Box[]
+  + Board(): constructor
+}
+
+class Box {
+  - {static} minToll: int
+  - {static} maxToll: int
+  - toll: int
+  - name: String
+  + Box(name: String): constructor
+  - generate(): void
+  + getToll(): int
+  + getName(): String
+}
+
+abstract class ScannerUtilities {
+  + {static} getInputString(scanner: Scanner, message: String): String
+}
+
+@enduml
