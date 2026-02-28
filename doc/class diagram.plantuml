@@ -12,6 +12,24 @@ class Player {
   + getSymbol(): char
 }
 
+package cli {
+    enum Color {
+        RESET
+        BLACK
+        RED
+        GREEN
+        YELLOW
+        BLUE
+        PURPLE
+        CYAN
+        WHITE
+    }
+
+    abstract class TextColorizer {
+        + color(text: String, color: Color): String
+    }
+}
+
 abstract class Bank {
   - {static} balance: int
   + {static} distribute(player: Player): void
