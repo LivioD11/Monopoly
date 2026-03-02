@@ -7,7 +7,6 @@ maven-build:
   image: maven:3.9.3-eclipse-temurin-17
   script:
     - mvn clean compile
-
 maven-test:
   stage: test
   image: maven:3.9.3-eclipse-temurin-17
@@ -17,3 +16,5 @@ maven-test:
     when: always
     reports:
       junit: target/surefire-reports/*.xml
+    paths:
+      - target/surefire-reports/
