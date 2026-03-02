@@ -28,23 +28,37 @@ public class Player {
 
     public void changeBalance(int founds){
         this.balance += founds;
+
+        Color color = Color.GREEN;
+        String action = "obtained";
+        if(founds < 0){
+            color = Color.RED;
+            action = "lost";
+        }
         System.out.println(
-                String.format("Player %s (%s): obtained %s",
+                String.format("Player %s (%s): %s %s",
                         this.name,
                         this.sign,
-                        TextColorizer.color(founds + "$", Color.GREEN))
+                        action,
+                        TextColorizer.color(founds + "$", color))
         );
     }
 
     // GETTERS
 
+    public String getName() { return this.name; }
+
+    public char getSign(){
+        return this.sign;
+    }
+
+    public int getBalance(){
+        return this.balance;
+    }
+
     public boolean isBroke(){
         if(this.balance <= 0)
             return true;
         return false;
-    }
-
-    public char getSign(){
-        return this.sign;
     }
 }
