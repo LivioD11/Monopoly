@@ -162,6 +162,7 @@ fabric.properties
 *.idea
 *.iml
 *.xml
+!pom.xml
 !.idea/codeStyles
 !.idea/runConfigurations
 
