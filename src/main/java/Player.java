@@ -40,7 +40,7 @@ public class Player {
                         this.name,
                         this.sign,
                         action,
-                        TextColorizer.color(founds + "$", color))
+                        TextColorizer.color(Math.abs(founds) + "$", color))
         );
     }
 
