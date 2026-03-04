@@ -13,7 +13,7 @@ public class Player {
         this.sign = sign;
         this.balance = 0;
 
-        // Receive initial funds from the Bank.
+        // Riceve i primi 200 dalla banca
         Bank.distribute(this,Bank.CONTRIBUTION);
     }
 
@@ -31,9 +31,9 @@ public class Player {
 
         Color color = Color.GREEN;
         String action = "obtained";
-        if(founds < 0){
+        if(founds < 0){ //il giocatore paga un tot di soldi
             color = Color.RED;
-            action = "lost";
+            action = "payed";
         }
         System.out.println(
                 String.format("Player %s (%s): %s %s",
@@ -44,7 +44,7 @@ public class Player {
         );
     }
 
-    // GETTERS
+    // getters
 
     public String getName() { return this.name; }
 

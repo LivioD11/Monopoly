@@ -1,5 +1,5 @@
 public class Board {
-    Box[] boxes = new Box[16];
+    private Box[] boxes = new Box[16];
 
     public Board() {
         boxes[0] = new Box(0);
@@ -7,4 +7,7 @@ public class Board {
             boxes[i] = new Box(1);
         }
     }
+     public void drawBoard() {
+
+     }
 }

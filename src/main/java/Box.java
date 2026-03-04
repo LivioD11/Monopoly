@@ -1,12 +1,22 @@
-public class Box {
-    private static final int MIN_TOLL = Config.getInt("box.toll.min", 0);
-    private static final int MAX_TOLL = Config.getInt("box.toll.max", 0);
-    private String name;
-    private int toll;
+enum Type {
+    TOLL,START
+}
 
-    public Box(String name){
-        this.name = name;
-        this.initialize();
+public class Box {
+    private final int bonus = 100;
+    private final int TOLL_MAX = 101;
+    private final int TOLL_MIN = 50;
+    private final int tax;
+    private Type type;
+
+    public Box(int num) {
+        if(num == 0) {
+            type = type.START;
+            tax = bonus;
+        } else {
+            type = type.TOLL;
+            tax = (int) (Math.random() * TOLL_MAX + TOLL_MIN);
+        }
     }
 
     private void initialize(){

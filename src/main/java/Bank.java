@@ -3,14 +3,14 @@ import cli.TextColorizer;
 
 public abstract class Bank {
     private static int balance = Config.getInt("bank.balance", 0);
-    public static final int CONTRIBUTION =Config.getInt("bank.contribution", 0);
+    public static final int CONTRIBUTION = Config.getInt("bank.contribution", 0);
 
     public static void distribute(Player player, int founds){
         player.changeBalance(founds);
         withdrawFounds(founds);
     }
 
-    public static  void debit(Player player, int toll){
+    public static void debit(Player player, int toll){
 
     }
 
@@ -27,5 +27,9 @@ public abstract class Bank {
                 String.format("Bank: balance is %s",
                         TextColorizer.color(balance + "$", Color.YELLOW))
         );
+    }
+
+    public static void resetBank() {
+        balance = Config.getInt("bank.balance", 0);
     }
 }
