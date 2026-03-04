@@ -2,23 +2,46 @@ import cli.Color;
 import cli.TextColorizer;
 
 public abstract class Bank {
-    private static int balance = Config.getInt("bank.balance", 0);
-    public static final int CONTRIBUTION = Config.getInt("bank.contribution", 0);
+    private static final int INITIAL_BALANCE = 1000000;
+    public static final int CONTRIBUTION = 2000;
+    private static int balance = INITIAL_BALANCE;
 
-    public static void distribute(Player player, int founds){
-        player.changeBalance(founds);
-        withdrawFounds(founds);
+
+    public static void payMoney(Player player, int amount){
+        // Assicura il saldo sia effettivamente ridotto.
+        amount = Math.abs(amount);
+
+        player.receiveMoney(amount);
+        verboseTransaction(amount, TransactionType.PAY);
     }
 
-    public static void debit(Player player, int toll){
+    public static void receiveMoney(Player player, int amount){
+        // Assicura il saldo sia effettivamente incrementato.
+        amount = Math.abs(amount);
 
+        player.payMoney(amount);
+        balance += amount;
+
+        verboseTransaction(amount, TransactionType.RECEIVE);
     }
 
-    private static void withdrawFounds(int founds){
-        balance -= founds;
+    public static void reset(){
+        balance = INITIAL_BALANCE;
+    }
+
+    private static void verboseTransaction(int amount, TransactionType transactionType){
+        String transactionAction = "received";
+        Color color = Color.GREEN;
+
+        if(transactionType.equals(TransactionType.PAY)){
+            transactionAction = "paid";
+            color = Color.RED;
+        }
+
         System.out.println(
-                String.format("Bank: lost %s",
-                        TextColorizer.color(founds + "$", Color.RED))
+                String.format("Bank: %s %s",
+                        transactionAction,
+                        TextColorizer.color(amount + "$", color))
         );
     }
 
@@ -27,9 +50,5 @@ public abstract class Bank {
                 String.format("Bank: balance is %s",
                         TextColorizer.color(balance + "$", Color.YELLOW))
         );
-    }
-
-    public static void resetBank() {
-        balance = Config.getInt("bank.balance", 0);
     }
 }

@@ -14,7 +14,7 @@ public class Player {
         this.balance = 0;
 
         // Riceve i primi 200 dalla banca
-        Bank.distribute(this,Bank.CONTRIBUTION);
+        Bank.payMoney(this,Bank.CONTRIBUTION);
     }
 
     public void print(){
@@ -24,6 +24,14 @@ public class Player {
                         this.sign,
                         TextColorizer.color(this.balance + "$", Color.YELLOW))
         );
+    }
+
+    public void payMoney(int amount){
+
+    }
+
+    public void receiveMoney(int amount){
+
     }
 
     public void changeBalance(int founds){
