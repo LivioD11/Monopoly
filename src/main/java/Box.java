@@ -1,7 +1,3 @@
-enum Type {
-    TOLL,START
-}
-
 public class Box {
     private static final int bonus = 100;
     private static final int TOLL_MIN = 50;
@@ -10,22 +6,24 @@ public class Box {
     private String[] rappresentation;
 
     private final int value;
-    private Type type;
+    private BoxType type;
+    public String n;
 
     // TO DO
-    public Box(int num) {
-        if(num == 0) {
-            type = type.START;
+    public Box(BoxType type, String n) {
+        this.type = type;
+        this.n = n;
+
+        if(this.type.equals(BoxType.START)) {
             this.value = bonus;
         } else {
-            type = type.TOLL;
-            this.value = (int) (Math.random() * TOLL_MAX + TOLL_MIN);
+            this.value = (int) (Math.random() * (TOLL_MAX - TOLL_MIN + 1)) + TOLL_MIN;
         }
 
         this.rappresentation  = new String[]{
                 "-".repeat(24),
-                String.format("| %-21s|", "Pedaggio"),
-                String.format("|%-22s|", ""),
+                String.format("| %-21s|", this.type.getName()),
+                String.format("| %-21s|", this.value+"$"),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
