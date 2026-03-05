@@ -6,19 +6,15 @@ public abstract class Bank {
     public static final int CONTRIBUTION = 2000;
     private static int balance = INITIAL_BALANCE;
 
-    public static void payMoney(Player player, int amount){
+    public static void payMoney(int amount){
         // Assicura che il saldo sia effettivamente ridotto.
         amount = Math.abs(amount);
-
-        player.receiveMoney(amount);
         verboseTransaction(amount, TransactionType.PAY);
     }
 
-    public static void receiveMoney(Player player, int amount){
+    public static void receiveMoney(int amount){
         // Assicura che il saldo sia effettivamente incrementato.
         amount = Math.abs(amount);
-
-        player.payMoney(amount);
         balance += amount;
 
         verboseTransaction(amount, TransactionType.RECEIVE);

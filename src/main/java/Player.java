@@ -14,16 +14,18 @@ public class Player {
         this.balance = 0;
 
         // Ricevere i fondi iniziali dalla Banca.
-        Bank.payMoney(this,Bank.CONTRIBUTION);
+        this.receiveMoney(Bank.CONTRIBUTION);
     }
 
     public void payMoney(int amount){
         this.balance -= amount;
+        Bank.receiveMoney(amount);
         verboseTransaction(amount, TransactionType.PAY);
     }
 
     public void receiveMoney(int amount){
         this.balance += amount;
+        Bank.payMoney(amount);
         verboseTransaction(amount, TransactionType.RECEIVE);
     }
 
