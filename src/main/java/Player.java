@@ -13,8 +13,36 @@ public class Player {
         this.sign = sign;
         this.balance = 0;
 
-        // Riceve i primi 200 dalla banca
+        // Ricevere i fondi iniziali dalla Banca.
         Bank.payMoney(this,Bank.CONTRIBUTION);
+    }
+
+    public void payMoney(int amount){
+        this.balance -= amount;
+        verboseTransaction(amount, TransactionType.PAY);
+    }
+
+    public void receiveMoney(int amount){
+        this.balance += amount;
+        verboseTransaction(amount, TransactionType.RECEIVE);
+    }
+
+    private void verboseTransaction(int amount, TransactionType transactionType){
+        String transactionAction = "received";
+        Color color = Color.GREEN;
+
+        if(transactionType.equals(TransactionType.PAY)){
+            transactionAction = "paid";
+            color = Color.RED;
+        }
+
+        System.out.println(
+                String.format("Player %s (%s): %s %s",
+                        this.name,
+                        this.sign,
+                        transactionAction,
+                        TextColorizer.color(Math.abs(amount) + "$", color))
+        );
     }
 
     public void print(){
@@ -26,33 +54,7 @@ public class Player {
         );
     }
 
-    public void payMoney(int amount){
-
-    }
-
-    public void receiveMoney(int amount){
-
-    }
-
-    public void changeBalance(int founds){
-        this.balance += founds;
-
-        Color color = Color.GREEN;
-        String action = "obtained";
-        if(founds < 0){ //il giocatore paga un tot di soldi
-            color = Color.RED;
-            action = "payed";
-        }
-        System.out.println(
-                String.format("Player %s (%s): %s %s",
-                        this.name,
-                        this.sign,
-                        action,
-                        TextColorizer.color(Math.abs(founds) + "$", color))
-        );
-    }
-
-    // getters
+    // Getters
 
     public String getName() { return this.name; }
 
