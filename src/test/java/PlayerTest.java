@@ -6,7 +6,7 @@ public class PlayerTest {
     void playerInitializedHasCorrectValues(){
         String name = "Name";
         char sign = 'N';
-        int expectedBalance = Config.getInt("bank.contribution",0);
+        int expectedBalance = 2000;
         Player player = new Player(name,sign);
 
         assertEquals(name, player.getName());
@@ -18,9 +18,9 @@ public class PlayerTest {
     void playerIsBroke(){
         String name = "Name";
         char sign = 'N';
-        int toll = Config.getInt("bank.contribution",0) + 1;
+        int toll = 2001;
         Player player = new Player(name, sign);
-        player.changeBalance(-toll);
+        player.payMoney(toll);
 
         assertEquals(true, player.isBroke());
 
