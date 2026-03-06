@@ -8,7 +8,7 @@ public class Board {
         for(int i = 0; i < 26; i++) {
 
             // Crea la casella di partenza.
-            if(i == 5){
+            if(i == 8){
                 boxes[i] = new Box(BoxType.START, String.valueOf(i));
                 continue;
             }
@@ -34,7 +34,7 @@ public class Board {
         return (COLUMNS - 1) * 2 + (ROWS - 1) + (ROWS - 1 - row);
     }
 
-    // TO DO (pulire il codice).
+    // TODO (pulire il codice).
     public void draw() {
         String emptySpace = " ".repeat(24);
 

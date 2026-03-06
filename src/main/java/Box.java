@@ -9,7 +9,7 @@ public class Box {
     private BoxType type;
     public String n;
 
-    // TO DO
+    // TODO
     public Box(BoxType type, String n) {
         this.type = type;
         this.n = n;

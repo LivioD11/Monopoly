@@ -9,11 +9,11 @@ public class Player {
     private int balance;
 
     public Player(String name, char sign) {
-        this.name = name;
+        this.name = name; // TODO:metti controlli
         this.sign = sign;
         this.balance = 0;
 
-        // Ricevere i fondi iniziali dalla Banca.
+        // Ricevere i fondi iniziali dalla Banca
         this.receiveMoney(Bank.CONTRIBUTION);
     }
 

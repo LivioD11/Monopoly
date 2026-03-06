@@ -10,3 +10,14 @@ public class Main {
         scanner.close();
     }
 }
+
+// TODO:modificare la partenza
+// TODO:rendere il nome/simbolo univoco
+// TODO:rendere il gioco un ciclo
+// TODO:spostare i simboli sul cartellone
+
+// inizio ci chiede nome una volta
+// loop
+// apertura menu -> tiro dado/mostra conto
+// controlliamo che abbia il conto positivo
+// passiamo all'altro giocatore
