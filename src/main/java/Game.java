@@ -15,7 +15,6 @@ public class Game {
     }
 
     public void start(Scanner scanner) {
-        board.draw();
         for (int i = 0; i < PLAYER_NUMBER; i++) {
             boolean valid;
             String name;
@@ -51,7 +50,9 @@ public class Game {
             } while (!valid);
             players[i] = new Player(name, sign);
         }
+        board.draw();
         gameItself(scanner);
+
     }
 
     private void gameItself(Scanner scanner){
@@ -65,7 +66,6 @@ public class Game {
             if (choice == 1) {
                 System.out.println("Il saldo di " + players[currPlayer].getName() + " è " + players[currPlayer].getBalance());
             } else if (choice == 2) {
-                board.draw();
                 int value = dice();
                 System.out.println("E' uscito il numero " + value);
 
@@ -83,9 +83,10 @@ public class Game {
                     isPlaying = false;
                 }
 
-                //TODO:aggiornare il disegno
+                //TODO:aggiornare il disegno!
                 currPlayer = (currPlayer + 1) % PLAYER_NUMBER;
 
+                board.draw();
             } else {
                 System.out.println("Numero non valido! O 1 o 2.");
             }

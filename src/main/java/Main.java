@@ -9,8 +9,6 @@ public class Main {
     }
 }
 
-// TODO:rendere il gioco un ciclo
-// TODO:spostare i simboli sul cartellone
 
 // inizio ci chiede nome una volta
 // loop

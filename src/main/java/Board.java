@@ -58,15 +58,33 @@ public class Board {
 
                 // Gestisce il componente di una singola casella.
                 for (int column = 0; column < COLUMNS; column++) {
-                    int id_cell = getBoxIndex(row, column); //TODO:da continuare
+                    //
 
 
                     // Controlla che la casella sia al bordo.
+                    int id_cell = getBoxIndex(row, column);
+
                     if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1) {
-                        // Disegna la componente della casella.
-                        System.out.print(this.boxes[getBoxIndex(row,column)].draw(actualHeight));
+
+                        if(actualHeight == 5){
+                            char[] signs = game.getSignsAtIndex(id_cell);
+
+                            if(signs.length > 0){
+                                String s = "";
+                                for(char c : signs){
+                                    s += c + " ";
+                                }
+
+                                System.out.print(String.format("| %-21s|", s));
+                            } else {
+                                System.out.print(this.boxes[id_cell].draw(actualHeight));
+                            }
+
+                        } else {
+                            System.out.print(this.boxes[id_cell].draw(actualHeight));
+                        }
+
                     } else {
-                        // Lascia uno spazio vuoto (posizione centrale).
                         System.out.print(emptySpace);
                     }
 
