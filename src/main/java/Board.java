@@ -2,9 +2,11 @@ public class Board {
     private Box[] boxes;
     private static final int COLUMNS = 5;
     private static final int ROWS = 5;
+    private Game game;
 
-    public Board() {
+    public Board(Game game) {
         this.boxes = new Box[26];
+        this.game = game;
         for(int i = 0; i < 26; i++) {
 
             // Crea la casella di partenza.
@@ -56,6 +58,8 @@ public class Board {
 
                 // Gestisce il componente di una singola casella.
                 for (int column = 0; column < COLUMNS; column++) {
+                    int id_cell = getBoxIndex(row, column); //TODO:da continuare
+
 
                     // Controlla che la casella sia al bordo.
                     if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1) {
@@ -71,4 +75,12 @@ public class Board {
             }
         }
     }
+
+    public int getBoxValue(int value) {
+        if (value == 8) {
+            return 0;
+        }
+        return boxes[value].getValue();
+    }
+
 }

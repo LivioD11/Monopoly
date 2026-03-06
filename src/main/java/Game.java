@@ -9,12 +9,13 @@ public class Game {
 
     public Game(Scanner scanner){
         this.isPlaying = false; // true??
-        this.board = new Board();
+        this.board = new Board(this);
         this.players = new Player[PLAYER_NUMBER];
         this.start(scanner);
     }
 
     public void start(Scanner scanner) {
+        board.draw();
         for (int i = 0; i < PLAYER_NUMBER; i++) {
             boolean valid;
             String name;
@@ -64,7 +65,26 @@ public class Game {
             if (choice == 1) {
                 System.out.println("Il saldo di " + players[currPlayer].getName() + " è " + players[currPlayer].getBalance());
             } else if (choice == 2) {
-                System.out.println("ok");
+                board.draw();
+                int value = dice();
+                System.out.println("E' uscito il numero " + value);
+
+                if (players[currPlayer].getCoordinate() + value >= 8) {
+                    players[currPlayer].receiveMoney(100); //passo dal via
+                    System.out.println(players[currPlayer].getName() + " è " +
+                            "passato dal via! Riceve 100.");
+                }
+
+                players[currPlayer].advance(value);
+                players[currPlayer].payMoney(board.getBoxValue(players[currPlayer].getCoordinate()));
+                System.out.println("Il giocatore è sulla box " + players[currPlayer].getCoordinate());
+
+                if (players[currPlayer].isBroke()) {
+                    isPlaying = false;
+                }
+
+                //TODO:aggiornare il disegno
+                currPlayer = (currPlayer + 1) % PLAYER_NUMBER;
 
             } else {
                 System.out.println("Numero non valido! O 1 o 2.");
@@ -72,7 +92,26 @@ public class Game {
 
         } while (isPlaying);
 
+        System.out.println("Gioco finito!");
+    }
 
+    public char[] getSignsAtIndex(int index) {  // disegnerò o no il segno/i
+        int size = 0;
+        int i = 0;
+        for (Player player : players) {
+            if(player.getCoordinate() == index) {
+                size++;
+            }
+        }
+        char[] signs = new char[size];
+
+        for (Player player : players) {
+            if(player.getCoordinate() == index) {
+                signs[i++] = player.getSign();
+            }
+        }
+
+        return signs;
     }
 
     public void menu() {
@@ -82,7 +121,7 @@ public class Game {
                 "2. Lancia il dado e muovi giocatore corrente");
     }
 
-    public int dado() {
+    public int dice() {
         int MAX = 4;
         int MIN = 1;
         return (int) (Math.random() * MAX) + MIN;

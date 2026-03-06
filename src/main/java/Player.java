@@ -7,11 +7,13 @@ public class Player {
     private final String name;
     private final char sign;
     private int balance;
+    private int coordinate;
 
     public Player(String name, char sign) {
         this.name = name; // TODO:metti controlli
         this.sign = sign;
         this.balance = 0;
+        this.coordinate = 8;
 
         // Ricevere i fondi iniziali dalla Banca
         this.receiveMoney(Bank.CONTRIBUTION);
@@ -47,6 +49,10 @@ public class Player {
         );
     }
 
+    public void advance(int steps) {
+        this.coordinate = (this.coordinate + steps) % 16;
+    }
+
     public void print(){
         System.out.println(
                 String.format("Player %s (%s): balance is %s",
@@ -68,9 +74,9 @@ public class Player {
         return this.balance;
     }
 
+    public int getCoordinate() { return coordinate; }
+
     public boolean isBroke(){
-        if(this.balance <= 0)
-            return true;
-        return false;
+        return this.balance <= 0;
     }
 }

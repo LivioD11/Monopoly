@@ -31,6 +31,10 @@ public class Box {
         };
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public String draw(int index){
         return this.rappresentation[index];
     }
