@@ -14,24 +14,46 @@ public class Game {
         this.start(scanner);
     }
 
-    public void start(Scanner scanner){
+    public void start(Scanner scanner) {
         for (int i = 0; i < PLAYER_NUMBER; i++) {
-            String message = "Inserisci il nome del giocatore ("+(i+1)+"): ";
-            String name = ScannerUtilities.getInputString(scanner, message);
+            boolean valid;
+            String name;
+            do {
+                valid = true;
+                String message = "Inserisci il nome del giocatore (" + (i + 1) + "): ";
+                name = ScannerUtilities.getInputString(scanner, message);
+                for (int j = 0; j < i; j++) {
+                    if (name.equals(players[j].getName())) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    System.out.println("Nome già utilizzato, metti nuovo !");
+                }
+            } while (!valid);
 
-            message = "Inserisci il simbolo: ";
-            char sign = ScannerUtilities.getInputChar(scanner,message);
-
-            players[i] = new Player(name,sign);
+            char sign;
+            do {
+                valid = true;
+                String message = "Inserisci il simbolo: ";
+                sign = ScannerUtilities.getInputChar(scanner, message);
+                for (int j = 0; j < i; j++) {
+                    if (sign == players[j].getSign()) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid) {
+                    System.out.println("segno già utilizzato, metti nuovo !");
+                }
+            } while (!valid);
+            players[i] = new Player(name, sign);
         }
-
-        this.loop();
     }
 
     private void loop(){
-        while(getIsPlaying()){
-
-        }
+        System.out.println("");
     }
 
     public boolean getIsPlaying(){

@@ -11,7 +11,6 @@ public class Main {
     }
 }
 
-// TODO:modificare la partenza
 // TODO:rendere il nome/simbolo univoco
 // TODO:rendere il gioco un ciclo
 // TODO:spostare i simboli sul cartellone

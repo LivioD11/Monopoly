@@ -21,7 +21,7 @@ public abstract class ScannerUtilities {
     public static char getInputChar(Scanner scanner, String message){
         char output = ' ';
         while (Character.isWhitespace(output)) {
-            System.out.println(message);
+            System.out.print(message);
 
             if(!scanner.hasNext()){
                 System.out.println("Errore: non è stato inserito alcun carattere");
