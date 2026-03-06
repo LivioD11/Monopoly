@@ -41,4 +41,24 @@ public abstract class ScannerUtilities {
         }
         return output;
     }
+
+    public static int getInputInt(Scanner scanner, String message) {
+        int output = 0;
+        boolean valid = false;
+
+        while (!valid) {
+            System.out.print(message);
+
+            if (!scanner.hasNextInt()) {
+                System.out.println("Errore: il valore inserito non è un intero valido");
+                scanner.nextLine();
+                continue;
+            }
+
+            output = scanner.nextInt();
+            valid = true;
+        }
+
+        return output;
+    }
 }
