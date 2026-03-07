@@ -11,7 +11,7 @@ public class Game {
         this.isPlaying = false;
         this.board = new Board(this);
         this.players = new Player[PLAYER_NUMBER];
-        this.start(scanner);
+        this.start(scanner); // inizio
     }
 
     public void start(Scanner scanner) {
