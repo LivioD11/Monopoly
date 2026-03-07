@@ -58,8 +58,6 @@ public class Board {
 
                 // Gestisce il componente di una singola casella.
                 for (int column = 0; column < COLUMNS; column++) {
-                    //
-
 
                     // Controlla che la casella sia al bordo.
                     int id_cell = getBoxIndex(row, column);

@@ -8,7 +8,7 @@ public class Game {
     private static final int PLAYER_NUMBER = 2;
 
     public Game(Scanner scanner){
-        this.isPlaying = false; // true??
+        this.isPlaying = false;
         this.board = new Board(this);
         this.players = new Player[PLAYER_NUMBER];
         this.start(scanner);
@@ -52,39 +52,39 @@ public class Game {
         }
         board.draw();
         gameItself(scanner);
-
     }
 
     private void gameItself(Scanner scanner){
         boolean isPlaying = true;
-        int currPlayer = 0;
+        int indexCurrPlayer = 0;
 
         do {
             menu();
+            Player player = players[indexCurrPlayer];
             String question = "Cosa scegli? ";
             int choice = ScannerUtilities.getInputInt(scanner, question);
             if (choice == 1) {
-                System.out.println("Il saldo di " + players[currPlayer].getName() + " è " + players[currPlayer].getBalance());
+                System.out.println("Il saldo di " + player.getName() + " è " + player.getBalance());
             } else if (choice == 2) {
                 int value = dice();
                 System.out.println("E' uscito il numero " + value);
 
-                if (players[currPlayer].getCoordinate() + value >= 8) {
-                    players[currPlayer].receiveMoney(100); //passo dal via
-                    System.out.println(players[currPlayer].getName() + " è " +
+                if (player.getCoordinate() + value >= 8) {
+                    player.receiveMoney(Box.getBonus()); //passo dal via
+                    System.out.println(player.getName() + " è " +
                             "passato dal via! Riceve 100.");
                 }
 
-                players[currPlayer].advance(value);
-                players[currPlayer].payMoney(board.getBoxValue(players[currPlayer].getCoordinate()));
-                System.out.println("Il giocatore è sulla box " + players[currPlayer].getCoordinate());
+                player.advance(value); //faccio avanzare il player
 
-                if (players[currPlayer].isBroke()) {
+                player.payMoney(board.getBoxValue(player.getCoordinate()));
+                System.out.println("Il giocatore è sulla box " + player.getCoordinate());
+
+                if (player.isBroke()) {
                     isPlaying = false;
                 }
 
-                //TODO:aggiornare il disegno!
-                currPlayer = (currPlayer + 1) % PLAYER_NUMBER;
+                indexCurrPlayer = (indexCurrPlayer + 1) % PLAYER_NUMBER;
 
                 board.draw();
             } else {

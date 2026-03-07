@@ -10,7 +10,7 @@ public class Player {
     private int coordinate;
 
     public Player(String name, char sign) {
-        this.name = name; // TODO:metti controlli
+        this.name = name;
         this.sign = sign;
         this.balance = 0;
         this.coordinate = 8;

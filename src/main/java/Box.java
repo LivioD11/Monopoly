@@ -35,6 +35,10 @@ public class Box {
         return value;
     }
 
+    public static int getBonus() {
+        return bonus;
+    }
+
     public String draw(int index){
         return this.rappresentation[index];
     }
