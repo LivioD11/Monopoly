@@ -66,10 +66,10 @@ public class Game {
             if (choice == 1) {
                 System.out.println("Il saldo di " + player.getName() + " è " + player.getBalance());
             } else if (choice == 2) {
-                int value = dice();
+                int value = rollDice() + rollDice();
                 System.out.println("E' uscito il numero " + value);
 
-                if (player.getCoordinate() + value >= 8) {
+                if (player.getCoordinate() + value >= Board.INDEX_START) {
                     player.receiveMoney(Box.getBonus()); //passo dal via
                     System.out.println(player.getName() + " è " +
                             "passato dal via! Riceve 100.");
@@ -122,10 +122,11 @@ public class Game {
                 "2. Lancia il dado e muovi giocatore corrente");
     }
 
-    public int dice() {
-        int MAX = 4;
+    public int rollDice() {
         int MIN = 1;
-        return (int) (Math.random() * MAX) + MIN;
+        int MAX = 6;
+        int randomNumber = (int) (Math.random() * MAX) + MIN;
+        return randomNumber;
     }
 
     public boolean getIsPlaying(){

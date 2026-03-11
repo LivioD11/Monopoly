@@ -8,12 +8,13 @@ public class Player {
     private final char sign;
     private int balance;
     private int coordinate;
+    private static final int START_POSITION = Board.INDEX_START;
 
     public Player(String name, char sign) {
         this.name = name;
         this.sign = sign;
         this.balance = 0;
-        this.coordinate = 8;
+        this.coordinate = START_POSITION;
 
         // Ricevere i fondi iniziali dalla Banca
         this.receiveMoney(Bank.CONTRIBUTION);
@@ -50,7 +51,7 @@ public class Player {
     }
 
     public void advance(int steps) {
-        this.coordinate = (this.coordinate + steps) % 16;
+        this.coordinate = (this.coordinate + steps) % Board.BOX_NUMBER;
     }
 
     public void print(){

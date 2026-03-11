@@ -1,16 +1,19 @@
 public class Board {
     private Box[] boxes;
-    private static final int COLUMNS = 5;
-    private static final int ROWS = 5;
+    private static final int COLUMNS = 9;
+    private static final int ROWS = 9;
+    public static final int BOX_NUMBER = ROWS * 2 + (COLUMNS - 2) * 2;
+    public static final int INDEX_START = 16;
     private Game game;
 
+
     public Board(Game game) {
-        this.boxes = new Box[26];
+        this.boxes = new Box[BOX_NUMBER];
         this.game = game;
-        for(int i = 0; i < 26; i++) {
+        for(int i = 0; i < 32; i++) {
 
             // Crea la casella di partenza.
-            if(i == 8){
+            if(i == INDEX_START){
                 boxes[i] = new Box(BoxType.START, String.valueOf(i));
                 continue;
             }
@@ -93,7 +96,7 @@ public class Board {
     }
 
     public int getBoxValue(int value) {
-        if (value == 8) {
+        if (value == INDEX_START) {
             return 0;
         }
         return boxes[value].getValue();
