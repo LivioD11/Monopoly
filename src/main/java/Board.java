@@ -10,7 +10,7 @@ public class Board {
     public Board(Game game) {
         this.boxes = new Box[BOX_NUMBER];
         this.game = game;
-        for(int i = 0; i < 32; i++) {
+        for(int i = 0; i < BOX_NUMBER; i++) {
 
             // Crea la casella di partenza.
             if(i == INDEX_START){
