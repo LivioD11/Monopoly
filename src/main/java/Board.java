@@ -1,10 +1,21 @@
 public class Board {
     private Box[] boxes;
+    private static final String[] STREET_NAME = {
+            "Vicolo Corto", "Vicolo Stretto",
+            "Bastioni Gran Sasso", "Viale Monterosa", "Viale Vesuvio",
+            "Via Accademia", "Corso Ateneo", "Piazza Università",
+            "Via Verdi", "Corso Raffaello", "Piazza Dante",
+            "Via Marco Polo", "Corso Magellano", "Largo Colombo",
+            "Viale Costantino", "Viale Traiano", "Piazza Giulio Cesare",
+            "Via Roma", "Corso Impero", "Largo Augusto",
+            "Viale dei Giardini", "Parco della Vittoria",
+            "Società Acqua Potabile", "Società Elettrica"
+    };
     private static final int COLUMNS = 9;
     private static final int ROWS = 9;
     public static final int BOX_NUMBER = ROWS * 2 + (COLUMNS - 2) * 2;
     public static final int INDEX_START = 16;
-    public static final int INDEX_STSUD = ROWS/2 + 1;
+    public static final int INDEX_STSUD = ROWS/2;
     public static final int INDEX_STOVEST = INDEX_STSUD + (ROWS - 1);
     public static final int INDEX_STNORD = INDEX_STOVEST + (ROWS - 1);
     public static final int INDEX_STEST = INDEX_STNORD + (ROWS - 1);
@@ -18,6 +29,7 @@ public class Board {
     public Board(Game game) {
         this.boxes = new Box[BOX_NUMBER];
         this.game = game;
+        int nomeIndex = 0;
 
         for (int i = 0; i < BOX_NUMBER; i++) {
             boxes[i] = switch (i) {
@@ -28,7 +40,12 @@ public class Board {
                 case INDEX_STEST   -> new BoxStation("STAZIONE EST");
                 case INDEX_LUX     -> new BoxLuxury();
                 case INDEX_HER     -> new BoxHeritage();
-                default            -> new BoxEstate("via casuale");
+                default -> {
+                    String name = (nomeIndex < STREET_NAME.length) ?
+                            STREET_NAME[nomeIndex] : "Via Generica";
+                    nomeIndex++;
+                    yield new BoxEstate(name);
+                }
             };
         }
 
