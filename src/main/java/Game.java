@@ -70,14 +70,16 @@ public class Game {
                 System.out.println("E' uscito il numero " + value);
 
                 if (player.getCoordinate() + value >= Board.INDEX_START) {
-                    player.receiveMoney(Box.getBonus()); //passo dal via
+                    player.receiveMoney(BoxStart.getBonus()); //passo dal via
                     System.out.println(player.getName() + " è " +
                             "passato dal via! Riceve 100.");
                 }
 
                 player.advance(value); //faccio avanzare il player
 
-                player.payMoney(board.getBoxValue(player.getCoordinate()));
+                board.getBox(player.getCoordinate()).applyEffect(player);
+                //in base alla casella dov'è, farà la cosa
+
                 System.out.println("Il giocatore è sulla box " + player.getCoordinate());
 
                 if (player.isBroke()) {

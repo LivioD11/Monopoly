@@ -6,4 +6,8 @@ public class BoxStart extends Box{
     }
 
     public void applyEffect(Player player) {}
+
+    public static int getBonus(){
+        return bonus;
+    }
 }

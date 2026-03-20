@@ -4,21 +4,34 @@ public class Board {
     private static final int ROWS = 9;
     public static final int BOX_NUMBER = ROWS * 2 + (COLUMNS - 2) * 2;
     public static final int INDEX_START = 16;
+    public static final int INDEX_STSUD = ROWS/2 + 1;
+    public static final int INDEX_STOVEST = INDEX_STSUD + (ROWS - 1);
+    public static final int INDEX_STNORD = INDEX_STOVEST + (ROWS - 1);
+    public static final int INDEX_STEST = INDEX_STNORD + (ROWS - 1);
+    public static final int INDEX_LUX = INDEX_START + (ROWS - 1);
+    public static final int INDEX_HER = INDEX_START - 2;
+
+
     private Game game;
 
 
     public Board(Game game) {
         this.boxes = new Box[BOX_NUMBER];
         this.game = game;
-        for(int i = 0; i < BOX_NUMBER; i++) {
 
-            // Crea la casella di partenza.
-            if(i == INDEX_START){
-                boxes[i] = new Box(BoxType.START, String.valueOf(i));
-                continue;
-            }
-            boxes[i] = new Box(BoxType.TOLL, String.valueOf(i));
+        for (int i = 0; i < BOX_NUMBER; i++) {
+            boxes[i] = switch (i) {
+                case INDEX_START   -> new BoxStart();
+                case INDEX_STSUD   -> new BoxStation("STAZIONE SUD");
+                case INDEX_STOVEST -> new BoxStation("STAZIONE OVEST");
+                case INDEX_STNORD  -> new BoxStation("STAZIONE NORD");
+                case INDEX_STEST   -> new BoxStation("STAZIONE EST");
+                case INDEX_LUX     -> new BoxLuxury();
+                case INDEX_HER     -> new BoxHeritage();
+                default            -> new BoxEstate("via casuale");
+            };
         }
+
     }
 
     private int getBoxIndex(int row, int col) {
@@ -95,11 +108,8 @@ public class Board {
         }
     }
 
-    public int getBoxValue(int value) {
-        if (value == INDEX_START) {
-            return 0;
-        }
-        return boxes[value].getValue();
+    public Box getBox(int value) {
+        return boxes[value];
     }
 
 }

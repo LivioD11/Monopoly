@@ -18,8 +18,6 @@ public abstract class Box {
     public Box(int value, String nome) {
         this.value = value;
         this.name = nome;
-        this.value = (int) (Math.random() * (TOLL_MAX - TOLL_MIN + 1)) +
-         TOLL_MIN;
 
         this.rappresentation  = new String[]{
                 "-".repeat(24),
@@ -46,5 +44,4 @@ public abstract class Box {
     public String draw(int index){
         return this.rappresentation[index];
     }
-
 }
