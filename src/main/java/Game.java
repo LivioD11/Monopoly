@@ -5,7 +5,7 @@ public class Game {
     private Board board;
     private Player[] players;
 
-    private static final int PLAYER_NUMBER = 2; //TODO metti a 4
+    private static final int PLAYER_NUMBER = 4;
 
     public Game(Scanner scanner){
         this.isPlaying = false;
