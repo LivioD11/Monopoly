@@ -55,15 +55,64 @@ class Baord {
 }
 
 class Box {
-  - {static} minToll: int
-  - {static} maxToll: int
-  - toll: int
-  - name: String
+  - {static} MIN_TOLL: int
+  - {static} MAX_TOLL: int
+  - value: int
+  + name: String
+  - rappresentation: String[]
   + Box(name: String): constructor
   - generate(): void
   + getToll(): int
   + getName(): String
 }
+
+class BoxEstate {
+  - {static} MIN_TOLL: int
+  - {static} MAX_TOLL: int
+  + BoxEstate(str: String): constructor
+  + applyEffect(player: Player): void
+  + {static} generateRandomNum(): int
+}
+
+class BoxHeritage {
+  - {static} TAX: int
+  + BoxHeritage(): constructor
+  + applyEffect(player: Player): void
+}
+
+class BoxLuxury {
+  - {static} TAX: int
+  + BoxLuxury(): constructor
+  + applyEffect(player: Player): void
+}
+
+class BoxParking {
+  - {static} MONEY: int
+  + BoxParking(): constructor
+  + applyEffect(player: Player): void
+}
+
+class BoxStart {
+  - {static} BONUS: int
+  + BoxStart(): constructor
+  + applyEffect(player: Player): void
+  + {static} getBonus(): int
+}
+
+class BoxStation {
+  - {static} MIN_TOLL: int
+  - {static} MAX_TOLL: int
+  + BoxStation(str: String): constructor
+  + applyEffect(player: Player): void
+  + {static} generateRandomNum(): int
+}
+
+Box <|-- BoxEstate
+Box <|-- BoxHeritage
+Box <|-- BoxLuxury
+Box <|-- BoxParking
+Box <|-- BoxStart
+Box <|-- BoxStation
 
 abstract class ScannerUtilities {
   + {static} getInputString(scanner: Scanner, message: String): String

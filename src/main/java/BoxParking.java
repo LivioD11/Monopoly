@@ -1,8 +1,8 @@
 public class BoxParking extends Box{
-    private static final int money = 0;
+    private static final int MONEY = 0;
 
     public BoxParking() {
-        super(money,"PARCHEGGIO");
+        super(MONEY,"PARCHEGGIO");
     }
 
     public void applyEffect(Player player) {}

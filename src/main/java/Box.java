@@ -4,7 +4,7 @@ public abstract class Box {
     private static final int TOLL_MIN = 50;
     private static final int TOLL_MAX = 150;
     //TODO: aggiungere il colore
-    private String[] rappresentation;
+    private String[] representation;
     private final int value;
     public String name;
 
@@ -20,8 +20,12 @@ public abstract class Box {
     public Box(int value, String nome) {
         this.value = value;
         this.name = nome;
+        this.represents();
 
-        this.rappresentation  = new String[]{
+    }
+
+    protected void represents(){
+        this.representation  = new String[]{
                 "-".repeat(24),
                 "|"+TextColorizer.padAnsi(this.name,22)+"|",
                 this.value > 0 ? String.format("| %-21s|", this.value+"$") :
@@ -33,8 +37,13 @@ public abstract class Box {
         };
     }
 
-    public void changeTextDescription(String str) {
-        this.rappresentation[2]  = String.format("|%-22s|", str);
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (String line : representation) {
+            sb.append(line).append("\n");
+        }
+        return sb.toString();
     }
 
     public int getValue() {
@@ -44,6 +53,6 @@ public abstract class Box {
     public abstract void applyEffect(Player player);
 
     public String draw(int index){
-        return this.rappresentation[index];
+        return this.representation[index];
     }
 }

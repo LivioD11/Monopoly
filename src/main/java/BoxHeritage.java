@@ -1,10 +1,10 @@
 public class BoxHeritage extends Box{
-    private static final int tax = 200;
+    private static final int TAX = 200;
 
     public BoxHeritage() {
-        super(tax,"TASSA PATRIMONIALE");
+        super(TAX,"TASSA PATRIMONIALE");
 
-        changeTextDescription("paga 10% patrimonio");
+        //changeTextDescription("paga 10% patrimonio");
     }
 
     public void applyEffect(Player player) {
