@@ -1,4 +1,5 @@
 package cli;
+import java.util.Random;
 
 public enum Color {
     RESET("\u001B[0m"),
@@ -22,5 +23,11 @@ public enum Color {
 
     public String getCode() {
         return code;
+    }
+
+    public static Color random() {
+        Color[] values = values();
+        Random random = new Random();
+        return values[random.nextInt(1, values.length)];
     }
 }

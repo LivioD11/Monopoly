@@ -1,3 +1,5 @@
+import cli.TextColorizer;
+
 public abstract class Box {
     private static final int TOLL_MIN = 50;
     private static final int TOLL_MAX = 150;
@@ -21,9 +23,9 @@ public abstract class Box {
 
         this.rappresentation  = new String[]{
                 "-".repeat(24),
-                String.format("| %-21s|", this.name),
+                "|"+TextColorizer.padAnsi(this.name,22)+"|",
                 this.value > 0 ? String.format("| %-21s|", this.value+"$") :
-                        String.format("|%-22s|", ""),
+                String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
@@ -32,7 +34,7 @@ public abstract class Box {
     }
 
     public void changeTextDescription(String str) {
-        this.rappresentation[2]  = String.format("| %-21s|", str);
+        this.rappresentation[2]  = String.format("|%-22s|", str);
     }
 
     public int getValue() {

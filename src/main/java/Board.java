@@ -1,3 +1,6 @@
+import cli.Color;
+import cli.TextColorizer;
+
 public class Board {
     private Box[] boxes;
     private static final String[] STREET_NAME = {
@@ -44,7 +47,8 @@ public class Board {
                     String name = (nomeIndex < STREET_NAME.length) ?
                             STREET_NAME[nomeIndex] : "Via Generica";
                     nomeIndex++;
-                    yield new BoxEstate(name);
+                    String colorfulName = TextColorizer.color(name, Color.random());
+                    yield new BoxEstate(colorfulName);
                 }
             };
         }
@@ -97,6 +101,7 @@ public class Board {
 
                     if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1) {
 
+                        // TODO: fix
                         if(actualHeight == 5){
                             char[] signs = game.getSignsAtIndex(id_cell);
 
@@ -106,7 +111,7 @@ public class Board {
                                     s += c + " ";
                                 }
 
-                                System.out.print(String.format("| %-21s|", s));
+                                System.out.print(String.format("|%-22s|", s));
                             } else {
                                 System.out.print(this.boxes[id_cell].draw(actualHeight));
                             }
