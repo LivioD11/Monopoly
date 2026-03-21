@@ -54,13 +54,13 @@ public class Player {
         this.coordinate = (this.coordinate + steps) % Board.BOX_NUMBER;
     }
 
-    public void print(){
-        System.out.println(
-                String.format("Player %s (%s): balance is %s",
-                        this.name,
-                        this.sign,
-                        TextColorizer.color(this.balance + "$", Color.YELLOW))
-        );
+    @Override
+    public String toString(){
+        String player = String.format("Player %s (%s): balance is %s",
+            this.name,
+            this.sign,
+            TextColorizer.color(this.balance + "$", Color.YELLOW));
+        return player;
     }
 
     // Getters

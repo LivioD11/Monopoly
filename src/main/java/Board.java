@@ -3,17 +3,7 @@ import cli.TextColorizer;
 
 public class Board {
     private Box[] boxes;
-    private static final String[] STREET_NAME = {
-            "Vicolo Corto", "Vicolo Stretto",
-            "Bastioni Gran Sasso", "Viale Monterosa", "Viale Vesuvio",
-            "Via Accademia", "Corso Ateneo", "Piazza Università",
-            "Via Verdi", "Corso Raffaello", "Piazza Dante",
-            "Via Marco Polo", "Corso Magellano", "Largo Colombo",
-            "Viale Costantino", "Viale Traiano", "Piazza Giulio Cesare",
-            "Via Roma", "Corso Impero", "Largo Augusto",
-            "Viale dei Giardini", "Parco della Vittoria",
-            "Società Acqua Potabile", "Società Elettrica"
-    };
+    private static final String[] STREET_NAME = FileUtilities.leggiLineeFile("src/main/java/resources/street_names.csv");
     private static final int COLUMNS = 9;
     private static final int ROWS = 9;
     public static final int BOX_NUMBER = ROWS * 2 + (COLUMNS - 2) * 2;
