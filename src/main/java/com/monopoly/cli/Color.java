@@ -1,4 +1,4 @@
-package cli;
+package com.monopoly.cli;
 import java.util.Random;
 
 public enum Color {

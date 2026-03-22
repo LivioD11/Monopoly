@@ -1,3 +1,9 @@
+package com.monopoly;
+
+import com.monopoly.board.Board;
+import com.monopoly.board.BoxStart;
+import com.monopoly.utilities.ScannerUtilities;
+
 import java.util.Scanner;
 
 public class Game {

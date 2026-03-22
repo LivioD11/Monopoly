@@ -1,8 +1,10 @@
+package com.monopoly.utilities;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-class FileUtilities {
+public class FileUtilities {
     public static String[] leggiLineeFile(String percorsoFile) {
         String[] lineeFile = null;
         try {

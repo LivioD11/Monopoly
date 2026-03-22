@@ -1,4 +1,5 @@
-import java.nio.file.Path;
+package com.monopoly;
+
 import java.util.Scanner;
 
 public class Main {

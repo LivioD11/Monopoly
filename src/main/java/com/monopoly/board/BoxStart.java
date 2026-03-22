@@ -1,4 +1,6 @@
-public class BoxStart extends Box{
+package com.monopoly.board;
+
+public class BoxStart extends Box {
     private static final int BONUS = 100;
 
     public BoxStart(int value, String name) {

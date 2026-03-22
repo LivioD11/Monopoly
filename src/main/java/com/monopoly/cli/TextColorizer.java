@@ -1,4 +1,4 @@
-package cli;
+package com.monopoly.cli;
 
 public abstract class TextColorizer {
 

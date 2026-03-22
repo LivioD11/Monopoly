@@ -58,66 +58,80 @@ interface Taxable {
   + tax(player: Player): void
 }
 
+interface Refoundable {
+  + refound(player: Player): void
+}
+
 class Box {
-  - {static} MIN_TOLL: int
-  - {static} MAX_TOLL: int
-  - value: int
-  + name: String
+  # {static} MIN_TOLL: int
+  # {static} MAX_TOLL: int
+  # value: int
+  # name: String
+  # description: String
   - rappresentation: String[]
+  + Box(value: int, name String): constructor
   + Box(name: String): constructor
-  - generate(): void
-  + getToll(): int
+  - {static} generateRandomNum(): int
+  - updateRepresentation(): void
+  + draw(index: int): String
+  + toString(): String
+  + setDescription(): void
+  + getValue(): int
   + getName(): String
+  + getDescription(): String
 }
 
-class BoxEstate {
-  - {static} MIN_TOLL: int
-  - {static} MAX_TOLL: int
-  + BoxEstate(str: String): constructor
+class BoxProperty {
+  + BoxEstate(name: String): constructor
+  + tax(player: Player): void
   + applyEffect(player: Player): void
-  + {static} generateRandomNum(): int
+  + toString(): String
 }
 
-class BoxHeritage {
-  - {static} TAX: int
-  + BoxHeritage(): constructor
+class BoxAssets {
+  + BoxHeritage(name: String): constructor
+  + tax(player: Player): void
   + applyEffect(player: Player): void
+  + toString(): String
 }
 
 class BoxLuxury {
-  + BoxLuxury(): constructor
+  - LUXURY_TAX_AMOUNT: int
+  + BoxLuxury(name: String): constructor
   + tax(player: Player): void
+  + applyEffect(player: Player): void
+  + toString(): String
 }
 
 class BoxParking {
-  - {static} MONEY: int
   + BoxParking(): constructor
   + applyEffect(player: Player): void
 }
 
 class BoxStart {
-  - {static} BONUS: int
   + BoxStart(): constructor
   + applyEffect(player: Player): void
   + {static} getBonus(): int
 }
 
 class BoxStation {
-  - {static} MIN_TOLL: int
-  - {static} MAX_TOLL: int
   + BoxStation(str: String): constructor
   + applyEffect(player: Player): void
-  + {static} generateRandomNum(): int
 }
 
-Box <|-- BoxEstate
-Box <|-- BoxHeritage
+Box <|-- BoxProperty
+Box <|-- BoxAssets
 Box <|-- BoxLuxury
 Box <|-- BoxParking
 Box <|-- BoxStart
 Box <|-- BoxStation
 
 Taxable <|.. BoxLuxury
+Taxable <|.. BoxAssets
+Taxable <|.. BoxStation
+Taxable <|.. BoxProperty
+
+Refoundable <|.. BoxStart
 
 abstract class ScannerUtilities {
   + {static} getInputString(scanner: Scanner, message: String): String

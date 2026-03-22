@@ -1,5 +1,8 @@
-import cli.Color;
-import cli.TextColorizer;
+package com.monopoly.board;
+
+import com.monopoly.cli.Color;
+import com.monopoly.cli.TextColorizer;
+import com.monopoly.utilities.FileUtilities;
 
 public class Board {
     private Box[] boxes;
@@ -31,14 +34,14 @@ public class Board {
                 case INDEX_STOVEST -> new BoxStation("STAZIONE OVEST");
                 case INDEX_STNORD  -> new BoxStation("STAZIONE NORD");
                 case INDEX_STEST   -> new BoxStation("STAZIONE EST");
-                case INDEX_LUX     -> new BoxLuxury(200,"TASSA DI LUSSO");
-                case INDEX_HER     -> new BoxHeritage(200,"TASSA PATRIMONIALE");
+                case INDEX_LUX     -> new BoxLuxury("TASSA DI LUSSO");
+                case INDEX_HER     -> new BoxAssets("TASSA PATRIMONIALE");
                 default -> {
                     String name = (nomeIndex < STREET_NAME.length) ?
                             STREET_NAME[nomeIndex] : "Via Generica";
                     nomeIndex++;
                     String colorfulName = TextColorizer.color(name, Color.random());
-                    yield new BoxEstate(colorfulName);
+                    yield new BoxProperty(colorfulName);
                 }
             };
         }

@@ -1,7 +1,10 @@
-import cli.Color;
-import cli.TextColorizer;
+package com.monopoly;
 
-import javax.sound.midi.Soundbank;
+
+import com.monopoly.TransactionType;
+import com.monopoly.board.Board;
+import com.monopoly.cli.Color;
+import com.monopoly.cli.TextColorizer;
 
 public class Player {
     private final String name;

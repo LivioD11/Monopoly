@@ -1,5 +1,9 @@
-import cli.Color;
-import cli.TextColorizer;
+package com.monopoly;
+
+import com.monopoly.TransactionType;
+import com.monopoly.cli.Color;
+import com.monopoly.cli.TextColorizer;
+
 
 public abstract class Bank {
     private static final int INITIAL_BALANCE = 1000000;

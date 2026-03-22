@@ -1,12 +1,14 @@
-import cli.TextColorizer;
+package com.monopoly.board;
+
+import com.monopoly.cli.TextColorizer;
 
 public abstract class Box {
     protected static final int TOLL_MIN = 50;
     protected static final int TOLL_MAX = 150;
-    private String[] representation;
     protected final int value;
     protected String name;
     protected String description;
+    private String[] representation;
 
     // START: quando ci passi sopra prendi 100CHF  !!!
     // PARCHEGGIO: ci passi sopra e non fa nulla
@@ -15,17 +17,28 @@ public abstract class Box {
     // PROPRIETA': dove paghi cifre random
     // STAZIONE: è al centro di ogni lato
 
-
+    /**
+     *  COSTRUTTORI
+     */
 
     public Box(int value, String name) {
         this.value = value;
         this.name = name;
         this.description = "Paga "+this.value;
         this.updateRepresentation();
-
     }
 
-    protected void updateRepresentation(){
+    public Box(String name){
+        this(generateRandomNum(),name);
+    }
+
+    //
+
+    private static int generateRandomNum() {
+        return (int) (Math.random() * (TOLL_MAX - TOLL_MIN + 1)) + TOLL_MIN;
+    }
+
+    private void updateRepresentation(){
         this.representation  = new String[]{
                 "-".repeat(24),
                 "|"+TextColorizer.padAnsi(this.name,22)+"|",
@@ -40,16 +53,23 @@ public abstract class Box {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (String line : representation) {
-            sb.append(line).append("\n");
-        }
-        return sb.toString();
+        return String.format("[ Cella: %s valore: %d CHF (%s)]",
+                name, value, description);
     }
 
-    public String draw(int index){
-        return this.representation[index];
+    public String draw(int index) {
+        if (index < 0 || index >= representation.length) {
+            return "";
+        }
+        return representation[index];
     }
+
+    /**
+     * Metodo per interagire con le classi figlie
+     * in modo generico.
+     * @param player
+     */
+    public abstract void applyEffect(Player player);
 
     // SETTERS
 
@@ -62,5 +82,13 @@ public abstract class Box {
 
     public int getValue() {
         return value;
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getDescription(){
+        return this.description;
     }
 }
