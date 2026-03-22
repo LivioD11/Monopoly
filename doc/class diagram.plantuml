@@ -54,6 +54,10 @@ class Baord {
   + Board(): constructor
 }
 
+interface Taxable {
+  + tax(player: Player): void
+}
+
 class Box {
   - {static} MIN_TOLL: int
   - {static} MAX_TOLL: int
@@ -81,9 +85,8 @@ class BoxHeritage {
 }
 
 class BoxLuxury {
-  - {static} TAX: int
   + BoxLuxury(): constructor
-  + applyEffect(player: Player): void
+  + tax(player: Player): void
 }
 
 class BoxParking {
@@ -113,6 +116,8 @@ Box <|-- BoxLuxury
 Box <|-- BoxParking
 Box <|-- BoxStart
 Box <|-- BoxStation
+
+Taxable <|.. BoxLuxury
 
 abstract class ScannerUtilities {
   + {static} getInputString(scanner: Scanner, message: String): String

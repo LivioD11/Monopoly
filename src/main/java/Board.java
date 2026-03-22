@@ -26,13 +26,13 @@ public class Board {
 
         for (int i = 0; i < BOX_NUMBER; i++) {
             boxes[i] = switch (i) {
-                case INDEX_START   -> new BoxStart();
+                case INDEX_START   -> new BoxStart(100,"VIA");
                 case INDEX_STSUD   -> new BoxStation("STAZIONE SUD");
                 case INDEX_STOVEST -> new BoxStation("STAZIONE OVEST");
                 case INDEX_STNORD  -> new BoxStation("STAZIONE NORD");
                 case INDEX_STEST   -> new BoxStation("STAZIONE EST");
-                case INDEX_LUX     -> new BoxLuxury();
-                case INDEX_HER     -> new BoxHeritage();
+                case INDEX_LUX     -> new BoxLuxury(200,"TASSA DI LUSSO");
+                case INDEX_HER     -> new BoxHeritage(200,"TASSA PATRIMONIALE");
                 default -> {
                     String name = (nomeIndex < STREET_NAME.length) ?
                             STREET_NAME[nomeIndex] : "Via Generica";

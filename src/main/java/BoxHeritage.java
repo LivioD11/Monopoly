@@ -1,13 +1,12 @@
-public class BoxHeritage extends Box{
-    private static final int TAX = 200;
+public class BoxHeritage extends Box implements Taxable{
 
-    public BoxHeritage() {
-        super(TAX,"TASSA PATRIMONIALE");
+    public BoxHeritage(int value, String name) {
+        super(value, name);
 
-        //changeTextDescription("paga 10% patrimonio");
+        setDescription("paga 10% patrimonio");
     }
 
-    public void applyEffect(Player player) {
+    public void tax(Player player) {
         int tax = (int) (player.getBalance() * 0.1);
         player.payMoney(tax);
     }

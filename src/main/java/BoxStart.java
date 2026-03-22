@@ -1,8 +1,9 @@
 public class BoxStart extends Box{
     private static final int BONUS = 100;
 
-    public BoxStart() {
-        super(BONUS,"VIA");
+    public BoxStart(int value, String name) {
+        super(value, name);
+        this.setDescription("Ritira "+value);
     }
 
     public void applyEffect(Player player) {}

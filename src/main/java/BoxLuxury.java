@@ -1,11 +1,10 @@
-public class BoxLuxury extends Box{
-    private static final int TAX = 200;
+public class BoxLuxury extends Box implements Taxable{
 
-    public BoxLuxury() {
-        super(TAX,"TASSA DI LUSSO");
+    public BoxLuxury(int value, String name) {
+        super(value,name);
     }
 
-    public void applyEffect(Player player) {
-        player.payMoney(TAX);
+    public void tax(Player player) {
+        player.payMoney(this.value);
     }
 }

@@ -1,12 +1,12 @@
 import cli.TextColorizer;
 
 public abstract class Box {
-    private static final int TOLL_MIN = 50;
-    private static final int TOLL_MAX = 150;
-    //TODO: aggiungere il colore
+    protected static final int TOLL_MIN = 50;
+    protected static final int TOLL_MAX = 150;
     private String[] representation;
-    private final int value;
-    public String name;
+    protected final int value;
+    protected String name;
+    protected String description;
 
     // START: quando ci passi sopra prendi 100CHF  !!!
     // PARCHEGGIO: ci passi sopra e non fa nulla
@@ -17,18 +17,19 @@ public abstract class Box {
 
 
 
-    public Box(int value, String nome) {
+    public Box(int value, String name) {
         this.value = value;
-        this.name = nome;
-        this.represents();
+        this.name = name;
+        this.description = "Paga "+this.value;
+        this.updateRepresentation();
 
     }
 
-    protected void represents(){
+    protected void updateRepresentation(){
         this.representation  = new String[]{
                 "-".repeat(24),
                 "|"+TextColorizer.padAnsi(this.name,22)+"|",
-                this.value > 0 ? String.format("| %-21s|", this.value+"$") :
+                this.value > 0 ? String.format("|%-22s|", this.description) :
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
@@ -46,13 +47,20 @@ public abstract class Box {
         return sb.toString();
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public abstract void applyEffect(Player player);
-
     public String draw(int index){
         return this.representation[index];
+    }
+
+    // SETTERS
+
+    public void setDescription(String description){
+        this.description = description;
+        this.updateRepresentation();
+    }
+
+    // GTTERS
+
+    public int getValue() {
+        return value;
     }
 }
