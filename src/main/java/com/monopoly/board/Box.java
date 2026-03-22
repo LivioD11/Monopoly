@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Player;
 import com.monopoly.cli.TextColorizer;
 
 public abstract class Box {

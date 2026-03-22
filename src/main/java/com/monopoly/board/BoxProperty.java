@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Player;
 import com.monopoly.board.interfaces.Taxable;
 
 public class BoxProperty extends Box implements Taxable {

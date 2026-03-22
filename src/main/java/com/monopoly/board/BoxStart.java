@@ -1,5 +1,7 @@
 package com.monopoly.board;
 
+import com.monopoly.Player;
+
 public class BoxStart extends Box {
     private static final int BONUS = 100;
 

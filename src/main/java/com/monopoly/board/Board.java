@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Game;
 import com.monopoly.cli.Color;
 import com.monopoly.cli.TextColorizer;
 import com.monopoly.utilities.FileUtilities;
