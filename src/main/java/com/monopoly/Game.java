@@ -11,17 +11,17 @@ public class Game {
     private Board board;
     private Player[] players;
 
-    private static final int PLAYER_NUMBER = 4;
+    private static final int PLAYERS_NUMBER = 4;
 
     public Game(Scanner scanner){
         this.isPlaying = false;
         this.board = new Board(this);
-        this.players = new Player[PLAYER_NUMBER];
+        this.players = new Player[PLAYERS_NUMBER];
         this.start(scanner); // inizio
     }
 
     public void start(Scanner scanner) {
-        for (int i = 0; i < PLAYER_NUMBER; i++) {
+        for (int i = 0; i < PLAYERS_NUMBER; i++) {
             boolean valid;
             String name;
             do {
@@ -92,7 +92,7 @@ public class Game {
                     isPlaying = false;
                 }
 
-                indexCurrPlayer = (indexCurrPlayer + 1) % PLAYER_NUMBER;
+                indexCurrPlayer = (indexCurrPlayer + 1) % PLAYERS_NUMBER;
 
                 board.draw();
             } else {

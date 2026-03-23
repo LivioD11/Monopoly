@@ -30,7 +30,7 @@ public class Board {
 
         for (int i = 0; i < BOX_NUMBER; i++) {
             boxes[i] = switch (i) {
-                case INDEX_START   -> new BoxStart(100,"VIA");
+                case INDEX_START   -> new BoxStart("VIA");
                 case INDEX_STSUD   -> new BoxStation("STAZIONE SUD");
                 case INDEX_STOVEST -> new BoxStation("STAZIONE OVEST");
                 case INDEX_STNORD  -> new BoxStation("STAZIONE NORD");

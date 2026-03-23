@@ -4,12 +4,14 @@ class Player {
   - name: String
   - sign: char
   - balance: int
-  - position: int
+  - coordinate: int
   + Player(name: String, sign: char): constructor
   + move(): void
-  + print(): void
-  + isBroke(): boolean
+  + toString(): String
+  + getName(): String
   + getSymbol(): char
+  + getBalance(): int
+  + isBroke(): boolean
 }
 
 package cli {
@@ -42,81 +44,93 @@ abstract class Dice {
 }
 
 class Game {
-  - PLAYER_NUMBER: int
+  - isPlaying: boolean
+  - PLAYERS_NUMBER: int
   - players: Player[]
-  - gameboard: GameBaord
+  - board: Board
   - gameLoop(): void
-  + Game(): constructor
+  + Game(scanner: Scanner): constructor
+  + start(scanner: Scanner): void
+  + gameItself(scanner: Scanner): void
+  + getSignsAtIndex(index: int): char[]
+  + menu(): void
+  + rollDice(): int
+  + getIsPlaying(): boolean
 }
 
-class Baord {
-  - boxes: Box[]
-  + Board(): constructor
-}
+package board{
+    package interfaces {
+        interface Taxable {
+          + tax(player: Player): void
+        }
 
-interface Taxable {
-  + tax(player: Player): void
-}
+        interface Refundable {
+          + refund(player: Player): void
+        }
+    }
 
-interface Refoundable {
-  + refound(player: Player): void
-}
+    class Board {
+      - boxes: Box[]
+      + Board(): constructor
+    }
 
-class Box {
-  # {static} MIN_TOLL: int
-  # {static} MAX_TOLL: int
-  # value: int
-  # name: String
-  # description: String
-  - rappresentation: String[]
-  + Box(value: int, name String): constructor
-  + Box(name: String): constructor
-  - {static} generateRandomNum(): int
-  - updateRepresentation(): void
-  + draw(index: int): String
-  + toString(): String
-  + setDescription(): void
-  + getValue(): int
-  + getName(): String
-  + getDescription(): String
-}
+    class Box {
+      # {static} MIN_TOLL: int
+      # {static} MAX_TOLL: int
+      # value: int
+      # name: String
+      # description: String
+      - representation: String[]
+      + Box(value: int, name String): constructor
+      + Box(name: String): constructor
+      - {static} generateRandomNum(): int
+      - updateRepresentation(): void
+      + draw(index: int): String
+      + toString(): String
+      + setDescription(): void
+      + getValue(): int
+      + getName(): String
+      + getDescription(): String
+    }
 
-class BoxProperty {
-  + BoxEstate(name: String): constructor
-  + tax(player: Player): void
-  + applyEffect(player: Player): void
-  + toString(): String
-}
+    class BoxProperty {
+      + BoxEstate(name: String): constructor
+      + tax(player: Player): void
+      + applyEffect(player: Player): void
+      + toString(): String
+    }
 
-class BoxAssets {
-  + BoxHeritage(name: String): constructor
-  + tax(player: Player): void
-  + applyEffect(player: Player): void
-  + toString(): String
-}
+    class BoxAssets {
+      + BoxHeritage(name: String): constructor
+      + tax(player: Player): void
+      + applyEffect(player: Player): void
+      + toString(): String
+    }
 
-class BoxLuxury {
-  - LUXURY_TAX_AMOUNT: int
-  + BoxLuxury(name: String): constructor
-  + tax(player: Player): void
-  + applyEffect(player: Player): void
-  + toString(): String
-}
+    class BoxLuxury {
+      - LUXURY_TAX_AMOUNT: int
+      + BoxLuxury(name: String): constructor
+      + tax(player: Player): void
+      + applyEffect(player: Player): void
+      + toString(): String
+    }
 
-class BoxParking {
-  + BoxParking(): constructor
-  + applyEffect(player: Player): void
-}
+    class BoxParking {
+      + BoxParking(name: String): constructor
+      + applyEffect(player: Player): void
+    }
 
-class BoxStart {
-  + BoxStart(): constructor
-  + applyEffect(player: Player): void
-  + {static} getBonus(): int
-}
+    class BoxStart {
+      + BoxStart(name: String): constructor
+      + refund(): void
+      + applyEffect(player: Player): void
+      + {static} getBonus(): int
+    }
 
-class BoxStation {
-  + BoxStation(str: String): constructor
-  + applyEffect(player: Player): void
+    class BoxStation {
+      + BoxStation(str: String): constructor
+      + applyEffect(player: Player): void
+    }
 }
 
 Box <|-- BoxProperty
@@ -131,7 +145,7 @@ Taxable <|.. BoxAssets
 Taxable <|.. BoxStation
 Taxable <|.. BoxProperty
 
-Refoundable <|.. BoxStart
+Refundable <|.. BoxStart
 
 abstract class ScannerUtilities {
   + {static} getInputString(scanner: Scanner, message: String): String

@@ -7,14 +7,20 @@ maven-build:
   image: maven:3.9.3-eclipse-temurin-17
   script:
     - mvn clean compile
+
 maven-test:
   stage: test
   image: maven:3.9.3-eclipse-temurin-17
   script:
-    - mvn test
+    # Esegue solo i test della classe PlayerTest per isolare i risultati,
+    # oppure rimuovi '-Dtest=PlayerTest' per eseguirli tutti.
+    - mvn test -Dtest=PlayerTest
   artifacts:
     when: always
     reports:
-      junit: target/surefire-reports/*.xml
+      junit:
+        - target/surefire-reports/TEST-com.monopoly.PlayerTest.xml
+        - target/surefire-reports/*.xml
     paths:
       - target/surefire-reports/
+    expire_in: 1 week
