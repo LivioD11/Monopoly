@@ -8,19 +8,32 @@ maven-build:
   script:
     - mvn clean compile
 
-maven-test:
+# Test specifici per la classe Player
+test-player:
   stage: test
   image: maven:3.9.3-eclipse-temurin-17
   script:
-    # Esegue solo i test della classe PlayerTest per isolare i risultati,
-    # oppure rimuovi '-Dtest=PlayerTest' per eseguirli tutti.
     - mvn test -Dtest=PlayerTest
   artifacts:
     when: always
     reports:
       junit:
         - target/surefire-reports/TEST-com.monopoly.PlayerTest.xml
-        - target/surefire-reports/*.xml
+    paths:
+      - target/surefire-reports/
+    expire_in: 1 week
+
+# Test specifici per la classe Bank
+test-bank:
+  stage: test
+  image: maven:3.9.3-eclipse-temurin-17
+  script:
+    - mvn test -Dtest=BankTest
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - target/surefire-reports/TEST-com.monopoly.BankTest.xml
     paths:
       - target/surefire-reports/
     expire_in: 1 week
