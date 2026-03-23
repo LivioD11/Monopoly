@@ -1,6 +1,7 @@
 package com.monopoly;
 
-import com.monopoly.TransactionType;
+import com.monopoly.cli.TransactionType;
+import com.monopoly.cli.Action;
 import com.monopoly.cli.Color;
 import com.monopoly.cli.TextColorizer;
 
@@ -13,7 +14,10 @@ public abstract class Bank {
     public static void payMoney(int amount){
         // Assicura che il saldo sia effettivamente ridotto.
         amount = Math.abs(amount);
-        verboseTransaction(amount, TransactionType.PAY);
+        balance -= amount;
+        if(amount <= 0)
+            reset();
+        Action.verboseTransaction("Bank",amount, TransactionType.PAY);
     }
 
     public static void receiveMoney(int amount){
@@ -21,27 +25,15 @@ public abstract class Bank {
         amount = Math.abs(amount);
         balance += amount;
 
-        verboseTransaction(amount, TransactionType.RECEIVE);
+        Action.verboseTransaction("Bank",amount, TransactionType.RECEIVE);
     }
 
     public static void reset(){
         balance = INITIAL_BALANCE;
     }
 
-    private static void verboseTransaction(int amount, TransactionType transactionType){
-        String transactionAction = "received";
-        Color color = Color.GREEN;
-
-        if(transactionType.equals(TransactionType.PAY)){
-            transactionAction = "paid";
-            color = Color.RED;
-        }
-
-        System.out.println(
-                String.format("Bank: %s %s",
-                        transactionAction,
-                        TextColorizer.color(amount + "$", color))
-        );
+    public static int getBalance(){
+        return balance;
     }
 
     // TODO

@@ -1,8 +1,9 @@
 package com.monopoly;
 
 
-import com.monopoly.TransactionType;
+import com.monopoly.cli.TransactionType;
 import com.monopoly.board.Board;
+import com.monopoly.cli.Action;
 import com.monopoly.cli.Color;
 import com.monopoly.cli.TextColorizer;
 
@@ -26,31 +27,13 @@ public class Player {
     public void payMoney(int amount){
         this.balance -= amount;
         Bank.receiveMoney(amount);
-        verboseTransaction(amount, TransactionType.PAY);
+        Action.verboseTransaction(String.format("Player %s (%s)",this.name,this.sign),amount, TransactionType.PAY);
     }
 
     public void receiveMoney(int amount){
         this.balance += amount;
         Bank.payMoney(amount);
-        verboseTransaction(amount, TransactionType.RECEIVE);
-    }
-
-    private void verboseTransaction(int amount, TransactionType transactionType){
-        String transactionAction = "received";
-        Color color = Color.GREEN;
-
-        if(transactionType.equals(TransactionType.PAY)){
-            transactionAction = "paid";
-            color = Color.RED;
-        }
-
-        System.out.println(
-                String.format("Player %s (%s): %s %s",
-                        this.name,
-                        this.sign,
-                        transactionAction,
-                        TextColorizer.color(Math.abs(amount) + "$", color))
-        );
+        Action.verboseTransaction(String.format("Player %s (%s)",this.name,this.sign),amount, TransactionType.RECEIVE);
     }
 
     public void advance(int steps) {

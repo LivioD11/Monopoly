@@ -9,51 +9,51 @@ class BankTest {
 
     @BeforeEach
     void setUp() {
-        // Reset dello stato statico della banca prima di ogni test
+        // Fondamentale: riporta la banca a 1.000.000 prima di ogni test [cite: 15]
         Bank.reset();
     }
 
     @Test
-    @DisplayName("Verifica saldo iniziale della banca")
+    @DisplayName("Il saldo iniziale deve essere esattamente 1.000.000 CHF")
     void testInitialBalance() {
-        // La banca deve partire con 1'000'000 CHF [cite: 14, 15]
-        // Nota: se non hai un getter per il balance, questo test
-        // serve a verificare la costante di contributo iniziale.
-        assertEquals(2000, Bank.CONTRIBUTION, "Il contributo iniziale deve essere 2000 CHF ");
+        assertEquals(1000000, Bank.getBalance(),
+                "ERRORE: La banca deve iniziare con 1.000.000 CHF come da regolamento [cite: 14]");
     }
 
     @Test
-    @DisplayName("La banca riceve denaro correttamente")
-    void testReceiveMoney() {
-        // Simuliamo un pagamento verso la banca (es. un pedaggio)
-        int amount = 500;
-        // Poiché il balance è privato e statico, verifichiamo che l'operazione
-        // non sollevi eccezioni e che la logica interna (se testabile tramite getter) funzioni.
-        assertDoesNotThrow(() -> Bank.receiveMoney(amount));
+    @DisplayName("Il saldo deve aumentare quando la banca riceve denaro")
+    void testReceiveMoneyIncrementsBalance() {
+        int initial = Bank.getBalance();
+        int deposit = 500;
+        Bank.receiveMoney(deposit);
+
+        assertEquals(initial + deposit, Bank.getBalance(),
+                "ERRORE: Il saldo della banca non è aumentato dopo la ricezione");
     }
 
     @Test
-    @DisplayName("La banca paga denaro correttamente")
-    void testPayMoney() {
-        // Simuliamo l'erogazione di fondi a un giocatore
-        int amount = 1000;
-        assertDoesNotThrow(() -> Bank.payMoney(amount));
+    @DisplayName("Il saldo deve diminuire quando la banca paga (e gestire negativi)")
+    void testPayMoneyDecrementsBalance() {
+        int initial = Bank.getBalance();
+        int payment = 2000;
+
+        // Testiamo anche che Math.abs funzioni: passando -2000 deve comunque detrarre 2000
+        Bank.payMoney(-payment);
+
+        // Se il tuo codice attuale NON sottrae 'amount' nel metodo payMoney,
+        // questo test FALLIRÀ, evidenziando il bug.
+        assertEquals(initial - payment, Bank.getBalance(),
+                "ERRORE: Il saldo non è diminuito correttamente o Math.abs non è stato applicato");
     }
 
     @Test
-    @DisplayName("Verifica gestione valori negativi nelle transazioni")
-    void testAbsoluteValueTransactions() {
-        // Il codice della banca usa Math.abs() per prevenire errori di segno
-        assertDoesNotThrow(() -> Bank.payMoney(-500), "Il metodo dovrebbe gestire valori negativi con Math.abs()");
-        assertDoesNotThrow(() -> Bank.receiveMoney(-1000), "Il metodo dovrebbe gestire valori negativi con Math.abs()");
-    }
+    @DisplayName("Verifica che il reset riporti il saldo al valore iniziale")
+    void testResetRestoresInitialFunds() {
+        Bank.payMoney(500000); // Svuota metà banca
+        assertNotEquals(1000000, Bank.getBalance());
 
-    @Test
-    @DisplayName("Verifica del reset del patrimonio")
-    void testReset() {
-        Bank.payMoney(500000); // Riduciamo il fondo
         Bank.reset();
-        // Dopo il reset, il patrimonio deve tornare a 1'000'000 CHF
-        // Se aggiungerai un getter getBalance(), potrai asserire il valore qui.
+        assertEquals(1000000, Bank.getBalance(),
+                "ERRORE: Il metodo reset non ha ripristinato il patrimonio a 1.000.000 [cite: 15]");
     }
 }

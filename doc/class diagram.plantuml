@@ -33,9 +33,12 @@ package cli {
 }
 
 abstract class Bank {
+  - INITIAL_BALANCE: int
+  - CONTRIBUTION: int
   - {static} balance: int
-  + {static} distribute(player: Player): void
-  + {static} debit(player: Player, box: Box): void
+  + {static} payMoney(amount: int): void
+  + {static} receiveMoney((amount: int): void
+  + {static} reset(): void
 }
 
 abstract class Dice {

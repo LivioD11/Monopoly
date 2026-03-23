@@ -1,4 +1,4 @@
-package com.monopoly;
+package com.monopoly.cli;
 
 public enum TransactionType {
     PAY,
