@@ -19,7 +19,7 @@ public class BoxProperty extends Box implements Taxable {
 
     @Override
     public String toString() {
-        return String.format("[ Cella proprietà: %s tassa di: %d CHF (%s)]",
-                name, value, description);
+        return String.format("[ Cella proprietà: %s | Tassa: %d CHF ]",
+                this.name, this.value);
     }
 }

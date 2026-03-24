@@ -15,6 +15,6 @@ public class BoxParking extends Box {
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("[ %s: Riposati un turno! ]", this.name);
     }
 }

@@ -22,7 +22,7 @@ public class BoxAssets extends Box implements Taxable {
 
     @Override
     public String toString() {
-        return String.format("[ Cella tassa patrimoniale: %s tassa di: %d CHF (%s)]",
-                name, value, description);
+        return String.format("[ Casella: %s | Effetto: %s ]",
+                this.name, this.description);
     }
 }

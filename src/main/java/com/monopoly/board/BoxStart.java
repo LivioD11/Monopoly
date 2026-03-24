@@ -22,4 +22,10 @@ public class BoxStart extends Box implements Refundable {
     public static int getBonus(){
         return BONUS;
     }
+
+    @Override
+    public String toString() {
+        return String.format("[ Cella %s | Rimborso: %d CHF ]",
+                this.name, this.value);
+    }
 }

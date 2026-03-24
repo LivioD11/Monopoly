@@ -20,6 +20,7 @@ public class BoxStation extends Box implements Taxable {
 
     @Override
     public String toString() {
-        return super.toString();
+        return String.format("[ Cella %s ]",
+                this.name);
     }
 }

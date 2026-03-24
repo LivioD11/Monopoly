@@ -49,6 +49,54 @@ public class Board {
 
     }
 
+
+
+    public void draw() {
+        final String emptySpace = " ".repeat(24);
+
+        for (int row = 0; row < ROWS; row++) {
+            // Determiniamo i limiti di disegno per questa riga di caselle
+            int startIndex = (row == 0 || row == ROWS - 1) ? 0 : 1;
+            int endIndex = (row == ROWS - 2) ? Box.TOTAL_BOX_HEIGHT - 1 : Box.TOTAL_BOX_HEIGHT;
+
+            // Ciclo sulle singole linee di testo che compongono una casella
+            for (int actualHeight = startIndex; actualHeight < endIndex; actualHeight++) {
+
+                for (int col = 0; col < COLUMNS; col++) {
+
+                    if (isBorder(row, col)) {
+                        int idCell = getBoxIndex(row, col);
+                        // Recuperiamo i segni dei giocatori (se presenti)
+                        char[] players = game.getSignsAtIndex(idCell);
+
+                        // Inversione del controllo: passiamo l'altezza e i player,
+                        // la Box sa cosa disegnare.
+                        System.out.print(this.boxes[idCell].draw(actualHeight, players));
+                    } else {
+                        // Siamo all'interno del tabellone
+                        System.out.print(emptySpace);
+                    }
+                }
+                System.out.println(); // Fine della linea di testo
+            }
+        }
+    }
+
+    /**
+     * Metodo di supporto per rendere il codice più leggibile
+     */
+    private boolean isBorder(int row, int col) {
+        return row == 0 || row == ROWS - 1 || col == 0 || col == COLUMNS - 1;
+    }
+
+    /**
+     * Restituisce una stringa formattata contenente i simboli dei giocatori
+     * presenti su una determinata casella.
+     */
+
+
+    // Getters
+
     private int getBoxIndex(int row, int col) {
 
         // riga superiore
@@ -65,63 +113,6 @@ public class Board {
 
         // colonna sinistra
         return (COLUMNS - 1) * 2 + (ROWS - 1) + (ROWS - 1 - row);
-    }
-
-    // TODO (pulire il codice).
-    public void draw() {
-        String emptySpace = " ".repeat(24);
-
-        // Gestisce le righe di caselle.
-        for(int row=0; row < ROWS; row++){
-            int boxHeight = 7;
-            int startIndex = 1;
-
-            // Alla prima e ultima riga disegna anche il bordo superiore.
-            if(row==0 || row == ROWS-1)
-                startIndex = 0;
-
-            // Alla penultima riga non disegna il bordo inferiore.
-            if(row==ROWS-2)
-                boxHeight = 6;
-
-            // Gestisce le componenti di una riga di caselle.
-            for (int actualHeight = startIndex; actualHeight < boxHeight; actualHeight++) {
-
-                // Gestisce il componente di una singola casella.
-                for (int column = 0; column < COLUMNS; column++) {
-
-                    // Controlla che la casella sia al bordo.
-                    int id_cell = getBoxIndex(row, column);
-
-                    if (row == 0 || row == ROWS - 1 || column == 0 || column == COLUMNS - 1) {
-
-                        // TODO: fix
-                        if(actualHeight == 5){
-                            char[] signs = game.getSignsAtIndex(id_cell);
-
-                            if(signs.length > 0){
-                                String s = "";
-                                for(char c : signs){
-                                    s += c + " ";
-                                }
-
-                                System.out.print(String.format("|%-22s|", s));
-                            } else {
-                                System.out.print(this.boxes[id_cell].draw(actualHeight));
-                            }
-
-                        } else {
-                            System.out.print(this.boxes[id_cell].draw(actualHeight));
-                        }
-
-                    } else {
-                        System.out.print(emptySpace);
-                    }
-
-                }
-                System.out.println();
-            }
-        }
     }
 
     public Box getBox(int value) {
