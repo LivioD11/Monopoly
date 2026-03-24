@@ -52,15 +52,15 @@ class PlayerTest {
     void testAdvance() {
         // Supponendo che Board.BOX_NUMBER sia 16 (per un 5x5) o 32 (per un 9x9)
         int steps = 5;
-        int initialPos = player.getCoordinate();
-        player.advance(steps);
+        int initialPos = player.getPosition();
+        player.move(steps);
 
         // Verifica movimento semplice
-        assertEquals(initialPos + steps, player.getCoordinate());
+        assertEquals(initialPos + steps, player.getPosition());
 
         // Verifica superamento del via (giro completo)
-        player.advance(100); // Valore arbitrario alto per forzare il modulo
-        assertTrue(player.getCoordinate() < 32, "La coordinata deve restare entro i limiti del tabellone");
+        player.move(100); // Valore arbitrario alto per forzare il modulo
+        assertTrue(player.getPosition() < 32, "La coordinata deve restare entro i limiti del tabellone");
     }
 
     @Test

@@ -1,145 +1,92 @@
 package com.monopoly;
 
 import com.monopoly.board.Board;
+import com.monopoly.board.Box;
 import com.monopoly.board.BoxStart;
+import com.monopoly.Dice;
+import com.monopoly.cli.TextFormatter;
 import com.monopoly.utilities.ScannerUtilities;
-
 import java.util.Scanner;
 
 public class Game {
-    private boolean isPlaying;
-    private Board board;
-    private Player[] players;
-
+    private final Board board;
+    private final Player[] players;
     private static final int PLAYERS_NUMBER = 4;
 
-    public Game(Scanner scanner){
-        this.isPlaying = false;
+    public Game(Scanner scanner) {
         this.board = new Board(this);
-        this.players = new Player[PLAYERS_NUMBER];
-        this.start(scanner); // inizio
+        PlayerFactory setupManager = new PlayerFactory(scanner, PLAYERS_NUMBER);
+        this.players = setupManager.setup();
+        play(scanner);
     }
 
-    public void start(Scanner scanner) {
-        for (int i = 0; i < PLAYERS_NUMBER; i++) {
-            boolean valid;
-            String name;
-            do {
-                valid = true;
-                String message = "Inserisci il nome del giocatore (" + (i + 1) + "): ";
-                name = ScannerUtilities.getInputString(scanner, message);
-                for (int j = 0; j < i; j++) {
-                    if (name.equals(players[j].getName())) {
-                        valid = false;
-                        break;
-                    }
-                }
-                if (!valid) {
-                    System.out.println("Nome già utilizzato, metti nuovo !");
-                }
-            } while (!valid);
+    private void play(Scanner scanner) {
+        int turnIndex = 0;
+        boolean isGameOver = false;
 
-            char sign;
-            do {
-                valid = true;
-                String message = "Inserisci il simbolo: ";
-                sign = ScannerUtilities.getInputChar(scanner, message);
-                for (int j = 0; j < i; j++) {
-                    if (sign == players[j].getSign()) {
-                        valid = false;
-                        break;
-                    }
-                }
-                if (!valid) {
-                    System.out.println("segno già utilizzato, metti nuovo !");
-                }
-            } while (!valid);
-            players[i] = new Player(name, sign);
-        }
         board.draw();
-        gameItself(scanner);
-    }
 
-    private void gameItself(Scanner scanner){
-        boolean isPlaying = true;
-        int indexCurrPlayer = 0;
+        while (!isGameOver) {
+            Player currentPlayer = players[turnIndex % PLAYERS_NUMBER];
+            showMenu(currentPlayer);
 
-        do {
-            menu();
-            Player player = players[indexCurrPlayer];
-            String question = "Cosa scegli? ";
-            int choice = ScannerUtilities.getInputInt(scanner, question);
-            if (choice == 1) {
-                System.out.println("Il saldo di " + player.getName() + " è " + player.getBalance());
-            } else if (choice == 2) {
-                int value = rollDice() + rollDice();
-                System.out.println("E' uscito il numero " + value);
+            int choice = ScannerUtilities.getInputInt(scanner, "Scegli un'opzione: ");
+            MenuOption option = MenuOption.fromInt(choice);
 
-                if (player.getCoordinate() + value >= Board.INDEX_START) {
-                    player.receiveMoney(BoxStart.getBonus()); //passo dal via
-                    System.out.println(player.getName() + " è " +
-                            "passato dal via! Riceve 100.");
+            switch (option) {
+                case VIEW_BALANCE ->
+                        System.out.println("💰 Saldo di " + currentPlayer.getName() + ": " + TextFormatter.formatCurrency(currentPlayer.getBalance()));
+
+                case ROLL_DICE -> {
+                    executeTurn(currentPlayer);
+                    if (currentPlayer.isBroke()) {
+                        System.out.println("🚫 " + currentPlayer.getName() + " è andato in bancarotta!");
+                        isGameOver = true;
+                    } else {
+                        board.draw();
+                        turnIndex++; // Prossimo turno solo se il giocatore ha mosso
+                    }
                 }
 
-                player.advance(value); //faccio avanzare il player
-
-                board.getBox(player.getCoordinate()).applyEffect(player);
-                //in base alla casella dov'è, farà la cosa
-
-                System.out.println("Il giocatore è sulla box " + player.getCoordinate());
-
-                if (player.isBroke()) {
-                    isPlaying = false;
-                }
-
-                indexCurrPlayer = (indexCurrPlayer + 1) % PLAYERS_NUMBER;
-
-                board.draw();
-            } else {
-                System.out.println("Numero non valido! O 1 o 2.");
-            }
-
-        } while (isPlaying);
-
-        System.out.println("Gioco finito!");
-    }
-
-    public char[] getSignsAtIndex(int index) {  // disegnerò o no il segno/i
-        int size = 0;
-        int i = 0;
-        for (Player player : players) {
-            if(player.getCoordinate() == index) {
-                size++;
+                default -> System.out.println("❌ Opzione non valida! Riprova.");
             }
         }
-        char[] signs = new char[size];
+        System.out.println("\n--- GARA CONCLUSA ---");
+    }
 
-        for (Player player : players) {
-            if(player.getCoordinate() == index) {
-                signs[i++] = player.getSign();
-            }
+    private void executeTurn(Player player) {
+        int roll = Dice.roll() + Dice.roll();
+        System.out.println("\n🎲 " + player.getName() + " ha lanciato i dadi: " + roll);
+
+        int oldPos = player.getPosition();
+        player.move(roll);
+        int newPos = player.getPosition();
+
+        // Logica Passaggio dal Via (Se la nuova pos è "tornata indietro" matematicamente)
+        if (newPos < oldPos) {
+            player.receiveMoney(BoxStart.getBonus());
+            System.out.println("✨ Sei passato dal VIA! + " + TextFormatter.formatCurrency(BoxStart.getBonus()));
         }
 
-        return signs;
+        Box currentBox = board.getBox(newPos);
+        System.out.println("📍 Atterrato su: " + currentBox.getName());
+        currentBox.applyEffect(player);
     }
 
-    public void menu() {
-        System.out.println("\n" + "Cosa vuoi fare?\n" + "1. Visualizza saldo " +
-                "del " +
-                "giocatore corrente\n" +
-                "2. Lancia il dado e muovi giocatore corrente");
+    public char[] getSignsAtIndex(int index) {
+        StringBuilder sb = new StringBuilder();
+        for (Player p : players) {
+            if (p != null && p.getPosition() == index) {
+                sb.append(p.getSign());
+            }
+        }
+        return sb.toString().toCharArray();
     }
 
-    public int rollDice() {
-        int MIN = 1;
-        int MAX = 6;
-        int randomNumber = (int) (Math.random() * MAX) + MIN;
-        return randomNumber;
+    private void showMenu(Player p) {
+        System.out.println("\n=== TURNO DI: " + p.getName().toUpperCase() + " ===");
+        for (MenuOption option : MenuOption.values()) {
+            if (option != MenuOption.UNKNOWN) System.out.println(option);
+        }
     }
-
-    public boolean getIsPlaying(){
-        return this.isPlaying;
-    }
-
-
 }

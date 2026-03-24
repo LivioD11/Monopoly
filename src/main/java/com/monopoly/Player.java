@@ -11,14 +11,14 @@ public class Player {
     private final String name;
     private final char sign;
     private int balance;
-    private int coordinate;
+    private int position;
     private static final int START_POSITION = Board.INDEX_START;
 
     public Player(String name, char sign) {
         this.name = name;
         this.sign = sign;
         this.balance = 0;
-        this.coordinate = START_POSITION;
+        this.position = START_POSITION;
 
         // Ricevere i fondi iniziali dalla Banca
         this.receiveMoney(Bank.CONTRIBUTION);
@@ -36,8 +36,8 @@ public class Player {
         Action.verboseTransaction(String.format("Giocatore %s (%s)",this.name,this.sign),amount, TransactionType.RECEIVE);
     }
 
-    public void advance(int steps) {
-        this.coordinate = (this.coordinate + steps) % Board.BOX_NUMBER;
+    public void move(int steps) {
+        this.position = (this.position + steps) % Board.BOX_NUMBER;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Player {
         return this.balance;
     }
 
-    public int getCoordinate() { return coordinate; }
+    public int getPosition() { return position; }
 
     public boolean isBroke(){
         return this.balance <= 0;

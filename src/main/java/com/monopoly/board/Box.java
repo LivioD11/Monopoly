@@ -69,8 +69,8 @@ public abstract class Box {
         // Se siamo alla riga 5 e ci sono giocatori
         if (index == 5 && players != null && players.length > 0) {
             StringBuilder sb = new StringBuilder();
-            for (char c : players) {
-                sb.append(c).append(" ");
+            for (char player : players) {
+                sb.append("[").append(player).append("] ");
             }
             // Restituisce la riga formattata con i giocatori
             return String.format("|%-22s|", sb.toString().trim());
