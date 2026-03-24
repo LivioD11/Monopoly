@@ -1,7 +1,7 @@
 package com.monopoly.board;
 
 import com.monopoly.Player;
-import com.monopoly.cli.TextColorizer;
+import com.monopoly.cli.TextFormatter;
 
 public abstract class Box {
     protected static final int TOLL_MIN = 50;
@@ -42,7 +42,7 @@ public abstract class Box {
     private void updateRepresentation(){
         this.representation  = new String[]{
                 "-".repeat(24),
-                "|"+TextColorizer.padAnsi(this.name,22)+"|",
+                "|"+ TextFormatter.padAnsi(this.name,22)+"|",
                 this.value > 0 ? String.format("|%-22s|", this.description) :
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),

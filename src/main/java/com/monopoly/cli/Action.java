@@ -3,19 +3,21 @@ package com.monopoly.cli;
 public abstract class Action {
 
     public static void verboseTransaction(String name, int amount, TransactionType transactionType){
-        String transactionAction = "received";
+        String transactionAction = "ha ricevuto";
         Color color = Color.GREEN;
 
         if(transactionType.equals(TransactionType.PAY)){
-            transactionAction = "paid";
+            transactionAction = "ha pagato";
             color = Color.RED;
         }
+
+        amount = Math.abs(amount);
 
         System.out.println(
                 String.format("%s: %s %s",
                         name,
                         transactionAction,
-                        TextColorizer.color(Math.abs(amount) + "$", color))
+                        TextFormatter.color(TextFormatter.formatCurrency(amount), color))
         );
     }
 }

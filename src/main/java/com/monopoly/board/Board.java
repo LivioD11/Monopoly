@@ -2,7 +2,7 @@ package com.monopoly.board;
 
 import com.monopoly.Game;
 import com.monopoly.cli.Color;
-import com.monopoly.cli.TextColorizer;
+import com.monopoly.cli.TextFormatter;
 import com.monopoly.utilities.FileUtilities;
 
 public class Board {
@@ -41,7 +41,7 @@ public class Board {
                     String name = (nomeIndex < STREET_NAME.length) ?
                             STREET_NAME[nomeIndex] : "Via Generica";
                     nomeIndex++;
-                    String colorfulName = TextColorizer.color(name, Color.random());
+                    String colorfulName = TextFormatter.color(name, Color.random());
                     yield new BoxProperty(colorfulName);
                 }
             };

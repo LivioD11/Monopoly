@@ -3,7 +3,7 @@ package com.monopoly;
 import com.monopoly.cli.TransactionType;
 import com.monopoly.cli.Action;
 import com.monopoly.cli.Color;
-import com.monopoly.cli.TextColorizer;
+import com.monopoly.cli.TextFormatter;
 
 
 public abstract class Bank {
@@ -17,7 +17,7 @@ public abstract class Bank {
         balance -= amount;
         if(amount <= 0)
             reset();
-        Action.verboseTransaction("Bank",amount, TransactionType.PAY);
+        Action.verboseTransaction("Banca",amount, TransactionType.PAY);
     }
 
     public static void receiveMoney(int amount){
@@ -39,8 +39,8 @@ public abstract class Bank {
     // TODO
     public static void print(){
         System.out.println(
-                String.format("Bank: balance is %s",
-                        TextColorizer.color(balance + "$", Color.YELLOW))
+                String.format("Banca: il saldo è %s",
+                        TextFormatter.color(TextFormatter.formatCurrency(balance), Color.YELLOW))
         );
     }
 }
