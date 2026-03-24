@@ -4,6 +4,7 @@ import com.monopoly.board.Board;
 import com.monopoly.board.Box;
 import com.monopoly.board.BoxStart;
 import com.monopoly.Dice;
+import com.monopoly.cli.Color;
 import com.monopoly.cli.TextFormatter;
 import com.monopoly.utilities.ScannerUtilities;
 import java.util.Scanner;
@@ -35,12 +36,12 @@ public class Game {
 
             switch (option) {
                 case VIEW_BALANCE ->
-                        System.out.println("💰 Saldo di " + currentPlayer.getName() + ": " + TextFormatter.formatCurrency(currentPlayer.getBalance()));
+                        System.out.println("Saldo di " + currentPlayer.getName() + ": " + TextFormatter.formatCurrency(currentPlayer.getBalance()));
 
                 case ROLL_DICE -> {
                     executeTurn(currentPlayer);
                     if (currentPlayer.isBroke()) {
-                        System.out.println("🚫 " + currentPlayer.getName() + " è andato in bancarotta!");
+                        System.out.println(currentPlayer.getName() + " è andato in bancarotta!");
                         isGameOver = true;
                     } else {
                         board.draw();
@@ -48,7 +49,7 @@ public class Game {
                     }
                 }
 
-                default -> System.out.println("❌ Opzione non valida! Riprova.");
+                default -> System.out.println(TextFormatter.color("Opzione non valida! Riprova.", Color.YELLOW));
             }
         }
         System.out.println("\n--- GARA CONCLUSA ---");
@@ -56,7 +57,7 @@ public class Game {
 
     private void executeTurn(Player player) {
         int roll = Dice.roll() + Dice.roll();
-        System.out.println("\n🎲 " + player.getName() + " ha lanciato i dadi: " + roll);
+        System.out.println("\n " + player.getName() + " ha lanciato i dadi: " + roll);
 
         int oldPos = player.getPosition();
         player.move(roll);
@@ -69,22 +70,22 @@ public class Game {
         }
 
         Box currentBox = board.getBox(newPos);
-        System.out.println("📍 Atterrato su: " + currentBox.getName());
+        System.out.println(" Atterrato su: " + currentBox.getName());
         currentBox.applyEffect(player);
     }
 
     public char[] getSignsAtIndex(int index) {
         StringBuilder sb = new StringBuilder();
-        for (Player p : players) {
-            if (p != null && p.getPosition() == index) {
-                sb.append(p.getSign());
+        for (Player player : players) {
+            if (player != null && player.getPosition() == index) {
+                sb.append(player.getSign());
             }
         }
         return sb.toString().toCharArray();
     }
 
-    private void showMenu(Player p) {
-        System.out.println("\n=== TURNO DI: " + p.getName().toUpperCase() + " ===");
+    private void showMenu(Player player) {
+        System.out.println(TextFormatter.color("\n=== TURNO DI: " + player.getName().toUpperCase() + " ===",Color.CYAN));
         for (MenuOption option : MenuOption.values()) {
             if (option != MenuOption.UNKNOWN) System.out.println(option);
         }

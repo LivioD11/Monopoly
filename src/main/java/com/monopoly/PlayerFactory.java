@@ -39,15 +39,15 @@ public class PlayerFactory {
     }
 
     private boolean isNameAvailable(String name) {
-        for (Player p : players) {
-            if (p != null && p.getName().equalsIgnoreCase(name)) return false;
+        for (Player player : players) {
+            if (player != null && player.getName().equalsIgnoreCase(name)) return false;
         }
         return true;
     }
 
     private boolean isSignAvailable(char sign) {
-        for (Player p : players) {
-            if (p != null && p.getSign() == sign) return false;
+        for (Player player : players) {
+            if (player != null && player.getSign() == sign) return false;
         }
         return true;
     }
