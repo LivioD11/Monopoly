@@ -10,7 +10,7 @@ public class BoxStation extends Box implements Taxable {
     }
 
     public void tax(Player player) {
-        player.payMoney(this.getValue());
+        player.payMoney(this.value);
     }
 
     @Override

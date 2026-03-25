@@ -47,6 +47,11 @@ class Game {
 }
 
 package cli {
+    enum TransactionType{
+        PAY
+        RECEIVE
+    }
+
     enum Color {
         RESET
         BLACK
@@ -57,10 +62,15 @@ package cli {
         PURPLE
         CYAN
         WHITE
+        + Color(code: String): constructor
+        + getCode(): String
+        + {static} random(): Color
     }
 
     abstract class TextColorizer {
-        + color(text: String, color: Color): String
+        + {static} color(text: String, color: Color): String
+        + {static} formatCurrency(amount: int): String
+        + {static} padAnsi(text: String, width: int): String
     }
 }
 
@@ -142,18 +152,20 @@ package board{
     class BoxParking {
       + BoxParking(name: String): constructor
       + applyEffect(player: Player): void
+      + toString(): String
     }
 
     class BoxStart {
       + BoxStart(name: String): constructor
-      + refund(): void
       + applyEffect(player: Player): void
       + {static} getBonus(): int
     }
 
     class BoxStation {
       + BoxStation(str: String): constructor
+      + tax(player: Player): void
       + applyEffect(player: Player): void
+      + toString(): String
     }
 }
 
@@ -171,8 +183,35 @@ Taxable <|.. BoxProperty
 
 Refundable <|.. BoxStart
 
-abstract class ScannerUtilities {
-  + {static} getInputString(scanner: Scanner, message: String): String
+package utilities {
+    abstract class ScannerUtilities {
+      + {static} getInputString(scanner: Scanner, message: String): String
+    }
+
+    class FileUtilities {
+       + leggiLineeFile(percorsoFile: String): String[]
+    }
+
+    class PlayerFactory {
+       - players: Player[]
+       - scanner: Scanner
+       + PlayerFactory(scanner: Scanner, playersNumber: int): constructor
+       + setup(): Player[]
+       - getUniqueName(): String
+       - getUniqueSign(): char
+       - isNameAvailable(name: String): boolean
+       - isSignAvailable(sign: char): boolean
+    }
+
+    enum MenuOption {
+        VIEW_BALANCE
+        ROLL_DICE
+        UNKNOWN
+        - ID: int
+        - DESCRIPTION: String
+        + MenuOption(id: int, description: String): constructor
+        + toString(): String
+    }
 }
 
 @enduml

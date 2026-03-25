@@ -5,23 +5,23 @@ public enum MenuOption {
     ROLL_DICE(2, "Lancia i dadi e muovi"),
     UNKNOWN(0, "Opzione non valida");
 
-    private final int id;
-    private final String description;
+    private final int ID;
+    private final String DESCRIPTION;
 
     MenuOption(int id, String description) {
-        this.id = id;
-        this.description = description;
+        this.ID = id;
+        this.DESCRIPTION = description;
     }
 
     public static MenuOption fromInt(int value) {
         for (MenuOption option : values()) {
-            if (option.id == value) return option;
+            if (option.ID == value) return option;
         }
         return UNKNOWN;
     }
 
     @Override
     public String toString() {
-        return id + ". " + description;
+        return ID + ". " + DESCRIPTION;
     }
 }

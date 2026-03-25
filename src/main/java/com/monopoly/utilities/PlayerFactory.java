@@ -5,8 +5,8 @@ import com.monopoly.Player;
 import java.util.Scanner;
 
 public class PlayerFactory {
-    private final Player[] players;
-    private final Scanner scanner;
+    private Player[] players;
+    private Scanner scanner;
 
     public PlayerFactory(Scanner scanner, int playersNumber) {
         this.scanner = scanner;
