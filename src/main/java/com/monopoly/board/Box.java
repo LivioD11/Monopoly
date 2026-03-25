@@ -36,8 +36,6 @@ public abstract class Box {
         this(generateRandomNum(),name);
     }
 
-    //
-
     private static int generateRandomNum() {
         return (int) (Math.random() * (TOLL_MAX - TOLL_MIN + 1)) + TOLL_MIN;
     }
@@ -80,11 +78,6 @@ public abstract class Box {
         return representation[index];
     }
 
-    /**
-     * Metodo per interagire con le classi figlie
-     * in modo generico.
-     * @param player
-     */
     public abstract void applyEffect(Player player);
 
     // SETTERS

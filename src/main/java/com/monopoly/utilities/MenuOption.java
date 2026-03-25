@@ -1,4 +1,4 @@
-package com.monopoly;
+package com.monopoly.utilities;
 
 public enum MenuOption {
     VIEW_BALANCE(1, "Visualizza saldo"),

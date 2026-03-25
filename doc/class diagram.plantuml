@@ -4,14 +4,46 @@ class Player {
   - name: String
   - sign: char
   - balance: int
-  - coordinate: int
+  - position: int
+  - START_POSITION: int
   + Player(name: String, sign: char): constructor
-  + move(): void
+  + payMoney(amount: int): void
+  + receiveMoney(amount: int): void
+  + move(steps: int): void
   + toString(): String
   + getName(): String
   + getSymbol(): char
   + getBalance(): int
+  + getPosition(): int
   + isBroke(): boolean
+}
+
+abstract class Dice {
+  - MIN: int
+  - MAX: int
+  + {static} roll(): int
+  + getFacesIcon(): int
+}
+
+abstract class Bank {
+  - INITIAL_BALANCE: int
+  - CONTRIBUTION: int
+  - {static} balance: int
+  + {static} payMoney(amount: int): void
+  + {static} receiveMoney(amount: int): void
+  + {static} reset(): void
+  + {static} getBalance(): int
+  + print(): void
+}
+
+class Game {
+  - board: Board
+  - players: Player[]
+  - PLAYERS_NUMBER: int
+  + Game(scanner: Scanner): constructor
+  - play(scanner: Scanner): void
+  - executeTurn(player: Player): void
+  - showMenu(player: Player): void
 }
 
 package cli {
@@ -32,35 +64,6 @@ package cli {
     }
 }
 
-abstract class Bank {
-  - INITIAL_BALANCE: int
-  - CONTRIBUTION: int
-  - {static} balance: int
-  + {static} payMoney(amount: int): void
-  + {static} receiveMoney((amount: int): void
-  + {static} reset(): void
-}
-
-abstract class Dice {
-  - {static} faces: int[]
-  + {static} launch(): int
-}
-
-class Game {
-  - isPlaying: boolean
-  - PLAYERS_NUMBER: int
-  - players: Player[]
-  - board: Board
-  - gameLoop(): void
-  + Game(scanner: Scanner): constructor
-  + start(scanner: Scanner): void
-  + gameItself(scanner: Scanner): void
-  + getSignsAtIndex(index: int): char[]
-  + menu(): void
-  + rollDice(): int
-  + getIsPlaying(): boolean
-}
-
 package board{
     package interfaces {
         interface Taxable {
@@ -74,7 +77,24 @@ package board{
 
     class Board {
       - boxes: Box[]
-      + Board(): constructor
+      - {static} STREET_NAME: String[]
+      - {static} COLUMNS: int
+      - {static} ROWS: int
+      - {static} BOX_NUMBER: int
+      - {static} INDEX_START: int
+      - {static} INDEX_STATION_SUD: int
+      - {static} INDEX_STATION_OVEST: int
+      - {static} INDEX_STATION_NORD: int
+      - {static} INDEX_STATION_EST: int
+      - {static} INDEX_LUXURY: int
+      - {static} INDEX_ASSETS:
+      - players: Player[]
+      + Board(players: Player[]): constructor
+      + draw(): void
+      - isBorder(row: int, col: int): boolean
+      - getSignsAtIndex(index: int): char[]
+      - getBoxIndex(row: int, col:int): int
+      + getBox(value: int): Box
     }
 
     class Box {
@@ -88,7 +108,8 @@ package board{
       + Box(name: String): constructor
       - {static} generateRandomNum(): int
       - updateRepresentation(): void
-      + draw(index: int): String
+      + draw(index: int, players: char[]): String
+      + {abstract} applyEffect(player: Player): void
       + toString(): String
       + setDescription(): void
       + getValue(): int

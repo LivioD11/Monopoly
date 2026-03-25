@@ -3,9 +3,10 @@ package com.monopoly;
 import com.monopoly.board.Board;
 import com.monopoly.board.Box;
 import com.monopoly.board.BoxStart;
-import com.monopoly.Dice;
 import com.monopoly.cli.Color;
 import com.monopoly.cli.TextFormatter;
+import com.monopoly.utilities.MenuOption;
+import com.monopoly.utilities.PlayerFactory;
 import com.monopoly.utilities.ScannerUtilities;
 import java.util.Scanner;
 
@@ -15,9 +16,9 @@ public class Game {
     private static final int PLAYERS_NUMBER = 4;
 
     public Game(Scanner scanner) {
-        this.board = new Board(this);
         PlayerFactory setupManager = new PlayerFactory(scanner, PLAYERS_NUMBER);
         this.players = setupManager.setup();
+        this.board = new Board(players);
         play(scanner);
     }
 
@@ -41,7 +42,7 @@ public class Game {
                 case ROLL_DICE -> {
                     executeTurn(currentPlayer);
                     if (currentPlayer.isBroke()) {
-                        System.out.println(currentPlayer.getName() + " è andato in bancarotta!");
+                        System.out.println(currentPlayer.getName() + "è andato in bancarotta!");
                         isGameOver = true;
                     } else {
                         board.draw();
@@ -72,16 +73,6 @@ public class Game {
         Box currentBox = board.getBox(newPos);
         System.out.println(" Atterrato su: " + currentBox.getName());
         currentBox.applyEffect(player);
-    }
-
-    public char[] getSignsAtIndex(int index) {
-        StringBuilder sb = new StringBuilder();
-        for (Player player : players) {
-            if (player != null && player.getPosition() == index) {
-                sb.append(player.getSign());
-            }
-        }
-        return sb.toString().toCharArray();
     }
 
     private void showMenu(Player player) {

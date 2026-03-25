@@ -1,6 +1,7 @@
-package com.monopoly;
+package com.monopoly.utilities;
 
-import com.monopoly.utilities.ScannerUtilities;
+import com.monopoly.Player;
+
 import java.util.Scanner;
 
 public class PlayerFactory {
