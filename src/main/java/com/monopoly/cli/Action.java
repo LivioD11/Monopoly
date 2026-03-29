@@ -2,6 +2,12 @@ package com.monopoly.cli;
 
 public abstract class Action {
 
+    /**
+     * Stampa a schermo le informazioni in merito alla transazione compiuta.
+     * @param name
+     * @param amount
+     * @param transactionType
+     */
     public static void verboseTransaction(String name, int amount, TransactionType transactionType){
         String transactionAction = "ha ricevuto";
         Color color = Color.GREEN;

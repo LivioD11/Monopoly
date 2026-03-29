@@ -36,7 +36,7 @@ public abstract class Bank {
         return balance;
     }
 
-    // TODO
+    // Metodo per visualizzare le informazioni sulla banca
     public static void print(){
         System.out.println(
                 String.format("Banca: il saldo è %s",

@@ -2,6 +2,12 @@ package com.monopoly.cli;
 
 public abstract class TextFormatter {
 
+    /**
+     * Ritorna la cifra sotto forma di stringa formattata.
+     * Esempio: 1000 --> "1'000 CHF"
+     * @param amount
+     * @return
+     */
     public static String formatCurrency(int amount) {
         String s = Integer.toString(Math.abs(amount));
         StringBuilder sb = new StringBuilder();
@@ -19,10 +25,24 @@ public abstract class TextFormatter {
         return formattedNumber + " CHF";
     }
 
+    /**
+     * Ritorna una Stringa del colore scelto. Se si stampa una seconda stringa
+     *  in sucessione avrà il colore di default.
+     * @param text
+     * @param color
+     * @return
+     */
     public static String color(String text, Color color) {
         return color.getCode() + text + Color.RESET.getCode();
     }
 
+    /**
+     * Permette di applicare il padding corretto anche se la stringa è colorata.
+     * Viene ritornata una string con il padding corretto.
+     * @param text
+     * @param width
+     * @return
+     */
     public static String padAnsi(String text, int width) {
         String clean = text.replaceAll("\u001B\\[[;\\d]*m", "");
         int padding = width - clean.length();
