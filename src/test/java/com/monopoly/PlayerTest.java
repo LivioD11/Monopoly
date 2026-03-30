@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
+    private Bank bank;
     private Player player;
     private final String TEST_NAME = "TestPlayer";
     private final char TEST_SIGN = 'T';
@@ -15,7 +16,8 @@ class PlayerTest {
     void setUp() {
         // Ripristiniamo lo stato della banca se necessario prima di ogni test
         // per evitare interferenze tra i test dovute ai metodi statici di Bank.
-        player = new Player(TEST_NAME, TEST_SIGN);
+        bank = new Bank();
+        player = new Player(TEST_NAME, TEST_SIGN, bank);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.monopoly.utilities;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 
 import java.util.Scanner;
@@ -13,12 +14,12 @@ public class PlayerFactory {
         this.players = new Player[playersNumber];
     }
 
-    public Player[] setup() {
+    public Player[] setup(Bank bank) {
         for (int i = 0; i < players.length; i++) {
             System.out.println("\n--- Configurazione Giocatore " + (i + 1) + " ---");
             String name = getUniqueName();
             char sign = getUniqueSign();
-            players[i] = new Player(name, sign);
+            players[i] = new Player(name, sign, bank);
         }
         return players;
     }

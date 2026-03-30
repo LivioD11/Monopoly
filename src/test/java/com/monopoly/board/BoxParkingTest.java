@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,12 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoxParkingTest {
 
     private BoxParking boxParking;
+    private Bank bank;
     private Player player;
 
     @BeforeEach
     void setUp() {
+        bank = new Bank();
         boxParking = new BoxParking();
-        player = new Player("TestPlayer", 'P');
+        player = new Player("TestPlayer", 'P',bank);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,14 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoxStationTest {
 
+    private Bank bank;
     private BoxStation boxStation;
     private Player player;
 
     @BeforeEach
     void setUp() {
         // Creiamo una stazione (il valore sarà random tra 50 e 150)
+        bank = new Bank();
         boxStation = new BoxStation("Stazione Termini");
-        player = new Player("Viaggiatore", 'S');
+        player = new Player("Viaggiatore", 'S',bank);
     }
 
     @Test

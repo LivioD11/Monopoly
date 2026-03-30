@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,14 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoxPropertyTest {
 
+    private Bank bank;
     private BoxProperty boxProperty;
     private Player player;
 
     @BeforeEach
     void setUp() {
         // Creiamo una proprietà (il valore verrà generato randomicamente tra 50 e 150)
+        bank = new Bank();
         boxProperty = new BoxProperty("Viale Giardini");
-        player = new Player("TestPlayer", 'G');
+        player = new Player("TestPlayer", 'G', bank);
     }
 
     @Test

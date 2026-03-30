@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,11 @@ class BoxLuxuryTest {
 
     @BeforeEach
     void setUp() {
+        Bank bank = new Bank();
         // Creiamo la casella "Tassa di Lusso"
         boxLuxury = new BoxLuxury("Tassa di Lusso");
         // Creiamo un giocatore (assumendo saldo iniziale standard, es. 1500 CHF)
-        player = new Player("TestPlayer", 'L');
+        player = new Player("TestPlayer", 'L',bank);
     }
 
     @Test

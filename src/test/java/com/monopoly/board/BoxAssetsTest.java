@@ -1,5 +1,6 @@
 package com.monopoly.board;
 
+import com.monopoly.Bank;
 import com.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,15 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoxAssetsTest {
 
+    private Bank bank;
     private BoxAssets boxAssets;
     private Player player;
 
     @BeforeEach
     void setUp() {
+        bank = new Bank();
         boxAssets = new BoxAssets("Tassa Patrimoniale");
         // Assumo che il costruttore di Player accetti (nome, simbolo)
         // e imposti un saldo iniziale (es. 1500)
-        player = new Player("TestPlayer", 'T');
+        player = new Player("TestPlayer", 'T',bank);
     }
 
     @Test
@@ -35,7 +38,7 @@ class BoxAssetsTest {
 
     @Test
     void testTaxWithSpecificValue() {
-        player = new Player("RichPlayer", 'R');
+        player = new Player("RichPlayer", 'R',bank);
 
         boxAssets.tax(player);
         assertTrue(player.getBalance() < 2000);
