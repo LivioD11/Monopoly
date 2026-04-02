@@ -13,14 +13,12 @@ public class Player {
     private int balance;
     private int position;
     private static final int START_POSITION = Board.INDEX_START;
-    private Bank bank;
 
-    public Player(String name, char sign, Bank bank) {
+    public Player(String name, char sign) {
         this.name = name;
         this.sign = sign;
         this.balance = 0;
         this.position = START_POSITION;
-        this.bank = bank;
 
         // Ricevere i fondi iniziali dalla Banca
         this.receiveMoney(Bank.CONTRIBUTION);
@@ -28,13 +26,13 @@ public class Player {
 
     public void payMoney(int amount){
         this.balance -= amount;
-        bank.receiveMoney(amount);
+        Bank.getInstance().receiveMoney(amount);
         Action.verboseTransaction(String.format("Giocatore %s (%s)",this.name,this.sign),amount, TransactionType.PAY);
     }
 
     public void receiveMoney(int amount){
         this.balance += amount;
-        bank.payMoney(amount);
+        Bank.getInstance().payMoney(amount);
         Action.verboseTransaction(String.format("Giocatore %s (%s)",this.name,this.sign),amount, TransactionType.RECEIVE);
     }
 

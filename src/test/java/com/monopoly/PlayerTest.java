@@ -16,8 +16,7 @@ class PlayerTest {
     void setUp() {
         // Ripristiniamo lo stato della banca se necessario prima di ogni test
         // per evitare interferenze tra i test dovute ai metodi statici di Bank.
-        bank = new Bank();
-        player = new Player(TEST_NAME, TEST_SIGN, bank);
+        player = new Player(TEST_NAME, TEST_SIGN);
     }
 
     @Test

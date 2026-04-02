@@ -14,11 +14,10 @@ class BoxLuxuryTest {
 
     @BeforeEach
     void setUp() {
-        Bank bank = new Bank();
         // Creiamo la casella "Tassa di Lusso"
         boxLuxury = new BoxLuxury("Tassa di Lusso");
         // Creiamo un giocatore (assumendo saldo iniziale standard, es. 1500 CHF)
-        player = new Player("TestPlayer", 'L',bank);
+        player = new Player("TestPlayer", 'L');
     }
 
     @Test

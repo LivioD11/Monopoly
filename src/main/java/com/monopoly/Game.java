@@ -13,13 +13,11 @@ import java.util.Scanner;
 public class Game {
     private final Board board;
     private final Player[] players;
-    private final Bank bank;
     private static final int PLAYERS_NUMBER = 4;
 
     public Game(Scanner scanner) {
-        this.bank = new Bank();
         PlayerFactory setupManager = new PlayerFactory(scanner, PLAYERS_NUMBER);
-        this.players = setupManager.setup(bank);
+        this.players = setupManager.setup();
         this.board = new Board(players);
         play(scanner);
     }

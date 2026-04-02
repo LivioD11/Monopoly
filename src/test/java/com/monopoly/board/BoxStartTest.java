@@ -15,9 +15,8 @@ class BoxStartTest {
 
     @BeforeEach
     void setUp() {
-        bank = new Bank();
         boxStart = new BoxStart("VIA!");
-        player = new Player("TestPlayer", 'V', bank);
+        player = new Player("TestPlayer", 'V');
     }
 
     @Test

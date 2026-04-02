@@ -15,9 +15,8 @@ class BoxParkingTest {
 
     @BeforeEach
     void setUp() {
-        bank = new Bank();
         boxParking = new BoxParking();
-        player = new Player("TestPlayer", 'P',bank);
+        player = new Player("TestPlayer", 'P');
     }
 
     @Test

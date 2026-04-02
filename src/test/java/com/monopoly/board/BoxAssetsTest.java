@@ -15,11 +15,10 @@ class BoxAssetsTest {
 
     @BeforeEach
     void setUp() {
-        bank = new Bank();
         boxAssets = new BoxAssets("Tassa Patrimoniale");
         // Assumo che il costruttore di Player accetti (nome, simbolo)
         // e imposti un saldo iniziale (es. 1500)
-        player = new Player("TestPlayer", 'T',bank);
+        player = new Player("TestPlayer", 'T');
     }
 
     @Test
@@ -38,7 +37,7 @@ class BoxAssetsTest {
 
     @Test
     void testTaxWithSpecificValue() {
-        player = new Player("RichPlayer", 'R',bank);
+        player = new Player("RichPlayer", 'R');
 
         boxAssets.tax(player);
         assertTrue(player.getBalance() < 2000);

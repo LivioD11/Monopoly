@@ -16,9 +16,8 @@ class BoxPropertyTest {
     @BeforeEach
     void setUp() {
         // Creiamo una proprietà (il valore verrà generato randomicamente tra 50 e 150)
-        bank = new Bank();
         boxProperty = new BoxProperty("Viale Giardini");
-        player = new Player("TestPlayer", 'G', bank);
+        player = new Player("TestPlayer", 'G');
     }
 
     @Test

@@ -14,12 +14,12 @@ public class PlayerFactory {
         this.players = new Player[playersNumber];
     }
 
-    public Player[] setup(Bank bank) {
+    public Player[] setup() {
         for (int i = 0; i < players.length; i++) {
             System.out.println("\n--- Configurazione Giocatore " + (i + 1) + " ---");
             String name = getUniqueName();
             char sign = getUniqueSign();
-            players[i] = new Player(name, sign, bank);
+            players[i] = new Player(name, sign);
         }
         return players;
     }

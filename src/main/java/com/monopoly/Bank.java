@@ -9,10 +9,18 @@ import com.monopoly.cli.TextFormatter;
 public class Bank {
     private static final int INITIAL_BALANCE = 1000000;
     public static final int CONTRIBUTION = 2000;
+    private static Bank bank;
     private int balance;
 
-    public Bank(){
+    private Bank(){
         this.balance = INITIAL_BALANCE;
+    }
+
+    public static Bank getInstance(){
+        if(bank == null){
+            bank = new Bank();
+        }
+        return  bank;
     }
 
     public void payMoney(int amount){

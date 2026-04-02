@@ -16,9 +16,8 @@ class BoxStationTest {
     @BeforeEach
     void setUp() {
         // Creiamo una stazione (il valore sarà random tra 50 e 150)
-        bank = new Bank();
         boxStation = new BoxStation("Stazione Termini");
-        player = new Player("Viaggiatore", 'S',bank);
+        player = new Player("Viaggiatore", 'S');
     }
 
     @Test
