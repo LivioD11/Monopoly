@@ -12,8 +12,8 @@ public abstract class Box {
     protected String description;
     private String[] representation;
 
-    public static final int PLAYER_ROW_HEIGHT = 5;
-    public static final int TOTAL_BOX_HEIGHT = 7;
+    public static final int PLAYER_ROW_HEIGHT = Config.getInt("box.height.player.row",0);
+    public static final int TOTAL_BOX_HEIGHT = Config.getInt("box.height.total",0);
 
     // START: quando ci passi sopra prendi 100CHF  !!!
     // PARCHEGGIO: ci passi sopra e non fa nulla
@@ -65,8 +65,8 @@ public abstract class Box {
             return "";
         }
 
-        // Se siamo alla riga 5 e ci sono giocatori
-        if (index == 5 && players != null && players.length > 0) {
+        // Se siamo alla riga PLAYER_ROW_HEIGHT e ci sono giocatori
+        if (index == PLAYER_ROW_HEIGHT && players != null && players.length > 0) {
             StringBuilder sb = new StringBuilder();
             for (char player : players) {
                 sb.append("[").append(player).append("] ");
