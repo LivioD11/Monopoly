@@ -7,7 +7,7 @@ import ch.supsi.monopoly.cli.Action;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 
-public class Player {
+public class Player implements Owner{
     private final String name;
     private final char sign;
     private int balance;

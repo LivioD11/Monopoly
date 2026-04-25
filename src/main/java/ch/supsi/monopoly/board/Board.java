@@ -2,6 +2,7 @@ package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.board.property.BoxProperty;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.FileUtilities;

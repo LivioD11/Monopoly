@@ -6,7 +6,7 @@ import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 
 
-public class Bank {
+public class Bank implements Owner {
     private static final int INITIAL_BALANCE = Config.getInt("bank.balance", 0);;
     public static final int CONTRIBUTION = Config.getInt("bank.contribution", 0);;
     private static Bank bank;

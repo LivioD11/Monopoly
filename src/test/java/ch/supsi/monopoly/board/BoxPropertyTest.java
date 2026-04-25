@@ -2,6 +2,7 @@ package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.board.property.BoxProperty;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
