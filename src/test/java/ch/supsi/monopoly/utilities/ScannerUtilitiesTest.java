@@ -1,4 +1,4 @@
-package com.monopoly.utilities;
+package ch.supsi.monopoly.utilities;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

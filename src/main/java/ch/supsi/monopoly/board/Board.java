@@ -1,10 +1,9 @@
-package com.monopoly.board;
+package ch.supsi.monopoly.board;
 
-import com.monopoly.Game;
-import com.monopoly.Player;
-import com.monopoly.cli.Color;
-import com.monopoly.cli.TextFormatter;
-import com.monopoly.utilities.FileUtilities;
+import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.utilities.FileUtilities;
 
 public class Board {
     private Box[] boxes;

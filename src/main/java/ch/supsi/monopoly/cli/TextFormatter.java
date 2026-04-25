@@ -1,4 +1,4 @@
-package com.monopoly.cli;
+package ch.supsi.monopoly.cli;
 
 public abstract class TextFormatter {
 

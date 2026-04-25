@@ -1,4 +1,4 @@
-package com.monopoly.cli;
+package ch.supsi.monopoly.cli;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

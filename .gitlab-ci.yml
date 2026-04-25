@@ -17,7 +17,7 @@ test-core:
   artifacts:
     when: always
     reports:
-      junit: "target/surefire-reports/TEST-com.monopoly.*.xml"
+      junit: "target/surefire-reports/TEST-ch.supsi.monopoly.*.xml"
     paths:
       - target/surefire-reports/
 
@@ -30,7 +30,7 @@ test-board-logic:
   artifacts:
     when: always
     reports:
-      junit: "target/surefire-reports/TEST-com.monopoly.board.*.xml"
+      junit: "target/surefire-reports/TEST-ch.supsi.monopoly.board.*.xml"
     paths:
       - target/surefire-reports/
 
@@ -44,7 +44,7 @@ test-utilities:
     when: always
     reports:
       junit:
-        - target/surefire-reports/TEST-com.monopoly.cli.*.xml
-        - target/surefire-reports/TEST-com.monopoly.utilities.*.xml
+        - target/surefire-reports/TEST-ch.supsi.monopoly.cli.*.xml
+        - target/surefire-reports/TEST-ch.supsi.monopoly.utilities.*.xml
     paths:
       - target/surefire-reports/

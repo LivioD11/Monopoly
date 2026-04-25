@@ -1,4 +1,4 @@
-package com.monopoly;
+package ch.supsi.monopoly;
 
 public abstract class Dice {
     private static final int MIN = 1;

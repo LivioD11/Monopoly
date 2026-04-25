@@ -1,13 +1,13 @@
-package com.monopoly;
+package ch.supsi.monopoly;
 
-import com.monopoly.board.Board;
-import com.monopoly.board.Box;
-import com.monopoly.board.BoxStart;
-import com.monopoly.cli.Color;
-import com.monopoly.cli.TextFormatter;
-import com.monopoly.utilities.MenuOption;
-import com.monopoly.utilities.PlayerFactory;
-import com.monopoly.utilities.ScannerUtilities;
+import ch.supsi.monopoly.board.Board;
+import ch.supsi.monopoly.board.Box;
+import ch.supsi.monopoly.board.BoxStart;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.utilities.MenuOption;
+import ch.supsi.monopoly.utilities.PlayerFactory;
+import ch.supsi.monopoly.utilities.ScannerUtilities;
 import java.util.Scanner;
 
 public class Game {

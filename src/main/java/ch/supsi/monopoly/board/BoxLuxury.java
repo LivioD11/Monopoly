@@ -1,7 +1,7 @@
-package com.monopoly.board;
+package ch.supsi.monopoly.board;
 
-import com.monopoly.Player;
-import com.monopoly.board.interfaces.Taxable;
+import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.board.interfaces.Taxable;
 
 public class BoxLuxury extends Box implements Taxable {
     private static final int LUXURY_TAX_AMOUNT = 200;

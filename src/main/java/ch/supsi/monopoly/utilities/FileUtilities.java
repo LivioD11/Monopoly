@@ -1,4 +1,4 @@
-package com.monopoly.utilities;
+package ch.supsi.monopoly.utilities;
 
 import java.io.IOException;
 import java.nio.file.Files;

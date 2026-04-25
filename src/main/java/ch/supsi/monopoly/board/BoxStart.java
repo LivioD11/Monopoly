@@ -1,7 +1,6 @@
-package com.monopoly.board;
+package ch.supsi.monopoly.board;
 
-import com.monopoly.Player;
-import com.monopoly.board.interfaces.Refundable;
+import ch.supsi.monopoly.Player;
 
 public class BoxStart extends Box {
     private static final int BONUS = 100;

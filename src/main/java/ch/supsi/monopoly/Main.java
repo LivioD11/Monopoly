@@ -1,4 +1,4 @@
-package com.monopoly;
+package ch.supsi.monopoly;
 
 import java.util.Scanner;
 

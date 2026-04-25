@@ -1,6 +1,6 @@
-package com.monopoly.board;
+package ch.supsi.monopoly.board;
 
-import com.monopoly.Player;
+import ch.supsi.monopoly.Player;
 
 public class BoxParking extends Box {
 

@@ -1,4 +1,4 @@
-package com.monopoly;
+package ch.supsi.monopoly;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

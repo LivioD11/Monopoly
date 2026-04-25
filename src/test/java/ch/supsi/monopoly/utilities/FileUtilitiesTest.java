@@ -1,4 +1,4 @@
-package com.monopoly.utilities;
+package ch.supsi.monopoly.utilities;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;

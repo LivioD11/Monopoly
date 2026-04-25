@@ -1,4 +1,4 @@
-package com.monopoly.board.interfaces;
+package ch.supsi.monopoly.board.interfaces;
 
 public interface Purchasable {
 }

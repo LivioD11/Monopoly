@@ -1,7 +1,7 @@
-package com.monopoly.board;
+package ch.supsi.monopoly.board;
 
-import com.monopoly.Bank;
-import com.monopoly.Player;
+import ch.supsi.monopoly.Bank;
+import ch.supsi.monopoly.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

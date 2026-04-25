@@ -1,11 +1,11 @@
-package com.monopoly;
+package ch.supsi.monopoly;
 
 
-import com.monopoly.cli.TransactionType;
-import com.monopoly.board.Board;
-import com.monopoly.cli.Action;
-import com.monopoly.cli.Color;
-import com.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.cli.TransactionType;
+import ch.supsi.monopoly.board.Board;
+import ch.supsi.monopoly.cli.Action;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
 
 public class Player {
     private final String name;

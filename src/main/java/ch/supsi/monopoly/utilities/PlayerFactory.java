@@ -1,7 +1,6 @@
-package com.monopoly.utilities;
+package ch.supsi.monopoly.utilities;
 
-import com.monopoly.Bank;
-import com.monopoly.Player;
+import ch.supsi.monopoly.Player;
 
 import java.util.Scanner;
 

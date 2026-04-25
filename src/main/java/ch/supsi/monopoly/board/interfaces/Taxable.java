@@ -1,6 +1,6 @@
-package com.monopoly.board.interfaces;
+package ch.supsi.monopoly.board.interfaces;
 
-import com.monopoly.Player;
+import ch.supsi.monopoly.Player;
 
 public interface Taxable {
     public void tax(Player player);
