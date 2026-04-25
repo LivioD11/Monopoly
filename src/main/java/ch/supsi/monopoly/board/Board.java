@@ -1,5 +1,6 @@
 package ch.supsi.monopoly.board;
 
+import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
@@ -7,11 +8,11 @@ import ch.supsi.monopoly.utilities.FileUtilities;
 
 public class Board {
     private Box[] boxes;
-    private static final String[] STREET_NAME = FileUtilities.leggiLineeFile("src/main/java/resources/street_names.csv");
-    private static final int COLUMNS = 9;
-    private static final int ROWS = 9;
+    private static final String[] STREET_NAME = FileUtilities.leggiLineeFile("src/main/resources/street_names.csv");
+    private static final int COLUMNS = Config.getInt("board.columns", 1);
+    private static final int ROWS = Config.getInt("board.rows", 1);
     public static final int BOX_NUMBER = ROWS * 2 + (COLUMNS - 2) * 2;
-    public static final int INDEX_START = 16;
+    public static final int INDEX_START = COLUMNS + ROWS - 2;
     public static final int INDEX_STATION_SUD = ROWS/2;
     public static final int INDEX_STATION_OVEST = INDEX_STATION_SUD + (ROWS - 1);
     public static final int INDEX_STATION_NORD = INDEX_STATION_OVEST + (ROWS - 1);
@@ -26,22 +27,38 @@ public class Board {
         int nomeIndex = 0;
 
         for (int i = 0; i < BOX_NUMBER; i++) {
-            boxes[i] = switch (i) {
-                case INDEX_START   -> new BoxStart("VIA");
-                case INDEX_STATION_SUD   -> new BoxStation("STAZIONE SUD");
-                case INDEX_STATION_OVEST -> new BoxStation("STAZIONE OVEST");
-                case INDEX_STATION_NORD  -> new BoxStation("STAZIONE NORD");
-                case INDEX_STATION_EST   -> new BoxStation("STAZIONE EST");
-                case INDEX_LUXURY     -> new BoxLuxury("TASSA DI LUSSO");
-                case INDEX_ASSETS     -> new BoxAssets("TASSA PATRIMONIALE");
-                default -> {
-                    String name = (nomeIndex < STREET_NAME.length) ?
-                            STREET_NAME[nomeIndex] : "Via Generica";
-                    nomeIndex++;
-                    String colorfulName = TextFormatter.color(name, Color.random());
-                    yield new BoxProperty(colorfulName);
-                }
-            };
+
+            if (i == INDEX_START) {
+                boxes[i] = new BoxStart("VIA");
+
+            } else if (i == INDEX_STATION_SUD) {
+                boxes[i] = new BoxStation("STAZIONE SUD");
+
+            } else if (i == INDEX_STATION_OVEST) {
+                boxes[i] = new BoxStation("STAZIONE OVEST");
+
+            } else if (i == INDEX_STATION_NORD) {
+                boxes[i] = new BoxStation("STAZIONE NORD");
+
+            } else if (i == INDEX_STATION_EST) {
+                boxes[i] = new BoxStation("STAZIONE EST");
+
+            } else if (i == INDEX_LUXURY) {
+                boxes[i] = new BoxLuxury("TASSA DI LUSSO");
+
+            } else if (i == INDEX_ASSETS) {
+                boxes[i] = new BoxAssets("TASSA PATRIMONIALE");
+
+            } else {
+                String name = (nomeIndex < STREET_NAME.length)
+                        ? STREET_NAME[nomeIndex]
+                        : "Via Generica";
+
+                nomeIndex++;
+
+                String colorfulName = TextFormatter.color(name, Color.random());
+                boxes[i] = new BoxProperty(colorfulName);
+            }
         }
 
     }

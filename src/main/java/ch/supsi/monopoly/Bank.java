@@ -7,8 +7,8 @@ import ch.supsi.monopoly.cli.TextFormatter;
 
 
 public class Bank {
-    private static final int INITIAL_BALANCE = 1000000;
-    public static final int CONTRIBUTION = 2000;
+    private static final int INITIAL_BALANCE = Config.getInt("bank.balance", 0);;
+    public static final int CONTRIBUTION = Config.getInt("bank.contribution", 0);;
     private static Bank bank;
     private int balance;
 

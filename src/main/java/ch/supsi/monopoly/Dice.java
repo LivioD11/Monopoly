@@ -1,6 +1,6 @@
 package ch.supsi.monopoly;
 
-public abstract class Dice {
+public final class Dice {
     private static final int MIN = 1;
     private static final int MAX = 6;
 

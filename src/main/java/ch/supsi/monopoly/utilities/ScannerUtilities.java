@@ -2,7 +2,7 @@ package ch.supsi.monopoly.utilities;
 
 import java.util.Scanner;
 
-public abstract class ScannerUtilities {
+public final class ScannerUtilities {
 
     public static String getInputString(Scanner scanner, String message) {
         String output = "";

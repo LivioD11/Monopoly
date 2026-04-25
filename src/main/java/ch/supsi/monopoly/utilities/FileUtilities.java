@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class FileUtilities {
+public final class FileUtilities {
     public static String[] leggiLineeFile(String percorsoFile) {
         String[] lineeFile = null;
         try {

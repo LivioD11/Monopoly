@@ -1,11 +1,12 @@
 package ch.supsi.monopoly.board;
 
+import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.TextFormatter;
 
 public abstract class Box {
-    protected static final int TOLL_MIN = 50;
-    protected static final int TOLL_MAX = 150;
+    protected static final int TOLL_MIN = Config.getInt("box.toll.min", 0);
+    protected static final int TOLL_MAX = Config.getInt("box.toll.max", 0);
     protected final int value;
     protected String name;
     protected String description;

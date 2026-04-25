@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class Game {
     private final Board board;
     private final Player[] players;
-    private static final int PLAYERS_NUMBER = 4;
+    private static final int PLAYERS_NUMBER = Config.getInt("game.players.number", 0);;
 
     public Game(Scanner scanner) {
         PlayerFactory setupManager = new PlayerFactory(scanner, PLAYERS_NUMBER);
