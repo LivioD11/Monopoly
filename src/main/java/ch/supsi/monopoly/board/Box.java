@@ -1,6 +1,8 @@
 package ch.supsi.monopoly.board;
 
+import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Config;
+import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.TextFormatter;
 
@@ -10,7 +12,9 @@ public abstract class Box {
     protected final int value;
     protected String name;
     protected String description;
+    protected Owner owner;
     private String[] representation;
+
 
     public static final int PLAYER_ROW_HEIGHT = Config.getInt("box.height.player.row",0);
     public static final int TOTAL_BOX_HEIGHT = Config.getInt("box.height.total",0);
@@ -30,6 +34,7 @@ public abstract class Box {
         this.value = value;
         this.name = name;
         this.description = "Paga "+this.value;
+        this.owner = Bank.getInstance();
         this.updateRepresentation();
     }
 
@@ -45,9 +50,8 @@ public abstract class Box {
         this.representation  = new String[]{
                 "-".repeat(24),
                 "|"+ TextFormatter.padAnsi(this.name,22)+"|",
-                this.value > 0 ? String.format("|%-22s|", this.description) :
-                String.format("|%-22s|", ""),
-                String.format("|%-22s|", ""),
+                this.value > 0 ? String.format("|%-22s|", this.description) : String.format("|%-22s|", ""),
+                this.owner != Bank.getInstance() ? String.format("|%-22s|", this.owner.toString()) : String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 String.format("|%-22s|", ""),
                 "-".repeat(24),

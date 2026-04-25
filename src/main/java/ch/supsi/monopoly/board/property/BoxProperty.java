@@ -9,13 +9,11 @@ import ch.supsi.monopoly.board.interfaces.Purchasable;
 import ch.supsi.monopoly.board.interfaces.Taxable;
 
 public class BoxProperty extends Box implements Taxable, Purchasable, Buildable {
-    private Owner owner;
     private int price;
     private Building[] buildings;
 
     public BoxProperty(String name) {
         super(name);
-        owner = Bank.getInstance();
     }
 
     public void buy(Owner buyer){
