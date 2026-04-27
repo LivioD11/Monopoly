@@ -53,4 +53,14 @@ public class Bank implements Owner {
         return String.format("Banca: il saldo è %s",
                 TextFormatter.color(TextFormatter.formatCurrency(this.balance), Color.YELLOW));
     }
+
+    @Override
+    public boolean equals(Object object) {
+        return this == object;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(balance);
+    }
 }

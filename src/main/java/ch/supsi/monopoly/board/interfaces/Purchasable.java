@@ -4,4 +4,5 @@ import ch.supsi.monopoly.Owner;
 
 public interface Purchasable {
     boolean buy(Owner buyer);
+    Owner getOwner();
 }

@@ -49,6 +49,27 @@ public class Player implements Owner{
         return player;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        // 1. Verifica se è lo stesso riferimento in memoria
+        if (this == o) return true;
+
+        // 2. Verifica se l'oggetto è nullo o appartiene a una classe diversa
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (sign != player.sign) return false;
+        return name != null ? name.equals(player.name) : player.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (int) sign;
+        return result;
+    }
+
     // Getters
 
     public String getName() { return this.name; }

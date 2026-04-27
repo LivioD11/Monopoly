@@ -14,11 +14,18 @@ import java.util.List;
 public class BoxProperty extends Box implements Taxable, Purchasable, Buildable {
     private static final int HOUSES_LIMIT = Config.getInt("box.property.houses.limit",0);
     private static final int HOTELS_LIMIT = Config.getInt("box.property.hotels.limit",0);
+    private static final int PRICE_MIN = Config.getInt("box.property.price.min",0);
+    private static final int PRICE_MAX = Config.getInt("box.property.price.max",0);
     private int price;
     private List<Building> buildings;
 
     public BoxProperty(String name) {
         super(name);
+        this.price = generatePrice();
+    }
+
+    private static int generatePrice() {
+        return (int) (Math.random() * (PRICE_MAX - PRICE_MIN + 1)) + PRICE_MIN;
     }
 
     public boolean buy(Owner buyer){
@@ -67,5 +74,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     public String toString() {
         return String.format("[ Cella proprietà: %s | Tassa: %d CHF ]",
                 this.name, this.value);
+    }
+
+    // GETTERS
+
+    public Owner getOwner(){
+        return  this.owner;
     }
 }
