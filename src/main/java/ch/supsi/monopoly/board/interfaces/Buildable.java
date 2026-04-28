@@ -8,10 +8,14 @@ import ch.supsi.monopoly.board.property.House;
 import java.util.List;
 
 public interface Buildable {
-    void build(DevelopmentLevel level);
+    void build();
 
     default int countHouses(List<Building>  buildings){
         int count = 0;
+
+        if(buildings == null)
+            return count;
+
         for (Building building : buildings)
             if(building instanceof House)
                 count++;
@@ -20,6 +24,10 @@ public interface Buildable {
 
     default int countHotels(List<Building> buildings){
         int count = 0;
+
+        if(buildings == null)
+            return count;
+
         for (Building building : buildings)
             if(building instanceof Hotel)
                 count++;

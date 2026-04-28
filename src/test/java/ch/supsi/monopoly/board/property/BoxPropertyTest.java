@@ -39,4 +39,25 @@ public class BoxPropertyTest {
         assertEquals(Bank.getInstance(),oldOwner);
         assertEquals(Bank.getInstance(),newOwner);
     }
+
+    @Test
+    void testCanBuildHouses() {
+        property.build();
+        property.build();
+
+        for(int i=0; i < 7; i++)
+            System.out.println(property.draw(i,null));
+    }
+
+    @Test
+    void testCanBuildHotels() {
+        property.build();
+        property.build();
+        property.build();
+        property.build();
+        property.build();
+
+        for(int i=0; i < 7; i++)
+            System.out.println(property.draw(i,null));
+    }
 }

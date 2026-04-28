@@ -2,6 +2,7 @@ package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.board.jail.BoxJail;
 import ch.supsi.monopoly.board.property.BoxProperty;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
@@ -18,8 +19,10 @@ public class Board {
     public static final int INDEX_STATION_OVEST = INDEX_STATION_SUD + (ROWS - 1);
     public static final int INDEX_STATION_NORD = INDEX_STATION_OVEST + (ROWS - 1);
     public static final int INDEX_STATION_EST = INDEX_STATION_NORD + (ROWS - 1);
-    public static final int INDEX_LUXURY = INDEX_START + (ROWS - 1);
+    public static final int INDEX_LUXURY = INDEX_START + (ROWS + 1);
     public static final int INDEX_ASSETS = INDEX_START - 2;
+    public static final int INDEX_JAIL = INDEX_START + (ROWS - 1);
+    public static final int INDEX_GO_TO_JAIL = COLUMNS -1;
     private Player[] players;
 
     public Board(Player[] players) {
@@ -28,19 +31,19 @@ public class Board {
         int nomeIndex = 0;
 
         for (int i = 0; i < BOX_NUMBER; i++) {
-
+            // Angolo in basso a destra
             if (i == INDEX_START) {
                 boxes[i] = new BoxStart("VIA");
-
+            // In centro in alto
             } else if (i == INDEX_STATION_SUD) {
                 boxes[i] = new BoxStation("STAZIONE SUD");
-
+            // In centro a destra
             } else if (i == INDEX_STATION_OVEST) {
                 boxes[i] = new BoxStation("STAZIONE OVEST");
-
+            // In centro in basso
             } else if (i == INDEX_STATION_NORD) {
                 boxes[i] = new BoxStation("STAZIONE NORD");
-
+            // In centro a sinistra
             } else if (i == INDEX_STATION_EST) {
                 boxes[i] = new BoxStation("STAZIONE EST");
 
@@ -49,6 +52,12 @@ public class Board {
 
             } else if (i == INDEX_ASSETS) {
                 boxes[i] = new BoxAssets("TASSA PATRIMONIALE");
+            // Angolo in basso a sinistra
+            } else if (i == INDEX_JAIL) {
+                boxes[i] = new BoxJail();
+            // Angolo in alto a destra
+            } else if (i == INDEX_GO_TO_JAIL) {
+                boxes[i] = new BoxGoToJail();
 
             } else {
                 String name = (nomeIndex < STREET_NAME.length)

@@ -8,24 +8,65 @@ import ch.supsi.monopoly.board.Box;
 import ch.supsi.monopoly.board.interfaces.Buildable;
 import ch.supsi.monopoly.board.interfaces.Purchasable;
 import ch.supsi.monopoly.board.interfaces.Taxable;
+import ch.supsi.monopoly.cli.TextFormatter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoxProperty extends Box implements Taxable, Purchasable, Buildable {
     private static final int HOUSES_LIMIT = Config.getInt("box.property.houses.limit",0);
     private static final int HOTELS_LIMIT = Config.getInt("box.property.hotels.limit",0);
-    private static final int PRICE_MIN = Config.getInt("box.property.price.min",0);
-    private static final int PRICE_MAX = Config.getInt("box.property.price.max",0);
+    private static final int MIN_PRICE = Config.getInt("box.property.price.min",0);
+    private static final int MAX_PRICE = Config.getInt("box.property.price.max",0);
     private int price;
     private List<Building> buildings;
+    private DevelopmentLevel level;
 
     public BoxProperty(String name) {
         super(name);
+        this.buildings = new ArrayList<>();
         this.price = generatePrice();
+        this.level = DevelopmentLevel.EMPTY;
+    }
+
+    @Override
+    protected void updateRepresentation(){
+        this.representation  = new String[]{
+                "-".repeat(24),
+                "|"+ TextFormatter.padAnsi(this.name,22)+"|",
+                this.value > 0 ? String.format("|%-22s|", this.description) : String.format("|%-22s|", ""),
+                String.format("|%-22s|", drawOwner()),
+                String.format("|%-22s|", ""),
+                "|"+ TextFormatter.padAnsiAndEmoji(this.drawBuildings(),22)+"|",
+                "-".repeat(24),
+        };
+    }
+
+    private String drawOwner(){
+        String output = "Price: "+TextFormatter.formatCurrency(this.price);
+        if(!(owner instanceof Bank))
+            output = owner.toString();
+        return output;
+    }
+
+    private String drawBuildings(){
+        String output = "";
+        if(level == null)
+            return output;
+
+        if(level.equals(DevelopmentLevel.HOUSES)){
+            for(Building building : this.buildings)
+                output += "\uD83C\uDFE0";
+            output += " ("+this.buildings.size()+" case)";
+        }
+
+        if(level.equals(DevelopmentLevel.HOTEL))
+            output += "\uD83C\uDFE8 (hotel)";
+        return output;
     }
 
     private static int generatePrice() {
-        return (int) (Math.random() * (PRICE_MAX - PRICE_MIN + 1)) + PRICE_MIN;
+        return (int) (Math.random() * (MAX_PRICE - MIN_PRICE + 1)) + MIN_PRICE;
     }
 
     public boolean buy(Owner buyer){
@@ -42,12 +83,12 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         return true;
     }
 
-    // TODO: correggere la logica
-    public void build(DevelopmentLevel level) {
+    public void build() {
         if (level == DevelopmentLevel.EMPTY || level == DevelopmentLevel.HOUSES) {
             if (countHouses(buildings) < HOUSES_LIMIT) {
                 buildings.add(new House());
                 level = DevelopmentLevel.HOUSES;
+                this.updateRepresentation();
                 return;
             }
         }
@@ -56,10 +97,9 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
             buildings.clear(); // opzionale: se le case vengono sostituite
             buildings.add(new Hotel());
             level = DevelopmentLevel.HOTEL;
+            this.updateRepresentation();
             return;
         }
-
-        // niente da fare: limite raggiunto
     }
 
     public void tax(Player player){

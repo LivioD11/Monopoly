@@ -42,10 +42,9 @@ public class Player implements Owner{
 
     @Override
     public String toString(){
-        String player = String.format("Giocatore %s (%s): il saldo è %s",
+        String player = String.format("Giocatore %s (%s)",
             this.name,
-            this.sign,
-            TextFormatter.color(TextFormatter.formatCurrency(this.balance), Color.YELLOW));
+            this.sign);
         return player;
     }
 

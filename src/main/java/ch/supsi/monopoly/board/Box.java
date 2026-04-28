@@ -13,7 +13,7 @@ public abstract class Box {
     protected String name;
     protected String description;
     protected Owner owner;
-    private String[] representation;
+    protected String[] representation;
 
 
     public static final int PLAYER_ROW_HEIGHT = Config.getInt("box.height.player.row",0);
@@ -46,7 +46,7 @@ public abstract class Box {
         return (int) (Math.random() * (TOLL_MAX - TOLL_MIN + 1)) + TOLL_MIN;
     }
 
-    private void updateRepresentation(){
+    protected void updateRepresentation(){
         this.representation  = new String[]{
                 "-".repeat(24),
                 "|"+ TextFormatter.padAnsi(this.name,22)+"|",

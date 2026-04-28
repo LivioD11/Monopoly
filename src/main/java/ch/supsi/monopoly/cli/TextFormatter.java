@@ -1,5 +1,7 @@
 package ch.supsi.monopoly.cli;
 
+import com.ibm.icu.text.BreakIterator;
+
 public abstract class TextFormatter {
 
     /**
@@ -46,6 +48,35 @@ public abstract class TextFormatter {
     public static String padAnsi(String text, int width) {
         String clean = text.replaceAll("\u001B\\[[;\\d]*m", "");
         int padding = width - clean.length();
+
+        if (padding <= 0) return text;
+
+        return text + " ".repeat(padding);
+    }
+
+    public static int getDisplayWidth(String text) {
+        int width = 0;
+        for (int i = 0; i < text.length(); ) {
+            int codePoint = text.codePointAt(i);
+
+            if (codePoint >= 0x1F000 || (codePoint >= 0x2600 && codePoint <= 0x27BF) || Character.isIdeographic(codePoint)) {
+                width += 2;
+            } else {
+                width += 1;
+            }
+
+            // Passa al carattere successivo (gestisce le surrogate pairs delle emoji)
+            i += Character.charCount(codePoint);
+        }
+        return width;
+    }
+
+    public static String padAnsiAndEmoji(String text, int width) {
+        // Rimuove i codici colore ANSI
+        String clean = text.replaceAll("\u001B\\[[;\\d]*m", "");
+
+        // Calcola lo spazio rimanente basato sull'ingombro reale visivo
+        int padding = width - getDisplayWidth(clean);
 
         if (padding <= 0) return text;
 
