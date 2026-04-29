@@ -12,12 +12,14 @@ public class Player implements Owner{
     private final char sign;
     private int balance;
     private int position;
+    private PlayerStatus status;
     private static final int START_POSITION = Board.INDEX_START;
 
     public Player(String name, char sign) {
         this.name = name;
         this.sign = sign;
         this.balance = 0;
+        this.status = PlayerStatus.ACTIVE;
         this.position = START_POSITION;
 
         // Ricevere i fondi iniziali dalla Banca
@@ -28,6 +30,8 @@ public class Player implements Owner{
         this.balance -= amount;
         Bank.getInstance().receiveMoney(amount);
         Action.verboseTransaction(String.format("Giocatore %s (%s)",this.name,this.sign),amount, TransactionType.PAY);
+        if(this.balance<=0)
+            this.status = PlayerStatus.BROKE;
     }
 
     public void receiveMoney(int amount){
@@ -42,7 +46,7 @@ public class Player implements Owner{
 
     @Override
     public String toString(){
-        String player = String.format("Giocatore %s (%s)",
+        String player = String.format("Giocatore %s (%s):",
             this.name,
             this.sign);
         return player;
@@ -69,6 +73,18 @@ public class Player implements Owner{
         return result;
     }
 
+    // Setters
+
+    public void setActive(){
+        if(this.status.equals(PlayerStatus.INACTIVE))
+            this.status = PlayerStatus.ACTIVE;
+    }
+
+    public void setInactive(){
+        if(this.status.equals(PlayerStatus.ACTIVE))
+            this.status = PlayerStatus.INACTIVE;
+    }
+
     // Getters
 
     public String getName() { return this.name; }
@@ -84,6 +100,8 @@ public class Player implements Owner{
     public int getPosition() { return position; }
 
     public boolean isBroke(){
-        return this.balance <= 0;
+        if(this.status.equals(PlayerStatus.BROKE))
+            return true;
+        return false;
     }
 }

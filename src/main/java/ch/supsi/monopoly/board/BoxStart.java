@@ -11,6 +11,7 @@ public class BoxStart extends Box {
         this.setDescription("Ritira "+value);
     }
 
+    @Override
     public void applyEffect(Player player) {
 
     }

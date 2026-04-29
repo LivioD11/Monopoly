@@ -1,6 +1,12 @@
 package ch.supsi.monopoly.cli;
 
-public abstract class Action {
+import java.util.Scanner;
+
+public final class Action {
+
+    private Action(){
+
+    }
 
     /**
      * Stampa a schermo le informazioni in merito alla transazione compiuta.
@@ -25,5 +31,12 @@ public abstract class Action {
                         transactionAction,
                         TextFormatter.color(TextFormatter.formatCurrency(amount), color))
         );
+    }
+
+    public static boolean confirmAction(Scanner scanner, String message) {
+        System.out.print(message + " (y/N): ");
+        String input = scanner.next().trim().toLowerCase();
+
+        return input.equals("y");
     }
 }

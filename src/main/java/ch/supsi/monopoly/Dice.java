@@ -12,6 +12,10 @@ public final class Dice {
         return randomNumber;
     }
 
+    private Dice(){
+
+    }
+
     public static String getFaceIcon(int value) {
         return switch (value) {
             case 1 -> "⚀";

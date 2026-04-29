@@ -8,10 +8,16 @@ import ch.supsi.monopoly.board.Box;
 import ch.supsi.monopoly.board.interfaces.Buildable;
 import ch.supsi.monopoly.board.interfaces.Purchasable;
 import ch.supsi.monopoly.board.interfaces.Taxable;
+import ch.supsi.monopoly.cli.Action;
+import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.utilities.MenuOption;
+import ch.supsi.monopoly.utilities.ScannerUtilities;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BoxProperty extends Box implements Taxable, Purchasable, Buildable {
     private static final int HOUSES_LIMIT = Config.getInt("box.property.houses.limit",0);
@@ -80,6 +86,13 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
         buyer.payMoney(price);
         this.owner = buyer;
+
+        System.out.println(
+            String.format(
+                    "%s "+TextFormatter.color("ha acquistato la proprietà",Color.YELLOW),
+                    buyer.toString()
+            )
+        );
         return true;
     }
 
@@ -108,6 +121,35 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     public void applyEffect(Player player) {
         this.tax(player);
+    }
+
+    @Override
+    public void interact(Scanner scanner, Player player) {
+        int choice = ScannerUtilities.getInputInt(scanner, "Scegli un'opzione: ");
+        PropertyOption option = PropertyOption.fromInt(choice);
+
+        switch (option) {
+            case BUY -> {
+                String message = "Acquistare la proprietà";
+                if(!Action.confirmAction(scanner,message))
+                    break;
+                this.buy(player);
+            }
+
+            case BUILD -> {
+                String message = "Costruire nella priprietà";
+                if(!Action.confirmAction(scanner,message))
+                    break;
+                this.build();
+            }
+
+            case EXIT -> {
+                System.out.println("Esci");
+                return;
+            }
+
+            default -> System.out.println(TextFormatter.color("Opzione non valida! Riprova.", Color.YELLOW));
+        }
     }
 
     @Override

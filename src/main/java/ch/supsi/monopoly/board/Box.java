@@ -6,6 +6,8 @@ import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.TextFormatter;
 
+import java.util.Scanner;
+
 public abstract class Box {
     protected static final int TOLL_MIN = Config.getInt("box.toll.min", 0);
     protected static final int TOLL_MAX = Config.getInt("box.toll.max", 0);
@@ -84,6 +86,10 @@ public abstract class Box {
     }
 
     public abstract void applyEffect(Player player);
+
+    public void interact(Scanner scanner, Player player){
+
+    }
 
     // SETTERS
 
