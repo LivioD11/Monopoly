@@ -87,6 +87,11 @@ public class Player implements Owner{
 
     // Getters
 
+
+    public PlayerStatus getStatus() {
+        return status;
+    }
+
     public String getName() { return this.name; }
 
     public char getSign(){

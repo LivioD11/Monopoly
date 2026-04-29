@@ -57,9 +57,16 @@ public class Game {
     }
 
     private void executeTurn(Player player) {
-        int roll = Dice.roll() + Dice.roll();
-        System.out.println("\n " + player.getName() + " ha lanciato i dadi: " + roll);
+        int roll1 = Dice.roll();
+        int roll2 = Dice.roll();
+        int roll = roll1 + roll2;
 
+        System.out.println("\n " + player.getName() + " ha lanciato i dadi: " + roll);
+        if (player.getStatus().equals(PlayerStatus.INACTIVE) && !checkEqualityDice(roll1, roll2)) {
+            return;
+        }
+
+        //TODO: rilascio prigioniero
         int oldPos = player.getPosition();
         player.move(roll);
         int newPos = player.getPosition();
@@ -73,6 +80,12 @@ public class Game {
         Box currentBox = board.getBox(newPos);
         System.out.println(" Atterrato su: " + currentBox.getName());
         currentBox.applyEffect(player);
+    }
+
+    private boolean checkEqualityDice(int roll1, int roll2) {
+        if (roll1 == roll2)
+            return true;
+        return false;
     }
 
     private void showMenu(Player player) {
