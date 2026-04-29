@@ -2,6 +2,7 @@ package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.board.jail.BoxGoToJail;
 import ch.supsi.monopoly.board.jail.BoxJail;
 import ch.supsi.monopoly.board.property.BoxProperty;
 import ch.supsi.monopoly.cli.Color;
@@ -54,7 +55,7 @@ public class Board {
                 boxes[i] = new BoxAssets("TASSA PATRIMONIALE");
             // Angolo in basso a sinistra
             } else if (i == INDEX_JAIL) {
-                boxes[i] = new BoxJail();
+                boxes[i] = BoxJail.getInstance();
             // Angolo in alto a destra
             } else if (i == INDEX_GO_TO_JAIL) {
                 boxes[i] = new BoxGoToJail();

@@ -10,15 +10,28 @@ import java.util.List;
 public class BoxJail extends Box {
     private static final int JAIL_TIME = Config.getInt("box.jail.time", 0);
     private List<Sentence> sentences;
+    private static BoxJail boxJail;
 
-    public BoxJail(){
+    private BoxJail(){
         super("Prigione");
         this.sentences = new ArrayList<>();
     }
 
+    public static BoxJail getInstance() {
+        if (boxJail == null) {
+            boxJail = new BoxJail();
+        }
+        return boxJail;
+    }
+
+    public void addSentence(Player player) {
+        Sentence sentence = new Sentence(player);
+        sentences.add(sentence);
+    }
+
     @Override
     public void applyEffect(Player player) {
-        this.processSentences();
+        this.processSentences(); //TODO: da rivedere
     }
 
     public void processSentences() {
