@@ -3,6 +3,7 @@ package ch.supsi.monopoly;
 import ch.supsi.monopoly.board.Board;
 import ch.supsi.monopoly.board.Box;
 import ch.supsi.monopoly.board.BoxStart;
+import ch.supsi.monopoly.board.jail.BoxJail;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.MenuOption;
@@ -65,6 +66,11 @@ public class Game {
         if (player.getStatus().equals(PlayerStatus.INACTIVE) && !checkEqualityDice(roll1, roll2)) {
             return;
         }
+
+        if (player.getStatus().equals(PlayerStatus.INACTIVE)) {
+            BoxJail.getInstance().releasePrisoner(player);
+        }
+
 
         //TODO: rilascio prigioniero
         int oldPos = player.getPosition();
