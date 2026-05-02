@@ -1,5 +1,8 @@
 package ch.supsi.monopoly.utilities;
 
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +14,15 @@ import java.util.List;
  * @version 1.0
  */
 public class Menu {
+    private String description;
     private List<Option> options;
+    private boolean isExitRequested = false;
 
     /**
      * Inizializza un nuovo Menu con una lista di opzioni vuota.
      */
-    public Menu() {
+    public Menu(String description) {
+        this.description = description;
         this.options = new ArrayList<>();
     }
 
@@ -49,26 +55,35 @@ public class Menu {
             return;
         }
 
-        int choice = -1;
-
         while (true) {
-            System.out.println("\n--- MENU ---");
+            System.out.println("\n------");
+            System.out.println(description);
+            System.out.println();
+
             for (int i = 0; i < options.size(); i++) {
-                System.out.println((i + 1) + ". " + options.get(i).getMessage());
+                System.out.println("(" + (i + 1) + ") - " + options.get(i).getMessage());
             }
-            String message = "Seleziona un'opzione: ";
+            System.out.println("(q) - Quit");
 
-            choice = ScannerUtilities.getInputInt(message);
+            // Usiamo getString perché l'input può essere sia un numero che 'q'
+            String input = ScannerUtilities.getInputString("\nSeleziona un'opzione: ").toLowerCase();
 
-            if (choice >= 1 && choice <= options.size()) {
-                // Selezione valida
-                break;
-            } else {
-                System.out.println("Errore: Inserire un numero compreso tra 1 e " + options.size());
+            if (input.equals("q")) {
+                System.out.println("Uscita dal menu...");
+                return; // Esce direttamente dal metodo
+            }
+
+            try {
+                int choice = Integer.parseInt(input);
+                if (choice >= 1 && choice <= options.size()) {
+                    options.get(choice - 1).trigger();
+                    break; // Esegue e chiude il menu
+                } else {
+                    System.out.println(TextFormatter.color("Errore: Numero fuori range.", Color.RED));
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(TextFormatter.color("Errore: Inserisci un numero o 'q'.", Color.RED));
             }
         }
-
-        // Trigger dell'opzione e chiusura
-        options.get(choice - 1).trigger();
     }
 }
