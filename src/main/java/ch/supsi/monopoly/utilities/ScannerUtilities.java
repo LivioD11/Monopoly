@@ -77,7 +77,7 @@ public final class ScannerUtilities {
     public static boolean getInputBoolean(String message){
         message = message + " (y/N): ";
         String input = scanner.next().trim().toLowerCase();
-
+        scanner.nextLine();
         return input.equals("y");
     }
 }

@@ -11,7 +11,8 @@ import ch.supsi.monopoly.board.interfaces.Taxable;
 import ch.supsi.monopoly.cli.Action;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
-import ch.supsi.monopoly.utilities.MenuOption;
+import ch.supsi.monopoly.utilities.Menu;
+import ch.supsi.monopoly.utilities.Option;
 import ch.supsi.monopoly.utilities.ScannerUtilities;
 
 import javax.sound.midi.Soundbank;
@@ -23,6 +24,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     private static final int HOTELS_LIMIT = Config.getInt("box.property.hotels.limit",0);
     private static final int MIN_PRICE = Config.getInt("box.property.price.min",0);
     private static final int MAX_PRICE = Config.getInt("box.property.price.max",0);
+    private Menu menu;
     private int price;
     private List<Building> buildings;
     private DevelopmentLevel level;
@@ -32,6 +34,28 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         this.buildings = new ArrayList<>();
         this.price = generatePrice();
         this.level = DevelopmentLevel.EMPTY;
+    }
+
+    private void setupMenu(Player player) {
+        Option option1 = new Option(
+                "Acquistare la proprietà",
+                () -> {
+                    String message = "Acquistare la proprietà";
+                    if(Action.confirmAction(message))
+                        this.buy(player);
+                });
+        Option option2 = new Option(
+                "Costruire nella priprietà",
+                () -> {
+                    String message = "Costruire nella priprietà";
+                    if(Action.confirmAction(message))
+                        this.build();
+                });
+
+        if(!getHasAPlayerOwner())
+            menu.addOption(option1);
+        if(player.equals(owner))
+            menu.addOption(option2);
     }
 
     @Override
@@ -49,7 +73,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     private String drawOwner(){
         String output = "Price: "+TextFormatter.formatCurrency(this.price);
-        if(!(owner instanceof Bank))
+        if(!getHasAPlayerOwner())
             output = owner.toString();
         return output;
     }
@@ -124,31 +148,9 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     @Override
     public void interact(Player player) {
-        int choice = ScannerUtilities.getInputInt("Scegli un'opzione: ");
-        PropertyOption option = PropertyOption.fromInt(choice);
-
-        switch (option) {
-            case BUY -> {
-                String message = "Acquistare la proprietà";
-                if(!Action.confirmAction(message))
-                    break;
-                this.buy(player);
-            }
-
-            case BUILD -> {
-                String message = "Costruire nella priprietà";
-                if(!Action.confirmAction(message))
-                    break;
-                this.build();
-            }
-
-            case EXIT -> {
-                System.out.println("Esci");
-                return;
-            }
-
-            default -> System.out.println(TextFormatter.color("Opzione non valida! Riprova.", Color.YELLOW));
-        }
+        this.menu = new Menu(this.toString());
+        this.setupMenu(player);
+        menu.displayAndSelect();
     }
 
     @Override
@@ -161,5 +163,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     public Owner getOwner(){
         return  this.owner;
+    }
+
+    public boolean getHasAPlayerOwner(){
+        if(owner instanceof Bank)
+            return false;
+        return true;
     }
 }

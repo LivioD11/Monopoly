@@ -83,7 +83,7 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerSelectWrongOption() {
-        setMockInput("a\n6");
+        setMockInput("a\n3\n1\na\n");
         property.interact(player);
     }
 
