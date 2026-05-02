@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 maven-build:
   stage: build
@@ -48,3 +49,14 @@ test-utilities:
         - target/surefire-reports/TEST-ch.supsi.monopoly.utilities.*.xml
     paths:
       - target/surefire-reports/
+
+generate-docs:
+  stage: deploy
+  image: maven:3.9.3-eclipse-temurin-17
+  script:
+    - mvn javadoc:javadoc
+  artifacts:
+    name: "javadoc-monopoly"
+    paths:
+      - doc/  # Esporta la cartella doc come artefatto scaricabile da GitLab
+    expire_in: 1 week

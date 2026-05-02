@@ -1,0 +1,53 @@
+-J-Xmx1024m
+-J-Xms128m
+@options
+-classpath
+'/home/lorenzo/.m2/repository/com/ibm/icu/icu4j/75.1/icu4j-75.1.jar'
+-encoding
+'UTF-8'
+-private
+-source
+'17'
+-sourcepath
+'/home/lorenzo/Projects/Gruppo_11/src/main/java'
+-subpackages
+ch.supsi.monopoly
+-author
+-bottom
+'Copyright &#169; 2026. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/lorenzo/Projects/Gruppo_11/target/site/apidocs'
+-docencoding
+'UTF-8'
+-Xdoclint:none
+-doctitle
+'Gruppo_11 3.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'Gruppo_11 3.0-SNAPSHOT API'
+/home/lorenzo/.m2/repository/com/ibm/icu/icu4j/75.1/icu4j-75.1.jar = 1713295500000
+/home/lorenzo/Projects/Gruppo_11/src/main/java = 1777357635914
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/package-search-index.js = 1777723274933
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/tag-search-index.js = 1777723274933
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/allclasses-index.html = 1777723274931
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/index-all.html = 1777723274945
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/search-page.js = 1777723274950
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/element-list = 1777723274860
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/link.svg = 1777723274949
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/overview-tree.html = 1777723274919
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/member-search-index.js = 1777723274933
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/type-search-index.js = 1777723274933
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/search.js = 1777723274949
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/copy.svg = 1777723274949
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/constant-values.html = 1777723274877
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/index.html = 1777723274920
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/module-search-index.js = 1777723274932
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/overview-summary.html = 1777723274946
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/stylesheet.css = 1777723274948
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/help-doc.html = 1777723274947
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/search.html = 1777723274945
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/script.js = 1777723274949
+/home/lorenzo/Projects/Gruppo_11/target/site/apidocs/allpackages-index.html = 1777723274932

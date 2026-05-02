@@ -5,9 +5,12 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+
     <groupId>ch.supsi.monopoly</groupId>
     <artifactId>Gruppo_11</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
+
+
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -41,6 +44,28 @@
                     <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
                 </configuration>
             </plugin>
+
+            <!-- JAVADOC -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <outputDirectory>${project.basedir}/doc</outputDirectory>
+                    <sourcepath>${project.basedir}/src/main/java</sourcepath>
+                    <subpackages>ch.supsi.monopoly</subpackages> <show>private</show>
+
+                    <detectLinks>false</detectLinks>
+                    <detectOfflineLinks>false</detectOfflineLinks>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+
+                    <minmemory>128m</minmemory>
+                    <maxmemory>1024m</maxmemory>
+
+                    <doclint>none</doclint>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 

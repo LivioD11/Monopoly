@@ -1,0 +1,7 @@
+ch.supsi.monopoly
+ch.supsi.monopoly.board
+ch.supsi.monopoly.board.interfaces
+ch.supsi.monopoly.board.jail
+ch.supsi.monopoly.board.property
+ch.supsi.monopoly.cli
+ch.supsi.monopoly.utilities

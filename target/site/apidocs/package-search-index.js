@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ch.supsi.monopoly"},{"l":"ch.supsi.monopoly.board"},{"l":"ch.supsi.monopoly.board.interfaces"},{"l":"ch.supsi.monopoly.board.jail"},{"l":"ch.supsi.monopoly.board.property"},{"l":"ch.supsi.monopoly.cli"},{"l":"ch.supsi.monopoly.utilities"}];updateSearchResults();
