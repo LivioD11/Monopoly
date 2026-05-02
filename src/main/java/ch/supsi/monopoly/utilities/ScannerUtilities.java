@@ -4,7 +4,10 @@ import java.util.Scanner;
 
 public final class ScannerUtilities {
 
-    public static String getInputString(Scanner scanner, String message) {
+    // Unica istanza statica per tutta l'applicazione
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static String getInputString(String message) {
         String output = "";
         while (output.isBlank()) {
             System.out.print(message);
@@ -20,7 +23,7 @@ public final class ScannerUtilities {
         return output;
     }
 
-    public static char getInputChar(Scanner scanner, String message){
+    public static char getInputChar(String message){
         char output = ' ';
         while (Character.isWhitespace(output)) {
             System.out.print(message);
@@ -44,7 +47,7 @@ public final class ScannerUtilities {
         return output;
     }
 
-    public static int getInputInt(Scanner scanner, String message) {
+    public static int getInputInt(String message) {
         int output = 0;
         boolean valid = false;
 
@@ -62,5 +65,12 @@ public final class ScannerUtilities {
         }
 
         return output;
+    }
+
+    public static boolean getInputBoolean(String message){
+        message = message + " (y/N): ";
+        String input = scanner.next().trim().toLowerCase();
+
+        return input.equals("y");
     }
 }

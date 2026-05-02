@@ -19,8 +19,7 @@ class PlayerFactoryTest {
         // G1: Nome "Mario", Simbolo 'M'
         // G2: Nome "Luigi", Simbolo 'L'
         String input = "Mario\nM\nLuigi\nL\n";
-        Scanner scanner = createScanner(input);
-        PlayerFactory factory = new PlayerFactory(scanner, 2);
+        PlayerFactory factory = new PlayerFactory(2);
 
         Player[] players = factory.setup();
 
@@ -38,7 +37,7 @@ class PlayerFactoryTest {
         // G2: "Mario" (Errore!), "Luigi", 'L'
         String input = "Mario\nM\nMario\nLuigi\nL\n";
         Scanner scanner = createScanner(input);
-        PlayerFactory factory = new PlayerFactory(scanner, 2);
+        PlayerFactory factory = new PlayerFactory( 2);
 
         Player[] players = factory.setup();
 
@@ -53,7 +52,7 @@ class PlayerFactoryTest {
         // G2: "Luigi", 'X' (Errore!), 'Y'
         String input = "Mario\nX\nLuigi\nX\nY\n";
         Scanner scanner = createScanner(input);
-        PlayerFactory factory = new PlayerFactory(scanner, 2);
+        PlayerFactory factory = new PlayerFactory( 2);
 
         Player[] players = factory.setup();
 
@@ -66,7 +65,7 @@ class PlayerFactoryTest {
         // Verifica che "MARIO" e "mario" siano considerati lo stesso nome
         String input = "Mario\nM\nMARIO\nLuigi\nL\n";
         Scanner scanner = createScanner(input);
-        PlayerFactory factory = new PlayerFactory(scanner, 2);
+        PlayerFactory factory = new PlayerFactory( 2);
 
         Player[] players = factory.setup();
 

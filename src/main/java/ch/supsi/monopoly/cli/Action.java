@@ -1,5 +1,7 @@
 package ch.supsi.monopoly.cli;
 
+import ch.supsi.monopoly.utilities.ScannerUtilities;
+
 import java.util.Scanner;
 
 public final class Action {
@@ -33,10 +35,8 @@ public final class Action {
         );
     }
 
-    public static boolean confirmAction(Scanner scanner, String message) {
-        System.out.print(message + " (y/N): ");
-        String input = scanner.next().trim().toLowerCase();
-
-        return input.equals("y");
+    public static boolean confirmAction(String message) {
+        // TODO: sistemare
+        return ScannerUtilities.getInputBoolean(message);
     }
 }

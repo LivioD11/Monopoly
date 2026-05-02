@@ -6,10 +6,8 @@ import java.util.Scanner;
 
 public class PlayerFactory {
     private Player[] players;
-    private Scanner scanner;
 
-    public PlayerFactory(Scanner scanner, int playersNumber) {
-        this.scanner = scanner;
+    public PlayerFactory(int playersNumber) {
         this.players = new Player[playersNumber];
     }
 
@@ -25,7 +23,7 @@ public class PlayerFactory {
 
     private String getUniqueName() {
         while (true) {
-            String name = ScannerUtilities.getInputString(scanner, "Nome: ");
+            String name = ScannerUtilities.getInputString("Nome: ");
             if (isNameAvailable(name)) return name;
             System.out.println("Errore: Nome già occupato.");
         }
@@ -33,7 +31,7 @@ public class PlayerFactory {
 
     private char getUniqueSign() {
         while (true) {
-            char sign = ScannerUtilities.getInputChar(scanner, "Simbolo: ");
+            char sign = ScannerUtilities.getInputChar("Simbolo: ");
             if (isSignAvailable(sign)) return sign;
             System.out.println("Errore: Simbolo già occupato.");
         }

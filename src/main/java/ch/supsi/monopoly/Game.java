@@ -16,14 +16,14 @@ public class Game {
     private final Player[] players;
     private static final int PLAYERS_NUMBER = Config.getInt("game.players.number", 0);;
 
-    public Game(Scanner scanner) {
-        PlayerFactory setupManager = new PlayerFactory(scanner, PLAYERS_NUMBER);
+    public Game() {
+        PlayerFactory setupManager = new PlayerFactory(PLAYERS_NUMBER);
         this.players = setupManager.setup();
         this.board = new Board(players);
-        play(scanner);
+        play();
     }
 
-    private void play(Scanner scanner) {
+    private void play() {
         int turnIndex = 0;
         boolean isGameOver = false;
 
@@ -33,7 +33,7 @@ public class Game {
             Player currentPlayer = players[turnIndex % PLAYERS_NUMBER];
             showMenu(currentPlayer);
 
-            int choice = ScannerUtilities.getInputInt(scanner, "Scegli un'opzione: ");
+            int choice = ScannerUtilities.getInputInt("Scegli un'opzione: ");
             MenuOption option = MenuOption.fromInt(choice);
 
             switch (option) {

@@ -20,9 +20,7 @@ public class Main {
             """;
 
         System.out.println(logo);
-        Scanner scanner = new Scanner(System.in);
-        Game game = new Game(scanner);
-        scanner.close();
+        Game game = new Game();
     }
 }
 

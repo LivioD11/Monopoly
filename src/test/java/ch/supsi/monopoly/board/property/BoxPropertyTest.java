@@ -71,19 +71,19 @@ public class BoxPropertyTest {
     @Test
     void testPlayerSelectWrongOption() {
         Scanner scanner = createScanner("a\n6");
-        property.interact(scanner, player);
+        property.interact(player);
     }
 
     @Test
     void testPlayerCanBuyProperty() {
         Scanner scanner = createScanner("1\ny");
-        property.interact(scanner, player);
+        property.interact(player);
     }
 
     @Test
     void testPlayerCanNotBuyProperty() {
         player.payMoney(2000);
         Scanner scanner = createScanner("1\ny");
-        property.interact(scanner, player);
+        property.interact(player);
     }
 }
