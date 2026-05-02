@@ -80,10 +80,22 @@ package property{
 
 package utilities{
    class Menu{
-
+    - options: List<Option>
+    + Menu(): constructor
+    + addOption(option: Option): void
+    + removeOption(option: Option): void
+    + select:
    }
 
    class Option{
+   - message: String
+   - action: Action
+   + Option(message: String, action Action): constructor
+   + trigger(): void
+   }
+
+   ' Non è una vera interfaccia. Serve a rappresentare un Lamda
+   interface Action{
 
    }
 }

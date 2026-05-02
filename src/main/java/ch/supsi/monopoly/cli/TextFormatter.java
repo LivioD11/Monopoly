@@ -1,7 +1,5 @@
 package ch.supsi.monopoly.cli;
 
-import com.ibm.icu.text.BreakIterator;
-
 public abstract class TextFormatter {
 
     /**
