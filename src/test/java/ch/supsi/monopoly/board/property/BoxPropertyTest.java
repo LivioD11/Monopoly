@@ -4,10 +4,12 @@ import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.BoxAssets;
+import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,13 +17,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BoxPropertyTest {
     private Player player;
     private BoxProperty property;
-    private Scanner createScanner(String input) {
-        return new Scanner(new ByteArrayInputStream(input.getBytes()));
+
+    private void setMockInput(String input) {
+        try {
+            InputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            // Usiamo la reflection per chiamare il metodo privato/package-private
+            java.lang.reflect.Method method = ScannerUtilities.class.getDeclaredMethod("updateScanner");
+            method.setAccessible(true); // Rompe il guscio di protezione
+            method.invoke(null);        // null perché il metodo è statico
+        } catch (Exception e) {
+            throw new RuntimeException("Errore nel reset dello scanner", e);
+        }
     }
 
     @BeforeEach
     void setUp() {
-        Scanner scanner = createScanner("NomeUtente");
+        setMockInput("NomeUtente");
         player = new Player("TestPlayer", 'T');
         property = new BoxProperty("TestProperty");
     }
@@ -70,20 +83,20 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerSelectWrongOption() {
-        Scanner scanner = createScanner("a\n6");
+        setMockInput("a\n6");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanBuyProperty() {
-        Scanner scanner = createScanner("1\ny");
+        setMockInput("1\ny");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanNotBuyProperty() {
         player.payMoney(2000);
-        Scanner scanner = createScanner("1\ny");
+        setMockInput("1\ny");
         property.interact(player);
     }
 }

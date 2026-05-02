@@ -5,7 +5,14 @@ import java.util.Scanner;
 public final class ScannerUtilities {
 
     // Unica istanza statica per tutta l'applicazione
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in);
+
+    /**
+     * Metodo utile hai per la creazione di test
+     */
+    static void updateScanner() {
+        scanner = new Scanner(System.in);
+    }
 
     public static String getInputString(String message) {
         String output = "";

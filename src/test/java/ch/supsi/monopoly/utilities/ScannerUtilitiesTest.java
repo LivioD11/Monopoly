@@ -3,18 +3,25 @@ package ch.supsi.monopoly.utilities;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
 class ScannerUtilitiesTest {
 
-    private Scanner createScanner(String input) {
-        return new Scanner(new ByteArrayInputStream(input.getBytes()));
+
+    public static void setMockInput(String input) {
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        ScannerUtilities.updateScanner();
+        // NOTA: Se lo scanner statico è già stato creato,
+        // questa modifica potrebbe non avere effetto a seconda di quando
+        // viene inizializzata la classe.
     }
 
     @Test
     void testGetInputString_ValidInput() {
-        Scanner scanner = createScanner("NomeUtente");
-        String result = ScannerUtilities.getInputString( "Inserisci nome: ");
+        setMockInput("NomeUtente\n");
+        String result = ScannerUtilities.getInputString("Inserisci nome: ");
         assertEquals("NomeUtente", result);
     }
 
@@ -22,14 +29,14 @@ class ScannerUtilitiesTest {
     void testGetInputString_WithSpacesAndRetry() {
         // Simula: stringa vuota (isBlank), poi input valido
         // Nota: .next() legge fino al primo spazio
-        Scanner scanner = createScanner("   \n ValidInput");
+        setMockInput(" \nValidInput\n");
         String result = ScannerUtilities.getInputString("Inserisci: ");
         assertEquals("ValidInput", result);
     }
 
     @Test
     void testGetInputChar_ValidAlphabetic() {
-        Scanner scanner = createScanner("A");
+        setMockInput("A\n");
         char result = ScannerUtilities.getInputChar("Inserisci carattere: ");
         assertEquals('A', result);
     }
@@ -37,14 +44,14 @@ class ScannerUtilitiesTest {
     @Test
     void testGetInputChar_RetryOnNonAlphabetic() {
         // Simula: '1' (non alfabetico), poi 'B' (valido)
-        Scanner scanner = createScanner("1\nB");
+        setMockInput("1\nB\n");
         char result = ScannerUtilities.getInputChar("Inserisci: ");
         assertEquals('B', result);
     }
 
     @Test
     void testGetInputInt_ValidInteger() {
-        Scanner scanner = createScanner("42");
+        setMockInput("42\n");
         int result = ScannerUtilities.getInputInt("Inserisci numero: ");
         assertEquals(42, result);
     }
@@ -52,14 +59,14 @@ class ScannerUtilitiesTest {
     @Test
     void testGetInputInt_RetryOnInvalidFormat() {
         // Simula: "abc" (non intero), poi "10" (valido)
-        Scanner scanner = createScanner("abc\n10");
+        setMockInput("abc\n10\n");
         int result = ScannerUtilities.getInputInt("Inserisci: ");
         assertEquals(10, result);
     }
 
     @Test
     void testGetInputInt_NegativeValue() {
-        Scanner scanner = createScanner("-5");
+        setMockInput("-5\n");
         int result = ScannerUtilities.getInputInt("Inserisci: ");
         assertEquals(-5, result);
     }
