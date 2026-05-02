@@ -19,35 +19,21 @@ import java.util.List;
 
 /**
  * Rappresenta una casella di proprietà acquistabile nel tabellone del Monopoly.
- * <p>
- * Questa classe gestisce l'acquisto della proprietà, la riscossione delle rendite (tasse)
- * e la costruzione di edifici (case e hotel) per aumentarne il valore.
- * </p>
- * * @see Box
- * @see Taxable
- * @see Purchasable
- * @see Buildable
+ * Gestisce l'acquisto, la tassazione e la costruzione di edifici (case/hotel).
  */
 public class BoxProperty extends Box implements Taxable, Purchasable, Buildable {
-
-    /** Limite massimo di case costruibili per proprietà. */
-    private static final int HOUSES_LIMIT = Config.getInt("box.property.houses.limit", 0);
-    /** Limite massimo di hotel costruibili per proprietà. */
-    private static final int HOTELS_LIMIT = Config.getInt("box.property.hotels.limit", 0);
-    /** Prezzo minimo di generazione della proprietà. */
-    private static final int MIN_PRICE = Config.getInt("box.property.price.min", 0);
-    /** Prezzo massimo di generazione della proprietà. */
-    private static final int MAX_PRICE = Config.getInt("box.property.price.max", 0);
-
+    private static final int HOUSES_LIMIT = Config.getInt("box.property.houses.limit",0);
+    private static final int HOTELS_LIMIT = Config.getInt("box.property.hotels.limit",0);
+    private static final int MIN_PRICE = Config.getInt("box.property.price.min",0);
+    private static final int MAX_PRICE = Config.getInt("box.property.price.max",0);
     private Menu menu;
     private int price;
     private List<Building> buildings;
     private DevelopmentLevel level;
 
     /**
-     * Crea una nuova proprietà con il nome specificato.
-     * Inizializza il prezzo casualmente tra i limiti definiti e imposta il livello di sviluppo a EMPTY.
-     * * @param name Nome della proprietà (es. "Parco della Vittoria").
+     * Costruttore della proprietà. Genera un prezzo casuale e inizializza gli edifici.
+     * @param name Nome della casella.
      */
     public BoxProperty(String name) {
         super(name);
@@ -57,87 +43,135 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     /**
-     * Configura il menu delle interazioni disponibili per il giocatore corrente.
-     * Le opzioni variano a seconda che la proprietà sia libera o già posseduta.
-     * * @param player Il giocatore che interagisce con la casella.
+     * Configura le opzioni del menu (Acquisto/Costruzione) in base allo stato della proprietà.
+     * @param player Il giocatore corrente.
      */
     private void setupMenu(Player player) {
-        // ... logica menu ...
+        Option option1 = new Option(
+                "Acquistare la proprietà",
+                () -> {
+                    String message = "Acquistare la proprietà";
+                    if(Action.confirmAction(message))
+                        this.buy(player);
+                });
+        Option option2 = new Option(
+                "Costruire nella priprietà",
+                () -> {
+                    String message = "Costruire nella priprietà";
+                    if(Action.confirmAction(message))
+                        this.build();
+                });
+
+        if(!getHasAPlayerOwner())
+            menu.addOption(option1);
+        if(player.equals(owner))
+            menu.addOption(option2);
     }
 
-    /**
-     * Aggiorna la rappresentazione grafica testuale della casella,
-     * includendo proprietario, prezzo e icone degli edifici.
-     */
     @Override
     protected void updateRepresentation(){
-        // ... logica rappresentazione ...
+        this.representation  = new String[]{
+                "-".repeat(24),
+                "|"+ TextFormatter.padAnsi(this.name,22)+"|",
+                this.value > 0 ? String.format("|%-22s|", this.description) : String.format("|%-22s|", ""),
+                String.format("|%-22s|", drawOwner()),
+                String.format("|%-22s|", ""),
+                "|"+ TextFormatter.padAnsiAndEmoji(this.drawBuildings(),22)+"|",
+                "-".repeat(24),
+        };
     }
 
-    /**
-     * Genera dinamicamente una stringa che rappresenta lo stato del proprietario o il prezzo d'acquisto.
-     * @return Stringa formattata per la visualizzazione.
-     */
     private String drawOwner(){
-        // ...
-        return "";
+        String output = "Price: "+TextFormatter.formatCurrency(this.price);
+        if(!getHasAPlayerOwner())
+            output = owner.getName();
+        return output;
     }
 
-    /**
-     * Restituisce una rappresentazione visiva (emoji) degli edifici presenti sulla casella.
-     * @return Stringa contenente icone di case o hotel.
-     */
     private String drawBuildings(){
-        // ...
-        return "";
+        String output = "";
+        if(level == null)
+            return output;
+
+        if(level.equals(DevelopmentLevel.HOUSES)){
+            for(Building building : this.buildings)
+                output += "\uD83C\uDFE0";
+            output += " ("+this.buildings.size()+" case)";
+        }
+
+        if(level.equals(DevelopmentLevel.HOTEL))
+            output += "\uD83C\uDFE8 (hotel)";
+        return output;
     }
 
-    /**
-     * Genera un prezzo casuale per la proprietà basato sui limiti di configurazione.
-     * @return Il prezzo calcolato.
-     */
     private static int generatePrice() {
         return (int) (Math.random() * (MAX_PRICE - MIN_PRICE + 1)) + MIN_PRICE;
     }
 
     /**
-     * Gestisce la transazione d'acquisto della proprietà da parte di un acquirente.
-     * * @param buyer L'acquirente (giocatore o altro Owner).
-     * @return {@code true} se l'acquisto è andato a buon fine, {@code false} se già posseduta o fondi insufficienti.
+     * Gestisce l'acquisto della proprietà.
+     * @param buyer Il potenziale acquirente.
+     * @return true se l'acquisto va a buon fine.
      */
     public boolean buy(Owner buyer){
-        // ...
+        if(!(owner instanceof Bank))
+            return false;
+
+        if(price>buyer.getBalance())
+            return false;
+
+        buyer.payMoney(price);
+        this.owner = buyer;
+
+        System.out.println(
+                String.format(
+                        "%s "+TextFormatter.color("ha acquistato la proprietà",Color.YELLOW),
+                        buyer.toString()
+                )
+        );
         return true;
     }
 
     /**
-     * Gestisce la logica di costruzione sulla proprietà.
-     * Aggiunge una casa se sotto il limite, o sostituisce le case con un hotel al raggiungimento della soglia.
+     * Aggiunge una casa o un hotel alla proprietà rispettando i limiti.
      */
     public void build() {
-        // ...
+        // Logica per le case
+        if (level == DevelopmentLevel.EMPTY || level == DevelopmentLevel.HOUSES) {
+            int currentHouses = 0;
+            for(Building b : buildings) if(b instanceof House) currentHouses++;
+
+            if (currentHouses < HOUSES_LIMIT) {
+                buildings.add(new House());
+                level = DevelopmentLevel.HOUSES;
+                this.updateRepresentation();
+                return;
+            }
+        }
+
+        // Logica per l'hotel
+        int currentHouses = 0;
+        for(Building b : buildings) if(b instanceof House) currentHouses++;
+        int currentHotels = 0;
+        for(Building b : buildings) if(b instanceof Hotel) currentHotels++;
+
+        if (currentHouses == HOUSES_LIMIT && currentHotels < HOTELS_LIMIT) {
+            buildings.clear();
+            buildings.add(new Hotel());
+            level = DevelopmentLevel.HOTEL;
+            this.updateRepresentation();
+            return;
+        }
     }
 
-    /**
-     * Preleva dal giocatore l'importo dovuto per essere atterrato sulla proprietà.
-     * @param player Il giocatore che deve pagare.
-     */
     public void tax(Player player){
         player.payMoney(this.getValue());
     }
 
-    /**
-     * Applica l'effetto immediato dell'atterraggio sulla casella (pagamento tassa).
-     * @param player Il giocatore attivo.
-     */
     public void applyEffect(Player player) {
         this.tax(player);
     }
 
-    /**
-     * Avvia l'interazione interattiva tramite menu per permettere al giocatore di scegliere se comprare o costruire.
-     * @param player Il giocatore attivo.
-     */
     @Override
     public void interact(Player player) {
         this.menu = new Menu(this.toString());
@@ -145,28 +179,16 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         menu.displayAndSelect();
     }
 
-    /**
-     * Fornisce una descrizione sintetica della casella proprietà.
-     * @return Stringa contenente nome e valore della tassa.
-     */
     @Override
     public String toString() {
         return String.format("[ Cella proprietà: %s | Tassa: %d CHF ]",
                 this.name, this.value);
     }
 
-    /**
-     * Restituisce il proprietario attuale della casella.
-     * @return L'oggetto {@link Owner} (Bank o Player).
-     */
     public Owner getOwner(){
         return  this.owner;
     }
 
-    /**
-     * Verifica se la proprietà appartiene a un giocatore reale e non alla banca.
-     * @return {@code true} se posseduta da un giocatore, {@code false} se posseduta dalla banca.
-     */
     public boolean getHasAPlayerOwner(){
         return !(owner instanceof Bank);
     }

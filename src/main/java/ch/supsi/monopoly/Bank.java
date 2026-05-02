@@ -44,6 +44,10 @@ public class Bank implements Owner {
         this.balance = INITIAL_BALANCE;
     }
 
+    public String getName(){
+        return "Banca";
+    }
+
     public int getBalance(){
         return this.balance;
     }

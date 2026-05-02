@@ -1,0 +1,15 @@
+ch/supsi/monopoly/board/BoxStartTest.class
+ch/supsi/monopoly/PlayerTest.class
+ch/supsi/monopoly/board/BoxAssetsTest.class
+ch/supsi/monopoly/utilities/PlayerFactoryTest.class
+ch/supsi/monopoly/utilities/ScannerUtilitiesTest.class
+ch/supsi/monopoly/board/BoxLuxuryTest.class
+ch/supsi/monopoly/utilities/MenuTest.class
+ch/supsi/monopoly/board/BoxPropertyTest.class
+ch/supsi/monopoly/board/property/BoxPropertyTest.class
+ch/supsi/monopoly/utilities/FileUtilitiesTest.class
+ch/supsi/monopoly/board/jail/BoxJailTest.class
+ch/supsi/monopoly/cli/TextFormatterTest.class
+ch/supsi/monopoly/BankTest.class
+ch/supsi/monopoly/board/BoxParkingTest.class
+ch/supsi/monopoly/board/BoxStationTest.class

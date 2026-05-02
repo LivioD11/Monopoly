@@ -1,0 +1,15 @@
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/BankTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/PlayerTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxAssetsTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxLuxuryTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxParkingTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxPropertyTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxStartTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/BoxStationTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/jail/BoxJailTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/board/property/BoxPropertyTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/cli/TextFormatterTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/utilities/FileUtilitiesTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/utilities/MenuTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/utilities/PlayerFactoryTest.java
+/home/lorenzo/Projects/Gruppo_11/src/test/java/ch/supsi/monopoly/utilities/ScannerUtilitiesTest.java

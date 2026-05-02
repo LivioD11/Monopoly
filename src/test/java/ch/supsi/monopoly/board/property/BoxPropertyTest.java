@@ -89,14 +89,14 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerCanBuyProperty() {
-        setMockInput("1\ny");
+        setMockInput("1\ny\n");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanNotBuyProperty() {
         player.payMoney(2000);
-        setMockInput("1\ny");
+        setMockInput("1\ny\n");
         property.interact(player);
     }
 }
