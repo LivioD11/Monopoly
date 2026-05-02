@@ -1,0 +1,26 @@
+@startuml
+class Sentence{
+- BAIL_AMOUNT: int
+- JAIL_TIME: int
+- jailTimeLeft: int
+- prisoner: Player
++ Sentence(player: Player): constructor
++ serveTime(): void
+- canBeReleased(): boolean
+
+}
+
+class BoxJail{
+
+}
+
+class BoxGoToJail{
++ BoxGoToJail(): constructor
++ sendToJail(player: Player):void
++ applyEffect(player: Player): void
+}
+
+interface Jailable{
+
+}
+@enduml
