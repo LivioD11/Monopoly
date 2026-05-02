@@ -34,6 +34,14 @@ public class BoxJail extends Box {
         this.processSentences(); //TODO: da rivedere
     }
 
+    public void releasePrisoner(Player prisoner) {
+        for(Sentence sentence : sentences) {
+            if (sentence.getPrisoner().equals(prisoner)) {
+                sentence.releasePrisoner();
+            }
+        }
+    }
+
     public void processSentences() {
         sentences.forEach(Sentence::serveTime);
     }

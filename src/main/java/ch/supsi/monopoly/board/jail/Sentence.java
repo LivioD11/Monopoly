@@ -21,7 +21,7 @@ public class Sentence {
         }
 
         if (jailTimeLeft == 0 && this.canBeReleased()) {
-            releasePrisoner();
+            endDetention();
         }
     }
 
@@ -36,8 +36,18 @@ public class Sentence {
         }
     }
 
-    private void releasePrisoner(){
+    private void endDetention(){
         prisoner.payMoney(BAIL_AMOUNT);
+        this.releasePrisoner();
+    }
+
+    public void releasePrisoner(){
         prisoner.setActive();
+    }
+
+    //GETTERS
+
+    public Player getPrisoner() {
+        return prisoner;
     }
 }
