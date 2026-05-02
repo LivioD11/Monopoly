@@ -85,6 +85,10 @@ public class Player implements Owner{
             this.status = PlayerStatus.INACTIVE;
     }
 
+    public void goToPrison(){
+        this.position = Board.INDEX_JAIL;
+    }
+
     // Getters
 
 

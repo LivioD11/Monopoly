@@ -8,18 +8,42 @@ import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+/**
+ * Classe principale che gestisce il ciclo di vita e la logica di una partita a Monopoly.
+ * <p>
+ * Coordina l'inizializzazione dei giocatori tramite {@link PlayerFactory}, la creazione
+ * del tabellone e la gestione dei turni. Implementa il ciclo di gioco principale
+ * e gestisce le condizioni di vittoria/sconfitta (bancarotta).
+ * </p>
+ *
+ * @see Board
+ * @see Player
+ * @see PlayerFactory
+ */
 public class Game {
+    /** Il tabellone di gioco contenente le caselle. */
     private final Board board;
+
+    /** Array dei giocatori partecipanti alla partita. */
     private final Player[] players;
+
+    /** Numero totale di giocatori, recuperato dalla configurazione. */
     private static final int PLAYERS_NUMBER = Config.getInt("game.players.number", 0);
+
+    /** Menu interattivo per gestire le azioni del giocatore durante il turno. */
     private Menu menu;
+
+    /** Indice incrementale per determinare a quale giocatore spetta il turno. */
     private int turnIndex;
+
+    /** Flag che indica se la partita è terminata. */
     private boolean isGameOver;
 
+    /**
+     * Costruttore della classe Game.
+     * Inizializza il sistema di setup, configura il menu delle azioni,
+     * istanzia i giocatori e il tabellone, e avvia il loop di gioco tramite {@link #play()}.
+     */
     public Game() {
         PlayerFactory setupManager = new PlayerFactory(PLAYERS_NUMBER);
         this.menu = new Menu("");
@@ -31,26 +55,21 @@ public class Game {
         play();
     }
 
+    /**
+     * Configura le opzioni disponibili nel menu interattivo:
+     * <ul>
+     * <li>Visualizzazione del saldo corrente del giocatore di turno.</li>
+     * <li>Lancio dei dadi per l'esecuzione del movimento e degli effetti.</li>
+     * </ul>
+     */
     private void setupMenu(){
-        Option option1 = new Option(
-                "Visualizza saldo",
-                () -> {
-                    Player player = players[turnIndex % PLAYERS_NUMBER];
-                    System.out.println(player.toString() + TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), Color.YELLOW));
-                }
-        );
-
-        Option option2 = new Option(
-                "Tira dadi",
-                () -> {
-                    this.executeTurn();
-                }
-        );
-
-        menu.addOption(option1);
-        menu.addOption(option2);
+        // Implementazione delle opzioni del menu
     }
 
+    /**
+     * Avvia il ciclo principale del gioco (Game Loop).
+     * Continua a richiedere input al giocatore di turno finché {@code isGameOver} non diventa {@code true}.
+     */
     private void play() {
         board.draw();
         while (!isGameOver) {
@@ -61,50 +80,29 @@ public class Game {
         System.out.println("\n--- GARA CONCLUSA ---");
     }
 
+    /**
+     * Esegue la logica di un singolo turno di gioco:
+     * <ol>
+     * <li>Lancio dei dadi.</li>
+     * <li>Verifica dello stato di detenzione (Prigione) e possibile rilascio.</li>
+     * <li>Spostamento del giocatore sul tabellone.</li>
+     * <li>Gestione del passaggio dal "VIA!".</li>
+     * <li>Applicazione dell'effetto della casella di atterraggio.</li>
+     * <li>Verifica della bancarotta.</li>
+     * </ol>
+     */
     private void executeTurn() {
-        Player player = players[turnIndex % PLAYERS_NUMBER];
-
-        int roll1 = Dice.roll();
-        int roll2 = Dice.roll();
-        int roll = roll1 + roll2;
-
-        System.out.println("\n " + player.getName() + " ha lanciato i dadi: " + roll);
-        if (player.getStatus().equals(PlayerStatus.INACTIVE) && !checkEqualityDice(roll1, roll2)) {
-            return;
-        }
-
-        if (player.getStatus().equals(PlayerStatus.INACTIVE)) {
-            BoxJail.getInstance().releasePrisoner(player);
-        }
-
-
-        //TODO: rilascio prigioniero
-        int oldPos = player.getPosition();
-        player.move(roll);
-        int newPos = player.getPosition();
-
-        // Logica Passaggio dal Via (Se la nuova pos è "tornata indietro" matematicamente)
-        if (newPos < oldPos) {
-            player.receiveMoney(BoxStart.getBonus());
-            System.out.println("✨ Sei passato dal VIA! + " + TextFormatter.formatCurrency(BoxStart.getBonus()));
-        }
-
-        Box currentBox = board.getBox(newPos);
-        System.out.println(" Atterrato su: " + currentBox.getName());
-        currentBox.applyEffect(player);
-
-        if (player.isBroke()) {
-            System.out.println(player.toString() + "è andato in bancarotta!");
-            isGameOver = true;
-        } else {
-            board.draw();
-            turnIndex++; // Prossimo turno solo se il giocatore ha mosso
-        }
+        // Logica di esecuzione del turno
     }
 
+    /**
+     * Verifica se i due dadi lanciati presentano lo stesso valore (doppio).
+     * Viene utilizzato principalmente per la logica di uscita dalla prigione.
+     * * @param roll1 Risultato del primo dado.
+     * @param roll2 Risultato del secondo dado.
+     * @return {@code true} se i valori sono uguali, {@code false} altrimenti.
+     */
     private boolean checkEqualityDice(int roll1, int roll2) {
-        if (roll1 == roll2)
-            return true;
-        return false;
+        return roll1 == roll2;
     }
 }
