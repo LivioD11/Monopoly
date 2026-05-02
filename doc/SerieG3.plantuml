@@ -1,26 +1,104 @@
 @startuml
-class Sentence{
-- BAIL_AMOUNT: int
-- JAIL_TIME: int
-- jailTimeLeft: int
-- prisoner: Player
-+ Sentence(player: Player): constructor
-+ serveTime(): void
-- canBeReleased(): boolean
+package jail{
+    class Sentence{
+    - BAIL_AMOUNT: int
+    - JAIL_TIME: int
+    - jailTimeLeft: int
+    - prisoner: Player
+    + Sentence(player: Player): constructor
+    + serveTime(): void
+    - canBeReleased(): boolean
+    - endDetention(): void
+    + releasePrisoner(): void
+    + getPrisoner(): Player
+    }
 
+    class BoxJail{
+    - JAIL_TIME: int
+    - sentences : List<Sentence>
+    - {static} boxJail: BoxJail
+    - BoxJail(): constructor
+    + {static} getInstance(): BoxJail
+    + addSentence(player: Player): void
+    + applyEffect(player: Player): void
+    + releasePrisoner(prisoner: Player): void
+    + processSentences(): void
+    + toString(): String
+    }
+
+    class BoxGoToJail{
+    + BoxGoToJail(): constructor
+    + sendToJail(player: Player):void
+    + applyEffect(player: Player): void
+    }
 }
 
-class BoxJail{
+package property{
+    class BoxProperty {
+        - price : int
+        - buildings : List<Building>
+        - level : DevelopmentLevel
+        + BoxProperty(name : String)
+        - updateRepresentation() : void
+        - drawOwner() : String
+        - drawBuildings() : String
+        - generatePrice() : int
+        + buy(buyer : Owner) : boolean
+        + build() : void
+        + tax(player : Player) : void
+        + applyEffect(player : Player) : void
+        + interact(scanner : Scanner, player : Player) : void
+        + toString() : String
+        + getOwner() : Owner
+    }
 
+    class Building {
+    # price: int
+    + Building(): constructor
+    + getPrice(): int
+    }
+
+    class House {
+    # {static} MIN_PRICE: int
+    # {static} MAX_PRICE: int
+    + VALUE: int
+    + House(): constructor
+    - generatePrice(): int
+    }
+
+    class Hotel {
+    # {static} MIN_PRICE: int
+    # {static} MAX_PRICE: int
+    + VALUE: int
+    + Hotel(): constructor
+    - generatePrice(): int
+    }
+
+    Building <|-- House
+    Building <|-- Hotel
 }
 
-class BoxGoToJail{
-+ BoxGoToJail(): constructor
-+ sendToJail(player: Player):void
-+ applyEffect(player: Player): void
+package utilities{
+   class Menu{
+
+   }
+
+   class Option{
+
+   }
 }
 
-interface Jailable{
+package interfaces{
+    interface Jailable{
 
+    }
+
+    interface Buildable{
+
+    }
+
+    interface Purchasable{
+
+    }
 }
 @enduml
