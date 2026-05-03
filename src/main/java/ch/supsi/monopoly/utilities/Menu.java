@@ -97,4 +97,18 @@ public class Menu {
     public void setDescription(String description){
         this.description = description;
     }
+
+    // Getters
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<Option> getOptions() {
+        return options;
+    }
+
+    public boolean getRemoveQuit() {
+        return removeQuit;
+    }
 }

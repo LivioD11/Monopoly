@@ -31,7 +31,10 @@ public class Game {
         this.turnIndex = 0;
         this.players = setupManager.setup();
         this.board = new Board(players);
-        play();
+    }
+
+    public void start() {
+        this.play();
     }
 
     /**
@@ -74,7 +77,7 @@ public class Game {
     /**
      * Esegue la logica di un singolo turno: lancio dadi, gestione prigione, movimento e rendite.
      */
-    private void executeTurn() {
+    protected void executeTurn() {
         board.draw();
         Player player = players[turnIndex % PLAYERS_NUMBER];
 
@@ -126,5 +129,28 @@ public class Game {
      */
     private boolean checkEqualityDice(int roll1, int roll2) {
         return roll1 == roll2;
+    }
+
+    // Getters
+
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getTurnIndex() {
+        return turnIndex;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
     }
 }

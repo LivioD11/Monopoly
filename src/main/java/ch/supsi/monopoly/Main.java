@@ -19,6 +19,7 @@ public class Main {
 
         System.out.println(logo);
         Game game = new Game();
+        game.start();
     }
 }
 
