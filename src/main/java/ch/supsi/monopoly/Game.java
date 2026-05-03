@@ -10,43 +10,22 @@ import ch.supsi.monopoly.utilities.*;
 
 /**
  * Classe principale che gestisce il ciclo di vita e la logica di una partita a Monopoly.
- * <p>
- * Coordina l'inizializzazione dei giocatori tramite {@link PlayerFactory}, la creazione
- * del tabellone e la gestione dei turni. Implementa il ciclo di gioco principale
- * e gestisce le condizioni di vittoria/sconfitta (bancarotta).
- * </p>
- *
- * @see Board
- * @see Player
- * @see PlayerFactory
+ * Coordina l'inizializzazione dei giocatori, il tabellone e la turnazione.
  */
 public class Game {
-    /** Il tabellone di gioco contenente le caselle. */
     private final Board board;
-
-    /** Array dei giocatori partecipanti alla partita. */
     private final Player[] players;
-
-    /** Numero totale di giocatori, recuperato dalla configurazione. */
     private static final int PLAYERS_NUMBER = Config.getInt("game.players.number", 0);
-
-    /** Menu interattivo per gestire le azioni del giocatore durante il turno. */
     private Menu menu;
-
-    /** Indice incrementale per determinare a quale giocatore spetta il turno. */
     private int turnIndex;
-
-    /** Flag che indica se la partita è terminata. */
     private boolean isGameOver;
 
     /**
-     * Costruttore della classe Game.
-     * Inizializza il sistema di setup, configura il menu delle azioni,
-     * istanzia i giocatori e il tabellone, e avvia il loop di gioco tramite {@link #play()}.
+     * Inizializza una nuova partita, configura il menu e avvia il loop di gioco.
      */
     public Game() {
         PlayerFactory setupManager = new PlayerFactory(PLAYERS_NUMBER);
-        this.menu = new Menu("");
+        this.menu = new Menu("",true);
         this.setupMenu();
         this.isGameOver = false;
         this.turnIndex = 0;
@@ -56,51 +35,94 @@ public class Game {
     }
 
     /**
-     * Configura le opzioni disponibili nel menu interattivo:
-     * <ul>
-     * <li>Visualizzazione del saldo corrente del giocatore di turno.</li>
-     * <li>Lancio dei dadi per l'esecuzione del movimento e degli effetti.</li>
-     * </ul>
+     * Configura le opzioni interattive del menu di gioco.
      */
     private void setupMenu(){
-        // Implementazione delle opzioni del menu
+        Option option1 = new Option(
+                "Visualizza saldo",
+                () -> {
+                    Player player = players[turnIndex % PLAYERS_NUMBER];
+                    System.out.println(player.toString()+ " " + TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), Color.YELLOW));
+                }
+        );
+
+        Option option2 = new Option(
+                "Tira dadi",
+                () -> {
+                    this.executeTurn();
+                }
+        );
+
+        menu.addOption(option1);
+        menu.addOption(option2);
     }
 
     /**
-     * Avvia il ciclo principale del gioco (Game Loop).
-     * Continua a richiedere input al giocatore di turno finché {@code isGameOver} non diventa {@code true}.
+     * Avvia il ciclo principale del gioco finché non viene raggiunta una condizione di fine partita.
      */
     private void play() {
         board.draw();
         while (!isGameOver) {
             Player currentPlayer = players[turnIndex % PLAYERS_NUMBER];
-            menu.setDescription("Turno di "+currentPlayer.getName());
+            String description = TextFormatter.color("TURNO DI "+currentPlayer.getName().toUpperCase(),Color.CYAN);
+            menu.setDescription(description);
             menu.displayAndSelect();
         }
         System.out.println("\n--- GARA CONCLUSA ---");
     }
 
     /**
-     * Esegue la logica di un singolo turno di gioco:
-     * <ol>
-     * <li>Lancio dei dadi.</li>
-     * <li>Verifica dello stato di detenzione (Prigione) e possibile rilascio.</li>
-     * <li>Spostamento del giocatore sul tabellone.</li>
-     * <li>Gestione del passaggio dal "VIA!".</li>
-     * <li>Applicazione dell'effetto della casella di atterraggio.</li>
-     * <li>Verifica della bancarotta.</li>
-     * </ol>
+     * Esegue la logica di un singolo turno: lancio dadi, gestione prigione, movimento e rendite.
      */
     private void executeTurn() {
-        // Logica di esecuzione del turno
+        board.draw();
+        Player player = players[turnIndex % PLAYERS_NUMBER];
+
+        int roll1 = Dice.roll();
+        int roll2 = Dice.roll();
+        int roll = roll1 + roll2;
+
+        System.out.println("\n" + player.toString() + " ha lanciato i dadi: " + roll);
+
+        // Se il giocatore è inattivo (prigione) e non fa un doppio, il turno finisce
+        if (player.getStatus().equals(PlayerStatus.INACTIVE) && !checkEqualityDice(roll1, roll2)) {
+            turnIndex++; // Incremento il turno per passare al prossimo
+            return;
+        }
+
+        // Se è inattivo ma ha fatto un doppio, viene rilasciato
+        if (player.getStatus().equals(PlayerStatus.INACTIVE)) {
+            BoxJail.getInstance().releasePrisoner(player);
+        }
+
+        int oldPos = player.getPosition();
+        player.move(roll);
+        int newPos = player.getPosition();
+
+        // Logica Passaggio dal Via
+        if (newPos < oldPos) {
+            player.receiveMoney(BoxStart.getBonus());
+            System.out.println("Sei passato dal VIA! + " + TextFormatter.formatCurrency(BoxStart.getBonus()));
+        }
+
+        Box currentBox = board.getBox(newPos);
+        System.out.println("Atterrato su: " + currentBox.getName());
+        currentBox.applyEffect(player);
+
+        if (player.isBroke()) {
+            System.out.println(player.toString() + " è andato in bancarotta!");
+            isGameOver = true;
+        } else {
+
+            turnIndex++;
+        }
     }
 
     /**
-     * Verifica se i due dadi lanciati presentano lo stesso valore (doppio).
-     * Viene utilizzato principalmente per la logica di uscita dalla prigione.
-     * * @param roll1 Risultato del primo dado.
-     * @param roll2 Risultato del secondo dado.
-     * @return {@code true} se i valori sono uguali, {@code false} altrimenti.
+     * Verifica se i due dadi hanno lo stesso valore.
+     * @param roll1 Risultato primo dado.
+     * @param roll2 Risultato secondo dado.
+     * @return true se i dadi sono uguali.
      */
     private boolean checkEqualityDice(int roll1, int roll2) {
         return roll1 == roll2;

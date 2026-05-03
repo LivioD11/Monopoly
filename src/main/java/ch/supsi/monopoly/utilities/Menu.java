@@ -16,14 +16,20 @@ import java.util.List;
 public class Menu {
     private String description;
     private List<Option> options;
-    private boolean isExitRequested = false;
+    private boolean removeQuit;
 
     /**
      * Inizializza un nuovo Menu con una lista di opzioni vuota.
      */
     public Menu(String description) {
         this.description = description;
+        this.removeQuit = false;
         this.options = new ArrayList<>();
+    }
+
+    public Menu(String description, boolean removeQuit){
+        this(description);
+        this.removeQuit = removeQuit;
     }
 
     /**
@@ -63,12 +69,13 @@ public class Menu {
             for (int i = 0; i < options.size(); i++) {
                 System.out.println("(" + (i + 1) + ") - " + options.get(i).getMessage());
             }
-            System.out.println("(q) - Quit");
+            if(!removeQuit)
+                System.out.println("(q) - Quit");
 
             // Usiamo getString perché l'input può essere sia un numero che 'q'
             String input = ScannerUtilities.getInputString("\nSeleziona un'opzione: ").toLowerCase();
 
-            if (input.equals("q")) {
+            if (input.equals("q") && !removeQuit) {
                 System.out.println("Uscita dal menu...");
                 return; // Esce direttamente dal metodo
             }

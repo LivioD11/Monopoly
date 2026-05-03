@@ -4,8 +4,6 @@ package ch.supsi.monopoly;
 import ch.supsi.monopoly.cli.TransactionType;
 import ch.supsi.monopoly.board.Board;
 import ch.supsi.monopoly.cli.Action;
-import ch.supsi.monopoly.cli.Color;
-import ch.supsi.monopoly.cli.TextFormatter;
 
 public class Player implements Owner{
     private final String name;

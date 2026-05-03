@@ -1,7 +1,5 @@
 package ch.supsi.monopoly.board.property;
 
-import ch.supsi.monopoly.utilities.MenuOption;
-
 public enum PropertyOption {
     BUY(1,"Compra la proprietà"),
     BUILD(2, "Costruisci nella proprietà"),
