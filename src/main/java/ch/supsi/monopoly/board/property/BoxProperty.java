@@ -185,11 +185,29 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
                 this.name, this.value);
     }
 
+    // Getters
+
     public Owner getOwner(){
         return  this.owner;
     }
 
     public boolean getHasAPlayerOwner(){
         return !(owner instanceof Bank);
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public List<Building> getBuildings() {
+        return buildings;
+    }
+
+    public DevelopmentLevel getLevel() {
+        return level;
     }
 }

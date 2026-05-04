@@ -133,7 +133,6 @@ public class Game {
 
     // Getters
 
-
     public Board getBoard() {
         return board;
     }

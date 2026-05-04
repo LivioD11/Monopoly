@@ -6,6 +6,7 @@ import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.BoxAssets;
 import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -40,6 +41,7 @@ public class BoxPropertyTest {
     }
 
     @Test
+    @DisplayName("Il giocatore può acquistare la proprietà")
     void testPlayerCanBuyAProperty() {
         Owner oldOwner = property.getOwner();
         property.buy(player);
@@ -61,6 +63,7 @@ public class BoxPropertyTest {
     }
 
     @Test
+    @DisplayName("È possibile costruire delle case")
     void testCanBuildHouses() {
         property.build();
         property.build();
@@ -70,6 +73,7 @@ public class BoxPropertyTest {
     }
 
     @Test
+    @DisplayName("È possibile costruire un hotel")
     void testCanBuildHotels() {
         property.build();
         property.build();
