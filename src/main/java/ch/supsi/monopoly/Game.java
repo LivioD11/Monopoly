@@ -15,7 +15,8 @@ import ch.supsi.monopoly.utilities.*;
 public class Game {
     private final Board board;
     private final Player[] players;
-    private static final int PLAYERS_NUMBER = Config.getInt("game.players.number", 0);
+    private static final int PLAYERS_NUMBER = Config.getInt("game.players" +
+            ".number", 1);
     private Menu menu;
     private int turnIndex;
     private boolean isGameOver;

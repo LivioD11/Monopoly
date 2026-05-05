@@ -22,18 +22,26 @@ public final class Config {
     private static final Properties fileProps = new Properties();
 
     static {
-        try (InputStream input =
-                     Config.class.getClassLoader()
-                             .getResourceAsStream("config.properties")) {
+        // 1. Otteniamo l'URL della risorsa
+        java.net.URL resource = Config.class.getClassLoader().getResource("config.properties");
 
-            if (input != null) {
+        if (resource != null) {
+            // 2. Stampiamo il percorso dove lo ha trovato
+            System.out.println("[CONFIG] File trovato in: " + resource.getPath());
+
+            try (InputStream input = resource.openStream()) {
                 fileProps.load(input);
+            } catch (Exception e) {
+                throw new RuntimeException("Errore nel caricamento del file", e);
             }
-
-        } catch (Exception e) {
-            throw new RuntimeException("Errore critico nel caricamento del file di configurazione", e);
+        } else {
+            // 3. Se è null, stampiamo un avviso chiaro
+            System.err.println("[CONFIG] ERRORE: Il file 'config.properties' non è stato trovato nel Classpath!");
+            // Stampa il percorso "radice" del classpath per capire dove sta guardando
+            System.err.println("[CONFIG] Classpath root: " + Config.class.getClassLoader().getResource("."));
         }
     }
+
 
     /**
      * Costruttore privato per impedire l'istanziazione di questa classe utility.
