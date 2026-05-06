@@ -10,6 +10,8 @@ import java.util.List;
 public interface Buildable {
     void build();
 
+    boolean getIsBuildable();
+
     default int countHouses(List<Building>  buildings){
         int count = 0;
 

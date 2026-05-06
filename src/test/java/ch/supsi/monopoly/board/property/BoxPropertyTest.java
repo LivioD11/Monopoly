@@ -4,6 +4,7 @@ import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.BoxAssets;
+import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoxPropertyTest {
     private Player player;
-    private BoxProperty property;
 
     private void setMockInput(String input) {
         try {
@@ -37,12 +37,12 @@ public class BoxPropertyTest {
     void setUp() {
         setMockInput("NomeUtente");
         player = new Player("TestPlayer", 'T');
-        property = new BoxProperty("TestProperty");
     }
 
     @Test
     @DisplayName("Il giocatore può acquistare la proprietà")
     void testPlayerCanBuyAProperty() {
+        BoxProperty property = new BoxProperty("TestProperty");
         Owner oldOwner = property.getOwner();
         property.buy(player);
         Owner newOwner = property.getOwner();
@@ -53,6 +53,7 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerCanNotBuyAProperty() {
+        BoxProperty property = new BoxProperty("TestProperty");
         Owner oldOwner = property.getOwner();
         player.payMoney(2000);
         property.buy(player);
@@ -65,6 +66,7 @@ public class BoxPropertyTest {
     @Test
     @DisplayName("È possibile costruire delle case")
     void testCanBuildHouses() {
+        BoxProperty property = new BoxProperty("TestProperty");
         property.build();
         property.build();
 
@@ -75,6 +77,7 @@ public class BoxPropertyTest {
     @Test
     @DisplayName("È possibile costruire un hotel")
     void testCanBuildHotels() {
+        BoxProperty property = new BoxProperty("TestProperty");
         property.build();
         property.build();
         property.build();
@@ -87,20 +90,83 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerSelectWrongOption() {
+        BoxProperty property = new BoxProperty("TestProperty");
         setMockInput("a\n3\n1\na\n");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanBuyProperty() {
+        BoxProperty property = new BoxProperty("TestProperty");
         setMockInput("1\ny\n");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanNotBuyProperty() {
+        BoxProperty property = new BoxProperty("TestProperty");
         player.payMoney(2000);
         setMockInput("1\ny\n");
         property.interact(player);
+    }
+
+    // Build
+
+    @Test
+    void testPlayerCanNotBuildOnBlack(){
+        BoxProperty property = new BoxProperty("TestProperty", Color.BLACK);
+        property.buy(player);
+        property.build();
+        int expected = 0;
+        int actual = property.getBuildings().size();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void testPlayerCanNotBuildWithoutAllProperties(){
+        BoxProperty property1 = new BoxProperty("TestProperty 1",Color.GREEN);
+        BoxProperty property2 = new BoxProperty("TestProperty 2",Color.GREEN);
+        property1.buy(player);
+        property1.build();
+        int expected = 0;
+        int actual = property1.getBuildings().size();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void testPlayerCanNotBuildWithoutFounds(){
+        BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        property.buy(player);
+        player.payMoney(2000);
+        property.build();
+        int expected = 0;
+        int actual = property.getBuildings().size();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void testPlayerCanBuildAnHouse(){
+        BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        property.buy(player);
+        player.receiveMoney(30000);
+        property.build();
+        int expected = 1;
+        int actual = property.getBuildings().size();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void testPlayerCanBuildAnHotel(){
+        BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        property.buy(player);
+        player.receiveMoney(30000);
+        property.build();
+        property.build();
+        property.build();
+        property.build();
+        property.build();
+        int expected = 1;
+        int actual = property.getBuildings().size();
+        assertEquals(expected,actual);
     }
 }
