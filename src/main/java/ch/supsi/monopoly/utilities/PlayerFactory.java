@@ -49,7 +49,7 @@ public class PlayerFactory {
      */
     private String getUniqueName() {
         while (true) {
-            String name = ScannerUtilities.getInputString("Nome: ");
+            String name = ScannerUtilities.getInputString("Nome: ").toUpperCase();
             if (isNameAvailable(name)) return name;
             System.out.println("Errore: Nome già occupato.");
         }
@@ -62,7 +62,7 @@ public class PlayerFactory {
      */
     private char getUniqueSign() {
         while (true) {
-            char sign = ScannerUtilities.getInputChar("Simbolo: ");
+            char sign = Character.toUpperCase(ScannerUtilities.getInputChar("Simbolo: "));
             if (isSignAvailable(sign)) return sign;
             System.out.println("Errore: Simbolo già occupato.");
         }
