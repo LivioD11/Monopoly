@@ -34,14 +34,17 @@ public class PropertyManagerTest {
 
         boolean property1EqualsProperty2 = p1.getColor().equals(p2.getColor());
         boolean property1EqualsProperty3 = p1.getColor().equals(p3.getColor());
+        System.out.println(property1EqualsProperty2);
+        System.out.println(property1EqualsProperty3);
         boolean expectedHasAllProperties = !(property1EqualsProperty3 || property1EqualsProperty2);
+
         boolean actualHasAllProperties = PropertyManager.getIstance().hasAllPropertiesOfColor(p1,player);
 
         p1.buy(player);
 
         System.out.println(
                 "\n"+
-                (PropertyManager.getIstance().hasAllPropertiesOfColor(p1,player) ?
+                (actualHasAllProperties ?
                         TextFormatter.color("Ha tutte le proprietà di quel colore", Color.GREEN) :
                         TextFormatter.color("Non ha tutte le proprietà di quel colore", Color.RED)
                 )+

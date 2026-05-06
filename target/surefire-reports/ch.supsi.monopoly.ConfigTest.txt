@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: ch.supsi.monopoly.GameTest
+Test set: ch.supsi.monopoly.ConfigTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in ch.supsi.monopoly.GameTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in ch.supsi.monopoly.ConfigTest

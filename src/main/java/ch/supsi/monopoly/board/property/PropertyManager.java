@@ -32,9 +32,14 @@ public class PropertyManager {
 
     public boolean hasAllPropertiesOfColor(BoxProperty actualProperty, Player player){
         Color color = actualProperty.getColor();
-        for(BoxProperty property : properties)
+        for(BoxProperty property : properties){
+            if(actualProperty.equals(property))
+                continue;
+
             if(color.equals(property.getColor()) && !player.equals(property.getOwner()))
                 return false;
+        }
+
         return true;
     }
 

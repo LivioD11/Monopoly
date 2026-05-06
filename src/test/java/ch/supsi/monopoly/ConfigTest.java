@@ -39,13 +39,11 @@ class ConfigTest {
 
     @Test
     void testGetBoolean() {
-        System.setProperty("test.bool", "true");
         assertTrue(Config.getBoolean("test.bool", false));
 
         System.setProperty("test.bool", "false");
         assertFalse(Config.getBoolean("test.bool", true));
 
-        // Se la chiave non esiste
         assertTrue(Config.getBoolean("non.existent", true));
 
         System.clearProperty("test.bool");
