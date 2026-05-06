@@ -1,6 +1,8 @@
 package ch.supsi.monopoly.board.property;
 
+import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.PlayerStatus;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 
@@ -41,6 +43,17 @@ public class PropertyManager {
         }
 
         return true;
+    }
+
+    public void checkProperties(){
+        for(BoxProperty property:properties){
+            if(property.getIsPurchasable())
+                continue;
+
+            PlayerStatus status =((Player) property.getOwner()).getStatus();
+            if(status.equals(PlayerStatus.BROKE) || status.equals(PlayerStatus.DEFEATED))
+                property.bankGetbackProperty();
+        }
     }
 
     @Override

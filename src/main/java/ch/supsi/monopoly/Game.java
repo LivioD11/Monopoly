@@ -4,6 +4,7 @@ import ch.supsi.monopoly.board.Board;
 import ch.supsi.monopoly.board.Box;
 import ch.supsi.monopoly.board.BoxStart;
 import ch.supsi.monopoly.board.jail.BoxJail;
+import ch.supsi.monopoly.board.property.PropertyManager;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.*;
@@ -155,6 +156,7 @@ public class Game {
 
     protected void tick(){
         BoxJail.getInstance().processSentences();
+        PropertyManager.getIstance().checkProperties();
     }
 
     // Getters

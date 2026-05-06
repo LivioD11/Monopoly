@@ -12,6 +12,8 @@ public interface Buildable {
 
     boolean getIsBuildable();
 
+    void bankGetbackProperty();
+
     default int countHouses(List<Building>  buildings){
         int count = 0;
 

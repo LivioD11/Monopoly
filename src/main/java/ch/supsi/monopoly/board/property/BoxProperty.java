@@ -184,6 +184,9 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
             return;
         }
     }
+    public void bankGetbackProperty(){
+        this.owner = Bank.getInstance();
+    }
 
     public void tax(Player player){
         player.payMoney(this.getValue());
