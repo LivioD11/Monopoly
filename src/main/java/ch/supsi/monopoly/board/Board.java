@@ -67,7 +67,8 @@ public class Board {
 
                 nomeIndex++;
 
-                String colorfulName = TextFormatter.color(name, Color.random());
+                // TODO: modificare
+                String colorfulName = name;//TextFormatter.color(name, Color.random());
                 boxes[i] = new BoxProperty(colorfulName);
             }
         }

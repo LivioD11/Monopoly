@@ -40,6 +40,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         this.buildings = new ArrayList<>();
         this.price = generatePrice();
         this.level = DevelopmentLevel.EMPTY;
+        PropertyManager.getIstance().addProperty(this);
     }
 
     /**

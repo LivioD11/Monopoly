@@ -4,6 +4,7 @@ import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
 
 
@@ -14,6 +15,7 @@ public abstract class Box {
     protected String name;
     protected String description;
     protected Owner owner;
+    protected Color color;
     protected String[] representation;
 
 
@@ -36,6 +38,7 @@ public abstract class Box {
         this.name = name;
         this.description = "Paga "+this.value;
         this.owner = Bank.getInstance();
+        this.color = Color.random();
         this.updateRepresentation();
     }
 
@@ -110,4 +113,6 @@ public abstract class Box {
     public String getDescription(){
         return this.description;
     }
+
+    public Color getColor(){ return this.color; }
 }

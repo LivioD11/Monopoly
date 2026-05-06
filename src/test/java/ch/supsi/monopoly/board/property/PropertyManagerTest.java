@@ -1,15 +1,53 @@
 package ch.supsi.monopoly.board.property;
 
+import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PropertyManagerTest {
+
+    @BeforeEach
+    public void setUp(){
+        PropertyManager.getIstance().reset();
+    }
+
     @Test
-    public void testIncrementSum() {
-        int expected = 2;
-        PropertyManager.getIstance().increment();
-        PropertyManager.getIstance().increment();
-        assertEquals(expected, PropertyManager.getIstance().getProva());
+    public void testToString() {
+        BoxProperty p1 = new BoxProperty("Proprietà 1");
+        BoxProperty p2 = new BoxProperty("Proprietà 2");
+        BoxProperty p3 = new BoxProperty("Proprietà 3");
+
+        System.out.println(PropertyManager.getIstance().toString());
+    }
+
+    @Test
+    public void testHasAllColorProperties(){
+        Player player = new Player("Test Player", 'T');
+
+        BoxProperty p1 = new BoxProperty("Proprietà 1");
+        BoxProperty p2 = new BoxProperty("Proprietà 2");
+        BoxProperty p3 = new BoxProperty("Proprietà 3");
+
+        boolean property1EqualsProperty2 = p1.getColor().equals(p2.getColor());
+        boolean property1EqualsProperty3 = p1.getColor().equals(p3.getColor());
+        boolean expectedHasAllProperties = !(property1EqualsProperty3 || property1EqualsProperty2);
+        boolean actualHasAllProperties = PropertyManager.getIstance().hasAllPropertiesOfColor(p1,player);
+
+        p1.buy(player);
+
+        System.out.println(
+                "\n"+
+                (PropertyManager.getIstance().hasAllPropertiesOfColor(p1,player) ?
+                        TextFormatter.color("Ha tutte le proprietà di quel colore", Color.GREEN) :
+                        TextFormatter.color("Non ha tutte le proprietà di quel colore", Color.RED)
+                )+
+                "\n");
+        System.out.println(PropertyManager.getIstance().toString());
+
+        assertEquals(expectedHasAllProperties,actualHasAllProperties);
     }
 }
