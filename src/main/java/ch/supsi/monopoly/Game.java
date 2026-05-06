@@ -67,12 +67,33 @@ public class Game {
     private void play() {
         board.draw();
         while (!isGameOver) {
-            Player currentPlayer = players[turnIndex % PLAYERS_NUMBER];
-            String description = TextFormatter.color("TURNO DI "+currentPlayer.getName().toUpperCase(),Color.CYAN);
-            menu.setDescription(description);
-            menu.displayAndSelect();
+            this.executeRound();
         }
         System.out.println("\n--- GARA CONCLUSA ---");
+    }
+
+    /**
+     * Esegue un giro completo: ogni giocatore effettua un turno.
+     */
+    private void executeRound() {
+        System.out.println(TextFormatter.color("\n--- INIZIO NUOVO GIRO ---", Color.PURPLE));
+
+        for (int i = 0; i < PLAYERS_NUMBER; i++) {
+            // Se qualcuno è andato in bancarotta durante il giro, fermiamo tutto
+            if (isGameOver) break;
+
+            // Impostiamo l'indice del turno corrente per il giocatore i-esimo
+            this.turnIndex = i;
+            Player currentPlayer = players[turnIndex];
+
+            String description = TextFormatter.color("TURNO DI " + currentPlayer.getName().toUpperCase(), Color.CYAN);
+            menu.setDescription(description);
+
+            // Visualizza il menu e attendi che il giocatore scelga "Tira dadi"
+            menu.displayAndSelect();
+
+            this.tick();
+        }
     }
 
     /**
@@ -130,6 +151,10 @@ public class Game {
      */
     private boolean checkEqualityDice(int roll1, int roll2) {
         return roll1 == roll2;
+    }
+
+    protected void tick(){
+        BoxJail.getInstance().processSentences();
     }
 
     // Getters
