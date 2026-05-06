@@ -70,10 +70,10 @@ public class GameTest {
         int actualPlayerCount = game.getPlayers().length;
         Player[] actualPlayers = game.getPlayers();
         assertEquals(extectedPlayerCount, actualPlayerCount);
-        assertEquals("a",actualPlayers[0].getName());
-        assertEquals("b",actualPlayers[1].getName());
-        assertEquals("c",actualPlayers[2].getName());
-        assertEquals("d",actualPlayers[3].getName());
+        assertEquals("A",actualPlayers[0].getName());
+        assertEquals("B",actualPlayers[1].getName());
+        assertEquals("C",actualPlayers[2].getName());
+        assertEquals("D",actualPlayers[3].getName());
     }
 
     @Test

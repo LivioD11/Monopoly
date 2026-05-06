@@ -216,7 +216,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     public boolean getIsPurchasable(){
-        return !(owner instanceof Bank);
+        return (owner instanceof Bank);
     }
 
     public Menu getMenu() {

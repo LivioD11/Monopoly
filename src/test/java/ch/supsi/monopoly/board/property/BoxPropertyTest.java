@@ -110,6 +110,14 @@ public class BoxPropertyTest {
         property.interact(player);
     }
 
+    @Test
+    void testPropertyIsPurchasable() {
+        BoxProperty property = new BoxProperty("TestProperty");
+        boolean expected = true;
+        boolean actual = property.getIsPurchasable();
+        assertEquals(expected,actual);
+    }
+
     // Build
 
     @Test

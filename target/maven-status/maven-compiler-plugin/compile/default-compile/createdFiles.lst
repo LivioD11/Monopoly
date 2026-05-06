@@ -6,7 +6,6 @@ ch/supsi/monopoly/Bank.class
 ch/supsi/monopoly/Dice.class
 ch/supsi/monopoly/Game.class
 ch/supsi/monopoly/board/property/Hotel.class
-ch/supsi/monopoly/board/property/PropertyOption.class
 ch/supsi/monopoly/PlayerStatus.class
 ch/supsi/monopoly/utilities/ScannerUtilities.class
 ch/supsi/monopoly/board/BoxAssets.class
