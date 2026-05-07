@@ -3,6 +3,8 @@ package ch.supsi.monopoly.board.jail;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.Box;
 import ch.supsi.monopoly.board.interfaces.Jailable;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
 
 /**
  * Rappresenta la casella "Vai in Prigione" nel tabellone del Monopoly.
@@ -29,7 +31,8 @@ public class BoxGoToJail extends Box implements Jailable {
      */
     @Override
     public void sendToJail(Player player) {
-        BoxJail.getInstance();
+        System.out.println(player.toString() + TextFormatter.color(" va in prigione", Color.YELLOW));
+        BoxJail.getInstance().addSentence(player);
         player.goToPrison();
     }
 

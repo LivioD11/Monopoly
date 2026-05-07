@@ -102,16 +102,14 @@ public class Game {
      */
     protected void executeTurn() {
         board.draw();
-        Player player = players[turnIndex % PLAYERS_NUMBER];
+        Player player = players[this.turnIndex];
 
-        int roll1 = Dice.roll();
-        int roll2 = Dice.roll();
-        int roll = roll1 + roll2;
+        Dice.RollResult result = Dice.rollMultiple(2);
 
-        System.out.println("\n" + player.toString() + " ha lanciato i dadi: " + roll);
+        System.out.println("\n" + player.toString() + " ha lanciato i dadi: " + result.total());
 
         // Se il giocatore è inattivo (prigione) e non fa un doppio, il turno finisce
-        if (player.getStatus().equals(PlayerStatus.INACTIVE) && !checkEqualityDice(roll1, roll2)) {
+        if (player.getStatus().equals(PlayerStatus.INACTIVE) && !result.allSame()) {
             turnIndex++; // Incremento il turno per passare al prossimo
             return;
         }
@@ -122,7 +120,7 @@ public class Game {
         }
 
         int oldPos = player.getPosition();
-        player.move(roll);
+        player.move(result.total());
         int newPos = player.getPosition();
 
         // Logica Passaggio dal Via
@@ -144,17 +142,7 @@ public class Game {
         }
     }
 
-    /**
-     * Verifica se i due dadi hanno lo stesso valore.
-     * @param roll1 Risultato primo dado.
-     * @param roll2 Risultato secondo dado.
-     * @return true se i dadi sono uguali.
-     */
-    private boolean checkEqualityDice(int roll1, int roll2) {
-        return roll1 == roll2;
-    }
-
-    protected void tick(){
+    private void tick(){
         BoxJail.getInstance().processSentences();
         PropertyManager.getIstance().checkProperties();
     }

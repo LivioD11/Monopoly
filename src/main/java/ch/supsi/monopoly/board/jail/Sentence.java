@@ -2,6 +2,8 @@ package ch.supsi.monopoly.board.jail;
 
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
 
 /**
  * Gestisce la "condanna" di un giocatore all'interno della prigione.
@@ -35,6 +37,8 @@ public class Sentence {
         this.jailTimeLeft = JAIL_TIME;
         this.prisoner = prisoner;
         prisoner.setInactive();
+
+        System.out.println(prisoner.toString() + TextFormatter.color(" condanna di "+JAIL_TIME + " giorni", Color.YELLOW));
     }
 
     /**
@@ -44,11 +48,22 @@ public class Sentence {
     public void serveTime(){
         if (jailTimeLeft > 0) {
             jailTimeLeft--;
+            System.out.println(prisoner.toString() + TextFormatter.color(String.format(" (%d) giorni di condanna rimanenti",jailTimeLeft),Color.PURPLE));
         }
 
-        if (jailTimeLeft == 0 && this.canBeReleased()) {
-            endDetention();
+        if(jailTimeLeft != 0) {
+            return;
         }
+
+        System.out.println(prisoner.toString() + TextFormatter.color(String.format(" condanna terminata!", jailTimeLeft), Color.BLUE));
+
+        if (this.canBeReleased()) {
+            endDetention();
+            return;
+        }
+
+        System.out.println(prisoner.toString() + TextFormatter.color(" muore in prigione!",Color.RED));
+        prisoner.setDefeated();
     }
 
     /**
@@ -76,6 +91,7 @@ public class Sentence {
      * Imposta lo stato del giocatore come attivo, permettendogli di tornare in gioco.
      */
     public void releasePrisoner(){
+        System.out.println(prisoner.toString() + TextFormatter.color(" viene rilasciato!",Color.GREEN));
         prisoner.setActive();
     }
 

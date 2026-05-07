@@ -83,6 +83,11 @@ public class Player implements Owner{
             this.status = PlayerStatus.INACTIVE;
     }
 
+    public void setDefeated(){
+        if(this.status.equals(PlayerStatus.INACTIVE))
+            this.status = PlayerStatus.DEFEATED;
+    }
+
     public void goToPrison(){
         this.position = Board.INDEX_JAIL;
     }

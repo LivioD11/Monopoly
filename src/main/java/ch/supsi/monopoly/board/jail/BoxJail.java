@@ -61,10 +61,10 @@ public class BoxJail extends Box {
      * Rimuove dalla lista interna tutte le condanne associate a giocatori
      * che sono tornati in stato {@link PlayerStatus#ACTIVE}.
      */
-    public void cleanSentences(){
-        for(Sentence sentence: sentences)
-            if(sentence.getPrisoner().getStatus().equals(PlayerStatus.ACTIVE))
-                sentences.remove(sentence);
+    public void cleanSentences() {
+        sentences.removeIf(sentence ->
+                sentence.getPrisoner().getStatus().equals(PlayerStatus.ACTIVE)
+        );
     }
 
     /**
