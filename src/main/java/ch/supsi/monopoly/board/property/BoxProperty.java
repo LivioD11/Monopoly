@@ -150,8 +150,10 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         // Logica per le case
         if (level == DevelopmentLevel.EMPTY || level == DevelopmentLevel.HOUSES) {
             building = new House();
-            if(owner.getBalance()<building.getPrice())
+            if(owner.getBalance()<building.getPrice()){
+                System.out.println(owner.toString() + TextFormatter.color(" saldo insufficiente",Color.RED));
                 return;
+            }
 
             int currentHouses = 0;
             for(Building b : buildings) if(b instanceof House) currentHouses++;
