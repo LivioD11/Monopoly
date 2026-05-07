@@ -56,14 +56,6 @@ public class GameTest {
     }
 
     @Test
-    @DisplayName("L'indice del turno deve incrementare dopo executeTurn")
-    void testTurnIncrement() {
-        int initialTurn = game.getTurnIndex();
-        game.executeTurn();
-        assertEquals(initialTurn + 1, game.getTurnIndex());
-    }
-
-    @Test
     @DisplayName("Devono essere presenti 4 giocatori")
     void testGameHasFourPlayers() {
         int extectedPlayerCount = 4;

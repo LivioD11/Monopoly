@@ -31,9 +31,9 @@ class PlayerFactoryTest {
         Player[] players = factory.setup();
 
         assertEquals(2, players.length);
-        assertEquals("Mario", players[0].getName());
+        assertEquals("MARIO", players[0].getName());
         assertEquals('M', players[0].getSign());
-        assertEquals("Luigi", players[1].getName());
+        assertEquals("LUIGI", players[1].getName());
         assertEquals('L', players[1].getSign());
     }
 
@@ -48,8 +48,8 @@ class PlayerFactoryTest {
 
         Player[] players = factory.setup();
 
-        assertEquals("Mario", players[0].getName());
-        assertEquals("Luigi", players[1].getName(), "Il secondo giocatore dovrebbe chiamarsi Luigi dopo il fallimento del primo tentativo");
+        assertEquals("MARIO", players[0].getName());
+        assertEquals("LUIGI", players[1].getName(), "Il secondo giocatore dovrebbe chiamarsi Luigi dopo il fallimento del primo tentativo");
     }
 
     @Test
@@ -77,6 +77,6 @@ class PlayerFactoryTest {
         Player[] players = factory.setup();
 
         assertNotEquals(players[0].getName(), players[1].getName());
-        assertEquals("Luigi", players[1].getName());
+        assertEquals("LUIGI", players[1].getName());
     }
 }

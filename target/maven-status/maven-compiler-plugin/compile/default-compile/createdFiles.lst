@@ -32,6 +32,7 @@ ch/supsi/monopoly/board/interfaces/Purchasable.class
 ch/supsi/monopoly/board/Board.class
 ch/supsi/monopoly/cli/Color.class
 ch/supsi/monopoly/board/interfaces/Buildable.class
+ch/supsi/monopoly/Dice$RollResult.class
 ch/supsi/monopoly/utilities/Option.class
 ch/supsi/monopoly/board/property/BoxProperty.class
 ch/supsi/monopoly/board/property/DevelopmentLevel.class

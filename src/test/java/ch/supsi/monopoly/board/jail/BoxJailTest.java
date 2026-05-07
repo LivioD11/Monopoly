@@ -1,5 +1,6 @@
 package ch.supsi.monopoly.board.jail;
 
+import ch.supsi.monopoly.Dice;
 import ch.supsi.monopoly.Game;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.PlayerStatus;
@@ -107,16 +108,27 @@ public class BoxJailTest {
     }
 
     @Test
-    void testPlayerCanBeReleasedRollingDices() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        int position = indexGoToJail - indexStart;
-        player.payMoney(1999);
-        player.move(position);
-        game.getBoard().getBox(player.getPosition()).applyEffect(player);
+    void testPlayerCanBeReleasedRollingDices() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
+        // Mockiamo il metodo statico Dice.rollMultiple
+        try (var mockedDice = org.mockito.Mockito.mockStatic(Dice.class)) {
+            // Forza un "doppio" (es. totale 8, allSame true)
+            mockedDice.when(() -> Dice.rollMultiple(2))
+                    .thenReturn(new Dice.RollResult(8, true));
 
-        java.lang.reflect.Method method = Game.class.getDeclaredMethod("tick");
-        method.setAccessible(true);
-        method.invoke(game);
 
-        assertEquals(PlayerStatus.ACTIVE, player.getStatus());
+            int position = indexGoToJail - indexStart;
+            player.move(position);
+            game.getBoard().getBox(player.getPosition()).applyEffect(player);
+
+
+
+            // Esegui la logica del turno
+            java.lang.reflect.Method method = Game.class.getDeclaredMethod("executeTurn");
+            method.setAccessible(true);
+            method.invoke(game);
+
+            // Verifica: il giocatore deve essere tornato ACTIVE grazie al doppio
+            assertEquals(PlayerStatus.ACTIVE, player.getStatus());
+        }
     }
 }

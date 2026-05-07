@@ -136,9 +136,6 @@ public class Game {
         if (player.isBroke()) {
             System.out.println(player.toString() + " è andato in bancarotta!");
             isGameOver = true;
-        } else {
-
-            turnIndex++;
         }
     }
 
