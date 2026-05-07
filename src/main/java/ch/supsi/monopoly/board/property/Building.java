@@ -13,14 +13,17 @@ package ch.supsi.monopoly.board.property;
  */
 public abstract class Building {
 
-    /** Il costo di costruzione dell'edificio. */
+    /**
+     * Il costo di costruzione dell'edificio.
+     */
     protected int price;
+    protected int value;
 
     /**
      * Inizializza un nuovo edificio con il prezzo specificato.
      * * @param price Il costo necessario per acquistare e costruire questo edificio.
      */
-    public Building(int price){
+    public Building(int price) {
         this.price = price;
     }
 
@@ -28,7 +31,11 @@ public abstract class Building {
      * Restituisce il prezzo dell'edificio.
      * * @return Il valore intero rappresentante il costo di costruzione.
      */
-    public int getPrice(){
+    public int getPrice() {
         return this.price;
+    }
+
+    public int getValue() {
+        return this.value;
     }
 }

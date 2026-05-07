@@ -10,6 +10,7 @@ import ch.supsi.monopoly.board.interfaces.Purchasable;
 import ch.supsi.monopoly.board.interfaces.Taxable;
 import ch.supsi.monopoly.cli.Action;
 import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.Display;
 import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.Menu;
 import ch.supsi.monopoly.utilities.Option;
@@ -38,9 +39,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     public BoxProperty(String name) {
         super(name);
         this.buildings = new ArrayList<>();
+        this.setDescription("Paga: "+getValue());
         this.price = generatePrice();
         this.level = DevelopmentLevel.EMPTY;
         PropertyManager.getIstance().addProperty(this);
+        this.updateRepresentation();
     }
 
     protected BoxProperty(String name, Color color){
@@ -76,38 +79,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     @Override
     protected void updateRepresentation(){
-        this.representation  = new String[]{
-                "-".repeat(24),
-                "|"+ TextFormatter.padAnsi(this.name,22)+"|",
-                this.value > 0 ? String.format("|%-22s|", this.description) : String.format("|%-22s|", ""),
-                String.format("|%-22s|", drawOwner()),
-                String.format("|%-22s|", ""),
-                "|"+ TextFormatter.padAnsiAndEmoji(this.drawBuildings(),22)+"|",
-                "-".repeat(24),
-        };
-    }
-
-    private String drawOwner(){
-        String output = "Price: "+TextFormatter.formatCurrency(this.price);
-        if(!getIsPurchasable())
-            output = owner.getName();
-        return output;
-    }
-
-    private String drawBuildings(){
-        String output = "";
-        if(level == null)
-            return output;
-
-        if(level.equals(DevelopmentLevel.HOUSES)){
-            for(Building building : this.buildings)
-                output += "\uD83C\uDFE0";
-            output += " ("+this.buildings.size()+" case)";
-        }
-
-        if(level.equals(DevelopmentLevel.HOTEL))
-            output += "\uD83C\uDFE8 (hotel)";
-        return output;
+        this.representation  = Display.boxPropertyRepresentation(this);
     }
 
     private static int generatePrice() {
@@ -212,6 +184,16 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     // Getters
+
+    @Override
+    public int getValue(){
+        int value = this.value;
+        if(buildings==null)
+            return value;
+        for (Building building: buildings)
+            value += building.getValue();
+        return value;
+    }
 
     public Owner getOwner(){
         return  this.owner;

@@ -5,7 +5,7 @@ import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.Color;
-import ch.supsi.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.cli.Display;
 
 
 public abstract class Box {
@@ -36,7 +36,7 @@ public abstract class Box {
     public Box(int value, String name) {
         this.value = value;
         this.name = name;
-        this.description = "Paga "+this.value;
+        this.description = "Paga: "+this.getValue();
         this.owner = Bank.getInstance();
         this.color = Color.random();
         this.updateRepresentation();
@@ -51,15 +51,7 @@ public abstract class Box {
     }
 
     protected void updateRepresentation(){
-        this.representation  = new String[]{
-                "-".repeat(24),
-                "|"+ TextFormatter.padAnsi(this.name,22)+"|",
-                this.value > 0 ? String.format("|%-22s|", this.description) : String.format("|%-22s|", ""),
-                this.owner != Bank.getInstance() ? String.format("|%-22s|", this.owner.toString()) : String.format("|%-22s|", ""),
-                String.format("|%-22s|", ""),
-                String.format("|%-22s|", ""),
-                "-".repeat(24),
-        };
+        this.representation = Display.boxRepresentation(name,description,value,owner,color);
     }
 
     @Override
