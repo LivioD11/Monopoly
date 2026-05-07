@@ -61,6 +61,6 @@ class BoxStationTest {
     void testInheritedDescription() {
         // Verifica che la descrizione di default di Box sia presente
         int val = boxStation.getValue();
-        assertEquals("Paga " + val, boxStation.getDescription());
+        assertEquals("Paga: " + val, boxStation.getDescription());
     }
 }

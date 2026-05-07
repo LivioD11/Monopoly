@@ -5,7 +5,6 @@ ch/supsi/monopoly/utilities/PlayerFactoryTest.class
 ch/supsi/monopoly/utilities/ScannerUtilitiesTest.class
 ch/supsi/monopoly/board/BoxLuxuryTest.class
 ch/supsi/monopoly/utilities/MenuTest.class
-ch/supsi/monopoly/board/BoxPropertyTest.class
 ch/supsi/monopoly/GameTest.class
 ch/supsi/monopoly/board/property/BoxPropertyTest.class
 ch/supsi/monopoly/utilities/FileUtilitiesTest.class

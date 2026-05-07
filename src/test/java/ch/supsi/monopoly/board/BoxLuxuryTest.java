@@ -50,7 +50,7 @@ class BoxLuxuryTest {
     @Test
     void testDescriptionInheritedFromBox() {
         // BoxLuxury chiama super(200, name), quindi Box imposta "Paga 200"
-        assertEquals("Paga 200", boxLuxury.getDescription(),
+        assertEquals("Paga: 200", boxLuxury.getDescription(),
                 "La descrizione generata automaticamente dal costruttore Box non è corretta");
     }
 

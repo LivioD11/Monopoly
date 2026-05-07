@@ -48,7 +48,7 @@ class BoxParkingTest {
     void testDescriptionDefaultsToValue() {
         // Box genera automaticamente "Paga [valore]" se non sovrascritto
         int value = boxParking.getValue();
-        assertEquals("Paga " + value, boxParking.getDescription());
+        assertEquals("Paga: " + value, boxParking.getDescription());
     }
 
     @Test
