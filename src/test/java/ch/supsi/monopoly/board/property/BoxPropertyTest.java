@@ -3,7 +3,6 @@ package ch.supsi.monopoly.board.property;
 import ch.supsi.monopoly.Bank;
 import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
-import ch.supsi.monopoly.board.BoxAssets;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -161,6 +159,10 @@ public class BoxPropertyTest {
         property.build();
         int expected = 1;
         int actual = property.getBuildings().size();
+
+        for(int i=0;i<7;i++)
+            System.out.println(property.draw(i,null));
+
         assertEquals(expected,actual);
     }
 

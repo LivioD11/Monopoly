@@ -37,7 +37,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
      * @param name Nome della casella.
      */
     public BoxProperty(String name) {
-        super(name);
+        super("(P) "+name);
         this.buildings = new ArrayList<>();
         this.setDescription("Paga: "+getValue());
         this.price = generatePrice();
@@ -95,8 +95,10 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         if(!(owner instanceof Bank))
             return false;
 
-        if(price>buyer.getBalance())
+        if(price>buyer.getBalance()){
+            System.out.println(TextFormatter.color("Saldo insufficiente",Color.RED));
             return false;
+        }
 
         buyer.payMoney(price);
         this.owner = buyer;
@@ -158,6 +160,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
             return;
         }
     }
+
     public void bankGetbackProperty(){
         this.owner = Bank.getInstance();
     }
@@ -172,15 +175,24 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     @Override
     public void interact(Player player) {
-        this.menu = new Menu(this.toString());
+        Color balanceColor = (player.getBalance() >= getPrice()) ? Color.GREEN : Color.RED;
+        String message = String.format(""" 
+                %s
+                
+                Saldo attuale: %s""",
+                this.toString(),
+                TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()),balanceColor));
+        this.menu = new Menu(message,false,true);
         this.setupMenu(player);
         menu.displayAndSelect();
     }
 
     @Override
     public String toString() {
-        return String.format("[ Cella proprietà: %s | Tassa: %d CHF ]",
-                this.name, this.value);
+        return String.format("[ %s ]\n- Tassa: %s\n- Prezzo: %s",
+                this.name,
+                TextFormatter.color(TextFormatter.formatCurrency(this.value),Color.YELLOW),
+                TextFormatter.color(TextFormatter.formatCurrency(this.price),Color.YELLOW));
     }
 
     // Getters

@@ -17,6 +17,7 @@ public class Menu {
     private String description;
     private List<Option> options;
     private boolean removeQuit;
+    private boolean needToQuit;
 
     /**
      * Inizializza un nuovo Menu con una lista di opzioni vuota.
@@ -30,6 +31,11 @@ public class Menu {
     public Menu(String description, boolean removeQuit){
         this(description);
         this.removeQuit = removeQuit;
+    }
+
+    public Menu(String description, boolean removeQuit, boolean needToQuit){
+        this(description,removeQuit);
+        this.needToQuit = needToQuit;
     }
 
     /**
@@ -84,7 +90,8 @@ public class Menu {
                 int choice = Integer.parseInt(input);
                 if (choice >= 1 && choice <= options.size()) {
                     options.get(choice - 1).trigger();
-                    break; // Esegue e chiude il menu
+                    if(!needToQuit)
+                        break; // Esegue e chiude il menu
                 } else {
                     System.out.println(TextFormatter.color("Errore: Numero fuori range.", Color.RED));
                 }
@@ -92,6 +99,10 @@ public class Menu {
                 System.out.println(TextFormatter.color("Errore: Inserisci un numero o 'q'.", Color.RED));
             }
         }
+    }
+
+    private void reset(){
+
     }
 
     public void setDescription(String description){

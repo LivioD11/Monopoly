@@ -36,8 +36,8 @@ public final class Display {
                 "|"+ TextFormatter.padAnsi(name,22)+"|",
                 property.getValue() > 0 ? String.format("|%-22s|", property.getDescription()) : String.format("|%-22s|", ""),
                 String.format("|%-22s|", drawOwner(property.getOwner(), property.getPrice())),
-                String.format("|%-22s|", ""),
                 "|"+ TextFormatter.padAnsiAndEmoji(drawBuildings(property.getLevel(), property.getBuildings()),22)+"|",
+                String.format("|%-22s|", ""),
                 "-".repeat(24),
         };
         return representation;
