@@ -89,22 +89,25 @@ public class BoxPropertyTest {
     @Test
     void testPlayerSelectWrongOption() {
         BoxProperty property = new BoxProperty("TestProperty");
-        setMockInput("a\n3\n1\na\n");
+        setMockInput("a\n3\n1\na\nq\n");
         property.interact(player);
     }
 
     @Test
     void testPlayerCanBuyProperty() {
         BoxProperty property = new BoxProperty("TestProperty");
-        setMockInput("1\ny\n");
+        setMockInput("1\ny\n1\ny\nq\n");
         property.interact(player);
+
+        for(int i=0;i<7;i++)
+            System.out.println(property.draw(i,null));
     }
 
     @Test
     void testPlayerCanNotBuyProperty() {
         BoxProperty property = new BoxProperty("TestProperty");
         player.payMoney(2000);
-        setMockInput("1\ny\n");
+        setMockInput("1\ny\nq\n");
         property.interact(player);
     }
 

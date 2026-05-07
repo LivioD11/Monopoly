@@ -18,6 +18,7 @@ public class Menu {
     private List<Option> options;
     private boolean removeQuit;
     private boolean needToQuit;
+    private Runnable action;
 
     /**
      * Inizializza un nuovo Menu con una lista di opzioni vuota.
@@ -43,7 +44,9 @@ public class Menu {
      * * @param option L'oggetto {@link Option} da aggiungere.
      */
     public void addOption(Option option) {
-        options.add(option);
+        if (!options.contains(option)) {
+            options.add(option);
+        }
     }
 
     /**
@@ -91,7 +94,9 @@ public class Menu {
                 if (choice >= 1 && choice <= options.size()) {
                     options.get(choice - 1).trigger();
                     if(!needToQuit)
-                        break; // Esegue e chiude il menu
+                        // Chiudo il menu
+                        break;
+                    this.reset();
                 } else {
                     System.out.println(TextFormatter.color("Errore: Numero fuori range.", Color.RED));
                 }
@@ -100,9 +105,13 @@ public class Menu {
             }
         }
     }
+    public void setReset(Runnable action){
+        this.action=action;
+    }
 
     private void reset(){
-
+        options.clear();
+        action.run();
     }
 
     public void setDescription(String description){

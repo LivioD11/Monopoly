@@ -1,5 +1,7 @@
 package ch.supsi.monopoly.utilities;
 
+import java.util.Objects;
+
 /**
  * Rappresenta una singola voce all'interno di un menu.
  * Ogni opzione è composta da un messaggio descrittivo e un'azione eseguibile.
@@ -35,5 +37,18 @@ public class Option {
      */
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Option other)) return false;
+
+        return Objects.equals(message, other.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(message);
     }
 }
