@@ -32,6 +32,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     private List<Building> buildings;
     private Building tmpBuilding;
     private DevelopmentLevel level;
+    private Player interactedPlayer;
 
     /**
      * Costruttore della proprietà. Genera un prezzo casuale e inizializza gli edifici.
@@ -67,14 +68,14 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         if (player.equals(owner) && PropertyManager.getInstance().hasAllPropertiesOfColor(this, player)) {
             menu.addOption(new Option("Costruire nella proprietà", () -> {
                 if (Action.confirmAction("Costruire nella proprietà")) { // Corretto "priprietà"
-                    this.build(player);
+                    this.build();
                 }
             }));
         }
     }
 
     @Override
-    protected void updateRepresentation(){
+    public void updateRepresentation(){
         this.representation  = Display.boxPropertyRepresentation(this);
     }
 
@@ -102,36 +103,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         return true;
     }
 
-    /**
-     * Aggiunge una casa o un hotel alla proprietà rispettando i limiti.
-     */
-    public void build(Player player) {
-        if (!getIsBuildable()) return;
 
-        if (canBuildHouse()) {
-            executeBuild(player, new House(), DevelopmentLevel.HOUSES, "una casa");
-        } else if (canBuildHotel()) {
-            executeBuild(player, new Hotel(), DevelopmentLevel.HOTEL, "un albergo");
-        }
-    }
-
-    private void executeBuild(Player player, Building building, DevelopmentLevel nextLevel, String buildingName) {
-        if (player.getBalance() < building.getPrice()) {
-            System.out.println(owner + TextFormatter.color(" saldo insufficiente", Color.RED));
-            return;
-        }
-
-        if (nextLevel == DevelopmentLevel.HOTEL) {
-            buildings.clear(); // Rimuove le case per far posto all'hotel
-        }
-
-        buildings.add(building);
-        level = nextLevel;
-        player.payMoney(building.getPrice());
-        updateRepresentation();
-
-        System.out.println(owner + TextFormatter.color(" ha costruito " + buildingName, Color.YELLOW));
-    }
 
     public void bankGetbackProperty(){
         this.owner = Bank.getInstance();
@@ -149,6 +121,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     @Override
     public void interact(Player player) {
+        this.interactedPlayer = player;
 
         this.menu = new Menu(setMessage(player),false,true);
         this.setupMenu(player);
@@ -182,6 +155,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
                 Saldo attuale: %s""",
                 propertyDesc.toString(),
                 TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), balanceColor));
+    }
+
+    @Override
+    public void setLevel(DevelopmentLevel level){
+        this.level = level;
     }
 
     @Override
@@ -237,6 +215,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     @Override
     public List<Building> getBuildings() {
         return this.buildings;
+    }
+
+    @Override
+    public Player getInteractedPlayer(){
+        return this.interactedPlayer;
     }
 
     public DevelopmentLevel getLevel() {

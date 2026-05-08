@@ -101,7 +101,7 @@ public class BoxPropertyTest {
     void testPlayerCanNotBuildOnBlack(){
         BoxProperty property = new BoxProperty("TestProperty", Color.BLACK);
         property.buy(player);
-        property.build(player);
+        property.build();
         int expected = 0;
         int actual = property.getBuildings().size();
         assertEquals(expected,actual);
@@ -112,7 +112,7 @@ public class BoxPropertyTest {
         BoxProperty property1 = new BoxProperty("TestProperty 1",Color.GREEN);
         BoxProperty property2 = new BoxProperty("TestProperty 2",Color.GREEN);
         property1.buy(player);
-        property1.build(player);
+        property1.build();
         int expected = 0;
         int actual = property1.getBuildings().size();
         assertEquals(expected,actual);
@@ -123,7 +123,7 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.payMoney(2000);
-        property.build(player);
+        property.build();
         int expected = 0;
         int actual = property.getBuildings().size();
         assertEquals(expected,actual);
