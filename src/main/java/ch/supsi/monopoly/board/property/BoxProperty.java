@@ -60,7 +60,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         if (getIsPurchasable()) {
             menu.addOption(new Option("Acquistare la proprietà", () -> {
                 if (Action.confirmAction("Acquistare la proprietà")) {
-                    this.buy(player);
+                    this.buy();
                 }
             }));
         }
@@ -82,28 +82,6 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     private static int generatePrice() {
         return (int) (Math.random() * (MAX_PRICE - MIN_PRICE + 1)) + MIN_PRICE;
     }
-
-    /**
-     * Gestisce l'acquisto della proprietà.
-     */
-    public boolean buy(Owner buyer) {
-        if (!getIsPurchasable()) {
-            return false;
-        }
-
-        if (price > buyer.getBalance()) {
-            System.out.println(TextFormatter.color("Saldo insufficiente", Color.RED));
-            return false;
-        }
-
-        buyer.payMoney(price);
-        this.owner = buyer;
-
-        System.out.println(String.format("%s " + TextFormatter.color("ha acquistato la proprietà", Color.YELLOW), buyer.toString()));
-        return true;
-    }
-
-
 
     public void bankGetbackProperty(){
         this.owner = Bank.getInstance();
@@ -171,6 +149,10 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     // Getters
+
+    public void setOwner(Owner owner){
+        this.owner = owner;
+    }
 
     private boolean getHasEnoughMoney(Building building) {
         return owner.getBalance() >= building.getPrice();

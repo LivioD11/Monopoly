@@ -40,7 +40,7 @@ public class PropertyManagerTest {
 
         boolean actualHasAllProperties = PropertyManager.getInstance().hasAllPropertiesOfColor(p1,player);
 
-        p1.buy(player);
+        p1.buy();
 
         System.out.println(
                 "\n"+
