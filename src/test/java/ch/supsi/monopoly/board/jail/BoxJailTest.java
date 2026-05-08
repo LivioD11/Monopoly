@@ -110,6 +110,7 @@ public class BoxJailTest {
     @Test
     void testPlayerCanBeReleasedRollingDices() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException{
         // Mockiamo il metodo statico Dice.rollMultiple
+        setMockInput("q\n");
         try (var mockedDice = org.mockito.Mockito.mockStatic(Dice.class)) {
             // Forza un "doppio" (es. totale 8, allSame true)
             mockedDice.when(() -> Dice.rollMultiple(2))

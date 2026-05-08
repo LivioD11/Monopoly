@@ -51,7 +51,7 @@ public class GameTest {
     @Test
     @DisplayName("La prima opzione deve lancaire il dado")
     void testPlayerCanRollDice() {
-        setMockInput("2\n");
+        setMockInput("2\nq\n");
         game.getMenu().displayAndSelect();
     }
 
@@ -75,7 +75,7 @@ public class GameTest {
         for(Player actualPlayer : actualPlayers)
             actualPlayer.payMoney(2000);
 
-        setMockInput("2\n");
+        setMockInput("2\nq\n");
         game.start();
 
         boolean expectedGameIsOver = true;

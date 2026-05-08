@@ -1,5 +1,8 @@
 package ch.supsi.monopoly.utilities;
 
+import ch.supsi.monopoly.cli.Color;
+import ch.supsi.monopoly.cli.TextFormatter;
+
 import java.util.Scanner;
 
 public final class ScannerUtilities {
@@ -75,9 +78,10 @@ public final class ScannerUtilities {
     }
 
     public static boolean getInputBoolean(String message){
-        message = message + " (y/N): ";
+        message = message + " (s/N): ";
+        System.out.println(TextFormatter.color(message, Color.YELLOW));
         String input = scanner.next().trim().toLowerCase();
         scanner.nextLine();
-        return input.equals("y");
+        return input.equals("s");
     }
 }

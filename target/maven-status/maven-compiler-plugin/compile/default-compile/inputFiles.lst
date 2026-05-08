@@ -9,6 +9,7 @@
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/Board.java
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/Box.java
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/BoxAssets.java
+/home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/BoxEmpty.java
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/BoxLuxury.java
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/BoxParking.java
 /home/lorenzo/Projects/Gruppo_11/src/main/java/ch/supsi/monopoly/board/BoxStart.java

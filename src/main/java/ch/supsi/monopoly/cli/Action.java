@@ -2,8 +2,6 @@ package ch.supsi.monopoly.cli;
 
 import ch.supsi.monopoly.utilities.ScannerUtilities;
 
-import java.util.Scanner;
-
 public final class Action {
 
     private Action(){
@@ -36,7 +34,6 @@ public final class Action {
     }
 
     public static boolean confirmAction(String message) {
-        // TODO: sistemare
         return ScannerUtilities.getInputBoolean(message);
     }
 }

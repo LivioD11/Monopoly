@@ -54,7 +54,8 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty");
         Owner oldOwner = property.getOwner();
         player.payMoney(2000);
-        property.buy(player);
+        setMockInput("1\ns\nq\n");
+        property.interact(player);
         Owner newOwner = property.getOwner();
 
         assertEquals(Bank.getInstance(),oldOwner);
@@ -71,7 +72,7 @@ public class BoxPropertyTest {
     @Test
     void testPlayerCanBuyProperty() {
         BoxProperty property = new BoxProperty("TestProperty");
-        setMockInput("1\ny\n1\ny\nq\n");
+        setMockInput("1\ns\n1\ns\nq\n");
         property.interact(player);
 
         for(int i=0;i<7;i++)
@@ -82,7 +83,7 @@ public class BoxPropertyTest {
     void testPlayerCanNotBuyProperty() {
         BoxProperty property = new BoxProperty("TestProperty");
         player.payMoney(2000);
-        setMockInput("1\ny\nq\n");
+        setMockInput("1\ns\nq\n");
         property.interact(player);
     }
 
@@ -134,7 +135,7 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
-        setMockInput("1\ny\nq\n");
+        setMockInput("1\ns\nq\n");
         property.interact(player);
         int expected = 1;
         int actual = property.getBuildings().size();
@@ -151,7 +152,7 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
-        setMockInput("1\ny\n1\ny\n1\ny\n1\ny\nq\n");
+        setMockInput("1\ns\n1\ns\n1\ns\n1\ns\nq\n");
         property.interact(player);
         int expected = 4;
         int actual = property.getBuildings().size();
@@ -168,7 +169,7 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
-        setMockInput("1\ny\n1\ny\n1\ny\n1\ny\n1\ny\nq\n");
+        setMockInput("1\ns\n1\ns\n1\ns\n1\ns\n1\ns\nq\n");
         property.interact(player);
         int expected = 1;
         int actual = property.getBuildings().size();
