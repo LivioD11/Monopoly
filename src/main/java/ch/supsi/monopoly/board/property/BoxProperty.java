@@ -74,7 +74,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
         if(getIsPurchasable())
             menu.addOption(option1);
-        if(player.equals(owner))
+        if(player.equals(owner) && PropertyManager.getIstance().hasAllPropertiesOfColor(this,player))
             menu.addOption(option2);
     }
 
@@ -175,7 +175,8 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     public void applyEffect(Player player) {
-        this.tax(player);
+        if(!player.equals(owner))
+            this.tax(player);
         this.interact(player);
     }
 
@@ -189,6 +190,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
             this.setupMenu(player);
         });
         menu.displayAndSelect();
+        updateRepresentation();
     }
 
     private String setMessage(Player player){
