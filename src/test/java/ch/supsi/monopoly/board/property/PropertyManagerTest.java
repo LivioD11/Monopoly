@@ -12,7 +12,7 @@ public class PropertyManagerTest {
 
     @BeforeEach
     public void setUp(){
-        PropertyManager.getIstance().reset();
+        PropertyManager.getInstance().reset();
     }
 
     @Test
@@ -21,7 +21,7 @@ public class PropertyManagerTest {
         BoxProperty p2 = new BoxProperty("Proprietà 2");
         BoxProperty p3 = new BoxProperty("Proprietà 3");
 
-        System.out.println(PropertyManager.getIstance().toString());
+        System.out.println(PropertyManager.getInstance().toString());
     }
 
     @Test
@@ -38,7 +38,7 @@ public class PropertyManagerTest {
         System.out.println(property1EqualsProperty3);
         boolean expectedHasAllProperties = !(property1EqualsProperty3 || property1EqualsProperty2);
 
-        boolean actualHasAllProperties = PropertyManager.getIstance().hasAllPropertiesOfColor(p1,player);
+        boolean actualHasAllProperties = PropertyManager.getInstance().hasAllPropertiesOfColor(p1,player);
 
         p1.buy(player);
 
@@ -49,7 +49,7 @@ public class PropertyManagerTest {
                         TextFormatter.color("Non ha tutte le proprietà di quel colore", Color.RED)
                 )+
                 "\n");
-        System.out.println(PropertyManager.getIstance().toString());
+        System.out.println(PropertyManager.getInstance().toString());
 
         assertEquals(expectedHasAllProperties,actualHasAllProperties);
     }

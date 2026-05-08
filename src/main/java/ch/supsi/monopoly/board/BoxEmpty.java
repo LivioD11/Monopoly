@@ -6,9 +6,8 @@ import ch.supsi.monopoly.cli.Color;
 public class BoxEmpty extends Box
 {
     public BoxEmpty(){
-        super("CASELLA VUOTA");
+        super("CASELLA VUOTA",Color.WHITE);
         setDescription("Non implementata");
-        color = Color.WHITE;
     }
 
     @Override

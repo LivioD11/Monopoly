@@ -1,11 +1,12 @@
 package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
 
 public class BoxParking extends Box {
 
     public BoxParking() {
-        super("PARCHEGGIO");
+        super("PARCHEGGIO", Color.WHITE);
     }
 
     @Override

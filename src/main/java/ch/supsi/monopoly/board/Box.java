@@ -33,13 +33,21 @@ public abstract class Box {
      *  COSTRUTTORI
      */
 
-    public Box(int value, String name) {
+    public Box(int value, String name, Color color) {
         this.value = value;
         this.name = name;
         this.description = "Paga: "+this.getValue();
         this.owner = Bank.getInstance();
-        this.color = Color.random();
+        this.color = color;
         this.updateRepresentation();
+    }
+
+    public Box(int value, String name){
+        this(value,name,Color.random());
+    }
+
+    public Box(String name, Color color){
+        this(generateRandomNum(),name,color);
     }
 
     public Box(String name){

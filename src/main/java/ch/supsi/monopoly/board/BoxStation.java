@@ -1,14 +1,13 @@
 package ch.supsi.monopoly.board;
 
-import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
-import ch.supsi.monopoly.board.interfaces.Purchasable;
 import ch.supsi.monopoly.board.interfaces.Taxable;
+import ch.supsi.monopoly.cli.Color;
 
 public class BoxStation extends Box implements Taxable {
 
     public BoxStation(String str) {
-        super(str);
+        super(str, Color.GRAY);
     }
 
     public void tax(Player player) {

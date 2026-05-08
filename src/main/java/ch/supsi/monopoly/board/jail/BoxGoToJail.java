@@ -33,6 +33,7 @@ public class BoxGoToJail extends Box implements Jailable {
     public void sendToJail(Player player) {
         System.out.println(player.toString() + TextFormatter.color(" va in prigione", Color.YELLOW));
         BoxJail.getInstance().addSentence(player);
+        this.color = Color.WHITE;
         player.goToPrison();
     }
 

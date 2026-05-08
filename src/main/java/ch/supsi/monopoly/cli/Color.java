@@ -11,7 +11,7 @@ public enum Color {
     PURPLE("\u001B[35m"),
     CYAN("\033[36m"),
     WHITE("\u001B[37m"),
-    GREY("\033[37m"),
+    GRAY("\033[37m"),
     BROWN("\033[94m"),
     PINK("\033[35m");
 

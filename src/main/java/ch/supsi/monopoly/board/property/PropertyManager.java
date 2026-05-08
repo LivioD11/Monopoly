@@ -1,6 +1,5 @@
 package ch.supsi.monopoly.board.property;
 
-import ch.supsi.monopoly.Owner;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.PlayerStatus;
 import ch.supsi.monopoly.cli.Color;
@@ -8,7 +7,6 @@ import ch.supsi.monopoly.cli.TextFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class PropertyManager {
     private List<BoxProperty> properties;
@@ -22,7 +20,7 @@ public class PropertyManager {
         propertyManager = new PropertyManager();
     }
 
-    public static PropertyManager getIstance() {
+    public static PropertyManager getInstance() {
         if(propertyManager == null)
             propertyManager = new PropertyManager();
         return propertyManager;

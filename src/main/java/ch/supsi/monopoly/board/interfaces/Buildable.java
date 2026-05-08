@@ -2,6 +2,7 @@ package ch.supsi.monopoly.board.interfaces;
 
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.property.Building;
+import ch.supsi.monopoly.board.property.DevelopmentLevel;
 import ch.supsi.monopoly.board.property.Hotel;
 import ch.supsi.monopoly.board.property.House;
 
@@ -14,27 +15,32 @@ public interface Buildable {
 
     void bankGetbackProperty();
 
-    default int countHouses(List<Building>  buildings){
-        int count = 0;
+    List<Building> getBuildings();
+    DevelopmentLevel getLevel();
+    int getHousesLimit();
+    int getHotelsLimit();
 
-        if(buildings == null)
-            return count;
-
-        for (Building building : buildings)
-            if(building instanceof House)
-                count++;
-        return count;
+    default int countHouses() {
+        if (getBuildings() == null) return 0;
+        return (int) getBuildings().stream().filter(b -> b instanceof House).count();
     }
 
-    default int countHotels(List<Building> buildings){
-        int count = 0;
+    default int countHotels() {
+        if (getBuildings() == null) return 0;
+        return (int) getBuildings().stream().filter(b -> b instanceof Hotel).count();
+    }
 
-        if(buildings == null)
-            return count;
+    default boolean canBuildHouse() {
+        DevelopmentLevel lvl = getLevel();
+        return (lvl == DevelopmentLevel.EMPTY || lvl == DevelopmentLevel.HOUSES)
+                && countHouses() < getHousesLimit()
+                && countHotels() == 0;
+    }
 
-        for (Building building : buildings)
-            if(building instanceof Hotel)
-                count++;
-        return count;
+    default boolean canBuildHotel() {
+        DevelopmentLevel lvl = getLevel();
+        return (lvl == DevelopmentLevel.HOUSES || lvl == DevelopmentLevel.HOTEL)
+                && countHouses() == getHousesLimit()
+                && countHotels() < getHotelsLimit();
     }
 }

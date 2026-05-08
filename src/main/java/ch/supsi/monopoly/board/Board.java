@@ -5,8 +5,6 @@ import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.jail.BoxGoToJail;
 import ch.supsi.monopoly.board.jail.BoxJail;
 import ch.supsi.monopoly.board.property.BoxProperty;
-import ch.supsi.monopoly.cli.Color;
-import ch.supsi.monopoly.cli.TextFormatter;
 import ch.supsi.monopoly.utilities.FileUtilities;
 
 public class Board {
@@ -59,20 +57,23 @@ public class Board {
             // Angolo in alto a destra
             } else if (i == INDEX_GO_TO_JAIL) {
                 boxes[i] = new BoxGoToJail();
-
-            } else {
+            }else if (isEmptyBoxIndex(i)) {
+                boxes[i] = new BoxEmpty();
+            }else {
                 String name = (nomeIndex < STREET_NAME.length)
                         ? STREET_NAME[nomeIndex]
                         : "Via Generica";
 
                 nomeIndex++;
-
-                // TODO: modificare
-                String colorfulName = name;//TextFormatter.color(name, Color.random());
-                boxes[i] = new BoxProperty(colorfulName);
+                boxes[i] = new BoxProperty(name);
             }
         }
 
+    }
+
+    private boolean isEmptyBoxIndex(int i) {
+        // Esempio: inserisce una BoxEmpty ogni N caselle, o basati su un array di indici fissi
+        return i == 2 || i == 7 || i == 17 || i == 22 || i == 33 || i == 38;
     }
 
     public void draw() {

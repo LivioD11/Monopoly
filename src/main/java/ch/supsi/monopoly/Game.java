@@ -141,7 +141,7 @@ public class Game {
 
     private void tick(){
         BoxJail.getInstance().processSentences();
-        PropertyManager.getIstance().checkProperties();
+        PropertyManager.getInstance().checkProperties();
     }
 
     // Getters

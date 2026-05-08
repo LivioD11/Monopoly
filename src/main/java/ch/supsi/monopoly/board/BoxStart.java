@@ -2,12 +2,13 @@ package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.cli.Color;
 
 public class BoxStart extends Box {
     private static final int BONUS = Config.getInt("box.start.bonus",0);
 
     public BoxStart(String name) {
-        super(BONUS, name);
+        super(BONUS, name, Color.WHITE);
         this.setDescription("Ritira "+value);
     }
 

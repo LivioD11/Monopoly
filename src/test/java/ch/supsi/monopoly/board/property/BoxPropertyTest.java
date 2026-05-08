@@ -131,7 +131,7 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerCanBuildAnHouse(){
-        PropertyManager.getIstance().reset();
+        PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
@@ -148,7 +148,7 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerCanBuildFourHouses(){
-        PropertyManager.getIstance().reset();
+        PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
@@ -165,7 +165,7 @@ public class BoxPropertyTest {
 
     @Test
     void testPlayerCanBuildAnHotel(){
-        PropertyManager.getIstance().reset();
+        PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);

@@ -43,7 +43,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         this.setDescription("Paga: "+getValue());
         this.price = generatePrice();
         this.level = DevelopmentLevel.EMPTY;
-        PropertyManager.getIstance().addProperty(this);
+        PropertyManager.getInstance().addProperty(this);
         this.updateRepresentation();
     }
 
@@ -54,28 +54,23 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     /**
      * Configura le opzioni del menu (Acquisto/Costruzione) in base allo stato della proprietà.
-     * @param player Il giocatore corrente.
      */
     private void setupMenu(Player player) {
-        Option option1 = new Option(
-                "Acquistare la proprietà",
-                () -> {
-                    String message = "Acquistare la proprietà";
-                    if(Action.confirmAction(message))
-                        this.buy(player);
-                });
-        Option option2 = new Option(
-                "Costruire nella priprietà",
-                () -> {
-                    String message = "Costruire nella priprietà";
-                    if(Action.confirmAction(message))
-                        this.build(player);
-                });
+        if (getIsPurchasable()) {
+            menu.addOption(new Option("Acquistare la proprietà", () -> {
+                if (Action.confirmAction("Acquistare la proprietà")) {
+                    this.buy(player);
+                }
+            }));
+        }
 
-        if(getIsPurchasable())
-            menu.addOption(option1);
-        if(player.equals(owner) && PropertyManager.getIstance().hasAllPropertiesOfColor(this,player))
-            menu.addOption(option2);
+        if (player.equals(owner) && PropertyManager.getInstance().hasAllPropertiesOfColor(this, player)) {
+            menu.addOption(new Option("Costruire nella proprietà", () -> {
+                if (Action.confirmAction("Costruire nella proprietà")) { // Corretto "priprietà"
+                    this.build(player);
+                }
+            }));
+        }
     }
 
     @Override
@@ -89,27 +84,21 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     /**
      * Gestisce l'acquisto della proprietà.
-     * @param buyer Il potenziale acquirente.
-     * @return true se l'acquisto va a buon fine.
      */
-    public boolean buy(Owner buyer){
-        if(!(owner instanceof Bank))
+    public boolean buy(Owner buyer) {
+        if (!getIsPurchasable()) {
             return false;
+        }
 
-        if(price>buyer.getBalance()){
-            System.out.println(TextFormatter.color("Saldo insufficiente",Color.RED));
+        if (price > buyer.getBalance()) {
+            System.out.println(TextFormatter.color("Saldo insufficiente", Color.RED));
             return false;
         }
 
         buyer.payMoney(price);
         this.owner = buyer;
 
-        System.out.println(
-                String.format(
-                        "%s "+TextFormatter.color("ha acquistato la proprietà",Color.YELLOW),
-                        buyer.toString()
-                )
-        );
+        System.out.println(String.format("%s " + TextFormatter.color("ha acquistato la proprietà", Color.YELLOW), buyer.toString()));
         return true;
     }
 
@@ -117,54 +106,32 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
      * Aggiunge una casa o un hotel alla proprietà rispettando i limiti.
      */
     public void build(Player player) {
-        if(!getIsBuildable())
-            return;
+        if (!getIsBuildable()) return;
 
-        // CASA
         if (canBuildHouse()) {
-            if (!hasEnoughMoney(tmpBuilding)) {
-                System.out.println(
-                    owner + TextFormatter.color(" saldo insufficiente", Color.RED)
-                );
-                return;
-            }
-            buildings.add(tmpBuilding);
-            level = DevelopmentLevel.HOUSES;
-            updateRepresentation();
+            executeBuild(player, new House(), DevelopmentLevel.HOUSES, "una casa");
+        } else if (canBuildHotel()) {
+            executeBuild(player, new Hotel(), DevelopmentLevel.HOTEL, "un albergo");
+        }
+    }
 
-            System.out.println(
-                owner + TextFormatter.color(" ha costruito una casa", Color.YELLOW)
-            );
-            player.payMoney(tmpBuilding.getPrice());
+    private void executeBuild(Player player, Building building, DevelopmentLevel nextLevel, String buildingName) {
+        if (player.getBalance() < building.getPrice()) {
+            System.out.println(owner + TextFormatter.color(" saldo insufficiente", Color.RED));
             return;
         }
 
-        // HOTEL
-        if (canBuildHotel()) {
-            if (!hasEnoughMoney(tmpBuilding)) {
-                System.out.println(
-                        owner +
-                                TextFormatter.color(" saldo insufficiente", Color.RED)
-                );
-                return;
-            }
-
-            buildings.clear();
-            buildings.add(tmpBuilding);
-            level = DevelopmentLevel.HOTEL;
-            updateRepresentation();
-
-            System.out.println(
-                owner + TextFormatter.color(" ha costruito un albergo", Color.YELLOW)
-            );
-            player.payMoney(tmpBuilding.getPrice());
+        if (nextLevel == DevelopmentLevel.HOTEL) {
+            buildings.clear(); // Rimuove le case per far posto all'hotel
         }
-    }
 
-    private boolean hasEnoughMoney(Building building) {
-        return owner.getBalance() >= building.getPrice();
-    }
+        buildings.add(building);
+        level = nextLevel;
+        player.payMoney(building.getPrice());
+        updateRepresentation();
 
+        System.out.println(owner + TextFormatter.color(" ha costruito " + buildingName, Color.YELLOW));
+    }
 
     public void bankGetbackProperty(){
         this.owner = Bank.getInstance();
@@ -193,31 +160,28 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         updateRepresentation();
     }
 
-    private String setMessage(Player player){
+    private String setMessage(Player player) {
         Color balanceColor = (player.getBalance() >= getPrice()) ? Color.GREEN : Color.RED;
-        String property = this.toString();
+        StringBuilder propertyDesc = new StringBuilder(this.toString());
 
-        if(canBuildHouse() && getIsBuildable()){
-            tmpBuilding = new House();
-            balanceColor = (player.getBalance() >= tmpBuilding.getPrice()) ? Color.GREEN : Color.RED;
-            property += "\n- Costruisci casa: "+TextFormatter.color(TextFormatter.formatCurrency(tmpBuilding.getPrice()),Color.YELLOW);
+        if (canBuildHouse() && getIsBuildable()) {
+            Building house = new House();
+            Color color = (player.getBalance() >= house.getPrice()) ? Color.GREEN : Color.RED;
+            propertyDesc.append("\n- Costruisci casa: ").append(TextFormatter.color(TextFormatter.formatCurrency(house.getPrice()), Color.YELLOW));
         }
 
-        if (canBuildHotel()){
-            tmpBuilding = new Hotel();
-            balanceColor = (player.getBalance() >= tmpBuilding.getPrice()) ? Color.GREEN : Color.RED;
-            property += "\n- Costruisci hotel: "+TextFormatter.color(TextFormatter.formatCurrency(tmpBuilding.getPrice()),Color.YELLOW);
+        if (canBuildHotel()) {
+            Building hotel = new Hotel();
+            Color color = (player.getBalance() >= hotel.getPrice()) ? Color.GREEN : Color.RED;
+            propertyDesc.append("\n- Costruisci hotel: ").append(TextFormatter.color(TextFormatter.formatCurrency(hotel.getPrice()), Color.YELLOW));
         }
 
-
-        String message = String.format(""" 
+        return String.format(""" 
                 %s
                 
                 Saldo attuale: %s""",
-                property,
-                TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()),balanceColor));
-
-        return message;
+                propertyDesc.toString(),
+                TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), balanceColor));
     }
 
     @Override
@@ -228,43 +192,11 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
                 TextFormatter.color(TextFormatter.formatCurrency(this.price),Color.YELLOW));
     }
 
-    private int countHouses() {
-        int count = 0;
-
-        for (Building b : buildings) {
-            if (b instanceof House) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    private int countHotels() {
-        int count = 0;
-
-        for (Building b : buildings) {
-            if (b instanceof Hotel) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    private boolean canBuildHouse() {
-        return (level == DevelopmentLevel.EMPTY || level == DevelopmentLevel.HOUSES)
-                && countHouses() < HOUSES_LIMIT
-                && countHotels() == 0;
-    }
-
-    private boolean canBuildHotel() {
-        return (level == DevelopmentLevel.HOUSES || level == DevelopmentLevel.HOTEL)
-                && countHouses() == HOUSES_LIMIT
-                && countHotels() < HOTELS_LIMIT;
-    }
-
     // Getters
+
+    private boolean getHasEnoughMoney(Building building) {
+        return owner.getBalance() >= building.getPrice();
+    }
 
     @Override
     public int getValue(){
@@ -292,8 +224,19 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         return price;
     }
 
+    @Override
+    public int getHousesLimit() {
+        return HOUSES_LIMIT;
+    }
+
+    @Override
+    public int getHotelsLimit() {
+        return HOTELS_LIMIT;
+    }
+
+    @Override
     public List<Building> getBuildings() {
-        return buildings;
+        return this.buildings;
     }
 
     public DevelopmentLevel getLevel() {
@@ -307,7 +250,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         if(getIsPurchasable())
             return false;
 
-        if(!PropertyManager.getIstance().hasAllPropertiesOfColor(this,(Player) owner))
+        if(!PropertyManager.getInstance().hasAllPropertiesOfColor(this,(Player) owner))
             return false;
 
         return  true;

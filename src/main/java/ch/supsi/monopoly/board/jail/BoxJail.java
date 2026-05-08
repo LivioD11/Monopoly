@@ -4,6 +4,7 @@ import ch.supsi.monopoly.Config;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.PlayerStatus;
 import ch.supsi.monopoly.board.Box;
+import ch.supsi.monopoly.cli.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class BoxJail extends Box {
      */
     private BoxJail(){
         super("Prigione");
+        this.color = Color.WHITE;
         this.sentences = new ArrayList<>();
     }
 
