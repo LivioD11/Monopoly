@@ -101,7 +101,6 @@ public class Game {
      * Esegue la logica di un singolo turno: lancio dadi, gestione prigione, movimento e rendite.
      */
     protected void executeTurn() {
-        board.draw();
         Player player = players[this.turnIndex];
 
         Dice.RollResult result = Dice.rollMultiple(2);
@@ -121,6 +120,7 @@ public class Game {
 
         int oldPos = player.getPosition();
         player.move(result.total());
+        board.draw();
         int newPos = player.getPosition();
 
         // Logica Passaggio dal Via

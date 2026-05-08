@@ -62,31 +62,6 @@ public class BoxPropertyTest {
     }
 
     @Test
-    @DisplayName("È possibile costruire delle case")
-    void testCanBuildHouses() {
-        BoxProperty property = new BoxProperty("TestProperty");
-        property.build();
-        property.build();
-
-        for(int i=0; i < 7; i++)
-            System.out.println(property.draw(i,null));
-    }
-
-    @Test
-    @DisplayName("È possibile costruire un hotel")
-    void testCanBuildHotels() {
-        BoxProperty property = new BoxProperty("TestProperty");
-        property.build();
-        property.build();
-        property.build();
-        property.build();
-        property.build();
-
-        for(int i=0; i < 7; i++)
-            System.out.println(property.draw(i,null));
-    }
-
-    @Test
     void testPlayerSelectWrongOption() {
         BoxProperty property = new BoxProperty("TestProperty");
         setMockInput("a\n3\n1\na\nq\n");
@@ -125,7 +100,7 @@ public class BoxPropertyTest {
     void testPlayerCanNotBuildOnBlack(){
         BoxProperty property = new BoxProperty("TestProperty", Color.BLACK);
         property.buy(player);
-        property.build();
+        property.build(player);
         int expected = 0;
         int actual = property.getBuildings().size();
         assertEquals(expected,actual);
@@ -136,7 +111,7 @@ public class BoxPropertyTest {
         BoxProperty property1 = new BoxProperty("TestProperty 1",Color.GREEN);
         BoxProperty property2 = new BoxProperty("TestProperty 2",Color.GREEN);
         property1.buy(player);
-        property1.build();
+        property1.build(player);
         int expected = 0;
         int actual = property1.getBuildings().size();
         assertEquals(expected,actual);
@@ -147,7 +122,7 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.payMoney(2000);
-        property.build();
+        property.build(player);
         int expected = 0;
         int actual = property.getBuildings().size();
         assertEquals(expected,actual);
@@ -159,8 +134,26 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
-        property.build();
+        setMockInput("1\ny\nq\n");
+        property.interact(player);
         int expected = 1;
+        int actual = property.getBuildings().size();
+
+        for(int i=0;i<7;i++)
+            System.out.println(property.draw(i,null));
+
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void testPlayerCanBuildFourHouses(){
+        PropertyManager.getIstance().reset();
+        BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        property.buy(player);
+        player.receiveMoney(30000);
+        setMockInput("1\ny\n1\ny\n1\ny\n1\ny\nq\n");
+        property.interact(player);
+        int expected = 4;
         int actual = property.getBuildings().size();
 
         for(int i=0;i<7;i++)
@@ -175,13 +168,14 @@ public class BoxPropertyTest {
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
         property.buy(player);
         player.receiveMoney(30000);
-        property.build();
-        property.build();
-        property.build();
-        property.build();
-        property.build();
+        setMockInput("1\ny\n1\ny\n1\ny\n1\ny\n1\ny\nq\n");
+        property.interact(player);
         int expected = 1;
         int actual = property.getBuildings().size();
+
+        for(int i=0;i<7;i++)
+            System.out.println(property.draw(i,null));
+
         assertEquals(expected,actual);
     }
 }

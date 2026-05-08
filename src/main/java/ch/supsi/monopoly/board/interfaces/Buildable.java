@@ -1,14 +1,14 @@
 package ch.supsi.monopoly.board.interfaces;
 
+import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.board.property.Building;
-import ch.supsi.monopoly.board.property.DevelopmentLevel;
 import ch.supsi.monopoly.board.property.Hotel;
 import ch.supsi.monopoly.board.property.House;
 
 import java.util.List;
 
 public interface Buildable {
-    void build();
+    void build(Player player);
 
     boolean getIsBuildable();
 
