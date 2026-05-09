@@ -10,13 +10,10 @@ public class BoxStation extends Box implements Taxable {
         super(str, Color.GRAY);
     }
 
-    public void tax(Player player) {
-        player.payMoney(this.value);
-    }
-
     @Override
     public void applyEffect(Player player) {
-        tax(player);
+        this.interactedPlayer = player;
+        tax();
     }
 
     @Override

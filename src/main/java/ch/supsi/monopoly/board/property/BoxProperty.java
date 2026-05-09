@@ -32,7 +32,6 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     private List<Building> buildings;
     private Building tmpBuilding;
     private DevelopmentLevel level;
-    private Player interactedPlayer;
 
     /**
      * Costruttore della proprietà. Genera un prezzo casuale e inizializza gli edifici.
@@ -87,13 +86,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         this.owner = Bank.getInstance();
     }
 
-    public void tax(Player player){
-        player.payMoney(this.getValue());
-    }
-
     public void applyEffect(Player player) {
-        if(!player.equals(owner))
-            this.tax(player);
         this.interact(player);
     }
 
@@ -168,10 +161,6 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         return value;
     }
 
-    public Owner getOwner(){
-        return  this.owner;
-    }
-
     public boolean getIsPurchasable(){
         return (owner instanceof Bank);
     }
@@ -197,11 +186,6 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     @Override
     public List<Building> getBuildings() {
         return this.buildings;
-    }
-
-    @Override
-    public Player getInteractedPlayer(){
-        return this.interactedPlayer;
     }
 
     public DevelopmentLevel getLevel() {

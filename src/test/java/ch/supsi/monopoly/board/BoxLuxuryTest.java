@@ -1,8 +1,12 @@
 package ch.supsi.monopoly.board;
 
 import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +14,20 @@ class BoxLuxuryTest {
 
     private BoxLuxury boxLuxury;
     private Player player;
+
+    private void setMockInput(String input) {
+        try {
+            InputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            // Usiamo la reflection per chiamare il metodo privato/package-private
+            java.lang.reflect.Method method = ScannerUtilities.class.getDeclaredMethod("updateScanner");
+            method.setAccessible(true); // Rompe il guscio di protezione
+            method.invoke(null);        // null perché il metodo è statico
+        } catch (Exception e) {
+            throw new RuntimeException("Errore nel reset dello scanner", e);
+        }
+    }
 
     @BeforeEach
     void setUp() {
@@ -42,8 +60,8 @@ class BoxLuxuryTest {
         int saldoIniziale = player.getBalance();
 
         // Chiamata diretta al metodo dell'interfaccia Taxable
-        boxLuxury.tax(player);
-
+        setMockInput("q\n");
+        boxLuxury.applyEffect(player);
         assertEquals(saldoIniziale - 200, player.getBalance());
     }
 

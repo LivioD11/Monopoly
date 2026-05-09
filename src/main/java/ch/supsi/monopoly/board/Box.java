@@ -15,6 +15,7 @@ public abstract class Box {
     protected String name;
     protected String description;
     protected Owner owner;
+    protected Player interactedPlayer;
     protected Color color;
     protected String[] representation;
 
@@ -115,4 +116,12 @@ public abstract class Box {
     }
 
     public Color getColor(){ return this.color; }
+
+    public Player getInteractedPlayer(){
+        return this.interactedPlayer;
+    }
+
+    public Owner getOwner(){
+        return  this.owner;
+    }
 }

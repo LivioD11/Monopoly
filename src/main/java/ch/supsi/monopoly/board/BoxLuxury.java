@@ -11,13 +11,10 @@ public class BoxLuxury extends Box implements Taxable {
         super(LUXURY_TAX_AMOUNT,name);
     }
 
-    public void tax(Player player) {
-        player.payMoney(this.value);
-    }
-
     @Override
     public void applyEffect(Player player) {
-        this.tax(player);
+        this.interactedPlayer = player;
+        this.tax();
     }
 
     @Override

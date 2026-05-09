@@ -40,17 +40,6 @@ class BoxStationTest {
     }
 
     @Test
-    void testTaxMethodDirectCall() {
-        int saldoIniziale = player.getBalance();
-        int valoreStazione = boxStation.getValue();
-
-        // Verifica l'implementazione del metodo dell'interfaccia Taxable
-        boxStation.tax(player);
-
-        assertEquals(saldoIniziale - valoreStazione, player.getBalance());
-    }
-
-    @Test
     void testToStringFormat() {
         String ts = boxStation.toString();
         // Il formato richiesto è: [ Cella Stazione Termini ]
