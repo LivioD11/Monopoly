@@ -3,12 +3,30 @@ package ch.supsi.monopoly.board.property;
 import ch.supsi.monopoly.Player;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.TextFormatter;
+import ch.supsi.monopoly.utilities.ScannerUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PropertyManagerTest {
+
+    private void setMockInput(String input) {
+        try {
+            InputStream in = new ByteArrayInputStream(input.getBytes());
+            System.setIn(in);
+
+            // Usiamo la reflection per chiamare il metodo privato/package-private
+            java.lang.reflect.Method method = ScannerUtilities.class.getDeclaredMethod("updateScanner");
+            method.setAccessible(true); // Rompe il guscio di protezione
+            method.invoke(null);        // null perché il metodo è statico
+        } catch (Exception e) {
+            throw new RuntimeException("Errore nel reset dello scanner", e);
+        }
+    }
 
     @BeforeEach
     public void setUp(){
@@ -32,6 +50,8 @@ public class PropertyManagerTest {
         BoxProperty p2 = new BoxProperty("Proprietà 2");
         BoxProperty p3 = new BoxProperty("Proprietà 3");
 
+        setMockInput("q\n");
+        p1.interact(player);
         boolean property1EqualsProperty2 = p1.getColor().equals(p2.getColor());
         boolean property1EqualsProperty3 = p1.getColor().equals(p3.getColor());
         System.out.println(property1EqualsProperty2);

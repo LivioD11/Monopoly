@@ -42,6 +42,8 @@ public class BoxPropertyTest {
     void testPlayerCanBuyAProperty() {
         BoxProperty property = new BoxProperty("TestProperty");
         Owner oldOwner = property.getOwner();
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         Owner newOwner = property.getOwner();
 
@@ -100,6 +102,8 @@ public class BoxPropertyTest {
     @Test
     void testPlayerCanNotBuildOnBlack(){
         BoxProperty property = new BoxProperty("TestProperty", Color.BLACK);
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         property.build();
         int expected = 0;
@@ -111,6 +115,8 @@ public class BoxPropertyTest {
     void testPlayerCanNotBuildWithoutAllProperties(){
         BoxProperty property1 = new BoxProperty("TestProperty 1",Color.GREEN);
         BoxProperty property2 = new BoxProperty("TestProperty 2",Color.GREEN);
+        setMockInput("q\n");
+        property1.interact(player);
         property1.buy();
         property1.build();
         int expected = 0;
@@ -121,6 +127,8 @@ public class BoxPropertyTest {
     @Test
     void testPlayerCanNotBuildWithoutFounds(){
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         player.payMoney(2000);
         property.build();
@@ -133,6 +141,8 @@ public class BoxPropertyTest {
     void testPlayerCanBuildAnHouse(){
         PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         player.receiveMoney(30000);
         setMockInput("1\ns\nq\n");
@@ -150,6 +160,8 @@ public class BoxPropertyTest {
     void testPlayerCanBuildFourHouses(){
         PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         player.receiveMoney(30000);
         setMockInput("1\ns\n1\ns\n1\ns\n1\ns\nq\n");
@@ -167,6 +179,8 @@ public class BoxPropertyTest {
     void testPlayerCanBuildAnHotel(){
         PropertyManager.getInstance().reset();
         BoxProperty property = new BoxProperty("TestProperty 1",Color.GREEN);
+        setMockInput("q\n");
+        property.interact(player);
         property.buy();
         player.receiveMoney(30000);
         setMockInput("1\ns\n1\ns\n1\ns\n1\ns\n1\ns\nq\n");
