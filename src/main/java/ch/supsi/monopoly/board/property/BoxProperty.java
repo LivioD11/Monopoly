@@ -83,11 +83,13 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
     }
 
     public void bankGetbackProperty(){
+        this.buildings.clear();
         this.owner = Bank.getInstance();
     }
 
     public void applyEffect(Player player) {
         this.interact(player);
+        this.tax();
     }
 
     @Override
