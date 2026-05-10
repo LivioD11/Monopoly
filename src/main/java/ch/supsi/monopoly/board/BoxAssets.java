@@ -10,14 +10,16 @@ public class BoxAssets extends Box implements Taxable {
         setDescription("paga 10% patrimonio");
     }
 
-    public void tax(Player player) {
-        int tax = (int) (player.getBalance() * 0.1);
-        player.payMoney(tax);
+    @Override
+    public void tax() {
+        int tax = (int) (getInteractedPlayer().getBalance() * 0.1);
+        getInteractedPlayer().payMoney(tax);
     }
 
     @Override
     public void applyEffect(Player player) {
-        this.tax(player);
+        this.interactedPlayer = player;
+        this.tax();
     }
 
     @Override

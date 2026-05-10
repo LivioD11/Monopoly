@@ -39,7 +39,7 @@ class BoxAssetsTest {
     void testTaxWithSpecificValue() {
         player = new Player("RichPlayer", 'R');
 
-        boxAssets.tax(player);
+        boxAssets.applyEffect(player);
         assertTrue(player.getBalance() < 2000);
     }
 

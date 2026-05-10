@@ -81,4 +81,40 @@ public class GameTest {
         boolean expectedGameIsOver = true;
         assertEquals(expectedGameIsOver,game.isGameOver());
     }
+
+    @Test
+    @DisplayName("Simulazione partita: i giocatori giocano diversi turni fino alla fine")
+    void testGameFullSimulation() {
+
+        Player[] players = game.getPlayers();
+
+        while (!game.isGameOver())
+        {
+            for (int i = 0; i < 4; i++) {
+                game.setTurnIndex(i);
+                String input ="2\nq\n";
+                setMockInput(input);
+
+                game.executeTurn();
+
+            }
+            game.tick();
+        }
+
+        // Verifichiamo che almeno un giocatore sia effettivamente senza soldi
+        boolean someoneIsBroke = false;
+        for (Player p : game.getPlayers()) {
+            System.out.println(p.toString() + " " + p.getBalance() + "\n");
+            if (p.isBroke()) {
+                someoneIsBroke = true;
+                break;
+            }
+        }
+
+        // 4. Verifichiamo che la condizione di GameOver sia stata raggiunta
+        assertEquals(true, game.isGameOver(), "La partita dovrebbe terminare quando un giocatore va in bancarotta");
+
+
+        assertEquals(true, someoneIsBroke, "Almeno un giocatore deve essere in bancarotta");
+    }
 }

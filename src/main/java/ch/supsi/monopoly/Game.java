@@ -139,9 +139,21 @@ public class Game {
         }
     }
 
-    private void tick(){
+    protected void tick(){
         BoxJail.getInstance().processSentences();
         PropertyManager.getInstance().checkProperties();
+    }
+
+    // Setters
+
+    protected void setTurnIndex(int turnIndex){
+        if(turnIndex >= PLAYERS_NUMBER)
+            return;
+
+        if(turnIndex < 0)
+            return;
+
+        this.turnIndex = turnIndex;
     }
 
     // Getters
