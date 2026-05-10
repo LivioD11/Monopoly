@@ -10,6 +10,6 @@ public interface Taxable {
 
     default void tax() {
         if(!getInteractedPlayer().equals(getOwner()))
-            getInteractedPlayer().payMoney(getValue());
+            getInteractedPlayer().payMoney(getOwner(), getValue());
     }
 }

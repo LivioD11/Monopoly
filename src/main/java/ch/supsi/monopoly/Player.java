@@ -32,6 +32,14 @@ public class Player implements Owner{
             this.status = PlayerStatus.BROKE;
     }
 
+    public void payMoney(Owner owner, int amount){
+        this.balance -= amount;
+        owner.receiveMoney(amount);
+        Action.verboseTransaction(String.format("Giocatore %s (%s)",this.name,this.sign),amount, TransactionType.PAY);
+        if(this.balance<=0)
+            this.status = PlayerStatus.BROKE;
+    }
+
     public void receiveMoney(int amount){
         this.balance += amount;
         Bank.getInstance().payMoney(amount);
