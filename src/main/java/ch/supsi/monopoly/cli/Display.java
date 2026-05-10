@@ -9,60 +9,82 @@ import ch.supsi.monopoly.board.property.DevelopmentLevel;
 import java.util.List;
 
 public final class Display {
-    private Display(){
+    private static final int BOX_WIDTH = 24;
+    private static final int CONTENT_WIDTH = BOX_WIDTH - 2;
+    private static final String HORIZONTAL_BORDER = "-".repeat(BOX_WIDTH);
 
+    private Display() {}
+
+    public static String[] boxRepresentation(String name, String description, int value, Owner owner, Color color) {
+        String coloredName = TextFormatter.color(name, color);
+        String ownerInfo = (owner != null && !(owner instanceof Bank)) ? owner.toString() : "";
+        String descInfo = (value > 0) ? description : "";
+
+        return buildBox(
+                TextFormatter.padAnsi(coloredName, CONTENT_WIDTH),
+                descInfo,
+                ownerInfo,
+                "",
+                ""
+        );
     }
 
-    public static String[] boxRepresentation(String name, String description, int value, Owner owner, Color color){
-        name = TextFormatter.color(name,color);
+    public static String[] boxPropertyRepresentation(BoxProperty property) {
+        String coloredName = TextFormatter.color(property.getName(), property.getColor());
+        String ownerOrPrice = drawOwner(property.getOwner(), property.getPrice());
+        String buildings = drawBuildings(property.getLevel(), property.getBuildings());
 
-        String[] representation  = new String[]{
-                "-".repeat(24),
-                "|"+ TextFormatter.padAnsi(name,22)+"|",
-                value > 0 ? String.format("|%-22s|", description) : String.format("|%-22s|", ""),
-                owner != Bank.getInstance() ? String.format("|%-22s|", owner.toString()) : String.format("|%-22s|", ""),
-                String.format("|%-22s|", ""),
-                String.format("|%-22s|", ""),
-                "-".repeat(24),
-        };
-        return representation;
+        return buildBox(
+                TextFormatter.padAnsi(coloredName, CONTENT_WIDTH),
+                property.getValue() > 0 ? property.getDescription() : "",
+                ownerOrPrice,
+                TextFormatter.padAnsiAndEmoji(buildings, CONTENT_WIDTH),
+                ""
+        );
     }
 
-    public static String[] boxPropertyRepresentation(BoxProperty property){
-        String name = TextFormatter.color(property.getName(),property.getColor());
+    /**
+     * Metodo helper per comporre la struttura visiva della casella.
+     * Evita di riscrivere i bordi e i formati in ogni metodo pubblico.
+     */
+    private static String[] buildBox(String... lines) {
+        String[] box = new String[7];
+        box[0] = HORIZONTAL_BORDER;
 
-        String[] representation  = new String[]{
-                "-".repeat(24),
-                "|"+ TextFormatter.padAnsi(name,22)+"|",
-                property.getValue() > 0 ? String.format("|%-22s|", property.getDescription()) : String.format("|%-22s|", ""),
-                String.format("|%-22s|", drawOwner(property.getOwner(), property.getPrice())),
-                "|"+ TextFormatter.padAnsiAndEmoji(drawBuildings(property.getLevel(), property.getBuildings()),22)+"|",
-                String.format("|%-22s|", ""),
-                "-".repeat(24),
-        };
-        return representation;
-    }
-
-    private static String drawOwner(Owner owner, int price){
-        String output = "Prezzo: "+TextFormatter.formatCurrency(price);
-        if(!(owner instanceof Bank))
-            output = owner.getName();
-        return output;
-    }
-
-    private static String drawBuildings(DevelopmentLevel level, List<Building> buildings){
-        String output = "";
-        if(level == null)
-            return output;
-
-        if(level.equals(DevelopmentLevel.HOUSES)){
-            for(Building building : buildings)
-                output += "\uD83C\uDFE0";
-            output += " ("+buildings.size()+" case)";
+        // Riempie le righe centrali (dalla 1 alla 5)
+        for (int i = 0; i < 5; i++) {
+            String content = (i < lines.length) ? lines[i] : "";
+            // Se la riga è già formattata con ANSI/Emoji non usiamo String.format standard
+            // perché sballerebbe i calcoli degli spazi (usiamo i formatter esistenti)
+            if (content.contains("\u001B") || content.contains("\uD83C")) {
+                box[i + 1] = "|" + content + "|";
+            } else {
+                box[i + 1] = String.format("|%-22s|", content);
+            }
         }
 
-        if(level.equals(DevelopmentLevel.HOTEL))
-            output += "\uD83C\uDFE8 (hotel)";
-        return output;
+        box[6] = HORIZONTAL_BORDER;
+        return box;
+    }
+
+    private static String drawOwner(Owner owner, int price) {
+        if (owner == null || owner instanceof Bank) {
+            return "Prezzo: " + TextFormatter.formatCurrency(price);
+        }
+        return owner.getName();
+    }
+
+    private static String drawBuildings(DevelopmentLevel level, List<Building> buildings) {
+        if (level == null) return "";
+
+        if (level == DevelopmentLevel.HOUSES) {
+            return "\u2302".repeat(buildings.size()) + " (" + buildings.size() + " case)";
+        }
+
+        if (level == DevelopmentLevel.HOTEL) {
+            return "\u2617 (hotel)";
+        }
+
+        return "";
     }
 }
