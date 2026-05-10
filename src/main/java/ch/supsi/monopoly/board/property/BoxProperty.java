@@ -123,10 +123,12 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
         }
 
         return String.format(""" 
-                %s
+                (%d / %d) %s 
                 
                 Saldo attuale: %s""",
-                propertyDesc.toString(),
+                PropertyManager.getInstance().getNumberOfPropertiesByColorAndOwner(this.getColor(),player),
+                PropertyManager.getInstance().getNumberOfPropertiesByColor(this.getColor()),
+                TextFormatter.color(this.toString(),this.getColor()),
                 TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), balanceColor));
     }
 

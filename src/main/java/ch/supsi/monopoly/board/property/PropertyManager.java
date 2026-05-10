@@ -54,6 +54,37 @@ public class PropertyManager {
         }
     }
 
+    public int getNumberOfPropertiesByColor(Color color) {
+        int count = 0;
+        for (BoxProperty property : properties) {
+            if (property.getColor().equals(color)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * Restituisce il numero di proprietà di un determinato colore possedute da uno specifico giocatore.
+     * @param color Il colore da cercare
+     * @param owner Il giocatore di cui vogliamo contare le proprietà
+     * @return Il numero di proprietà corrispondenti ai criteri
+     */
+    public int getNumberOfPropertiesByColorAndOwner(Color color, Player owner) {
+        if (color == null || owner == null) {
+            return 0;
+        }
+
+        int count = 0;
+        for (BoxProperty property : properties) {
+            // Verifichiamo se il colore coincide E se il proprietario coincide
+            if (color.equals(property.getColor()) && owner.equals(property.getOwner())) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public String toString(){
         String output = "";
