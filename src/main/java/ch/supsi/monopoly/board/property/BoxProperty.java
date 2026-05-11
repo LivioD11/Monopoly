@@ -139,10 +139,13 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
 
     @Override
     public String toString() {
-        return String.format("[ %s ]\n- Tassa: %s\n- Prezzo: %s",
+        return String.format("[ %s ]\n- Tassa: %s\n- Prezzo: %s\n- Proprietario: %s\n- Costruzioni: %s",
                 TextFormatter.color(this.name,this.getColor()),
                 TextFormatter.color(TextFormatter.formatCurrency(this.value),Color.YELLOW),
-                TextFormatter.color(TextFormatter.formatCurrency(this.price),Color.YELLOW));
+                TextFormatter.color(TextFormatter.formatCurrency(this.price),Color.YELLOW),
+                this.getOwner().toString(),
+                Display.drawBuildings(this.getLevel(),this.getBuildings()));
+
     }
 
     // Getters

@@ -74,7 +74,7 @@ public final class Display {
         return owner.getName();
     }
 
-    private static String drawBuildings(DevelopmentLevel level, List<Building> buildings) {
+    public static String drawBuildings(DevelopmentLevel level, List<Building> buildings) {
         if (level == null) return "";
 
         if (level == DevelopmentLevel.HOUSES) {
