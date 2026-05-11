@@ -7,6 +7,9 @@ import ch.supsi.monopoly.board.jail.BoxJail;
 import ch.supsi.monopoly.board.property.BoxProperty;
 import ch.supsi.monopoly.utilities.FileUtilities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private Box[] boxes;
     private static final String[] STREET_NAME = FileUtilities.leggiLineeFile("src/main/resources/street_names.csv");
@@ -92,11 +95,11 @@ public class Board {
                     if (isBorder(row, col)) {
                         int idCell = getBoxIndex(row, col);
                         // Recuperiamo i segni dei giocatori (se presenti)
-                        char[] players = getSignsAtIndex(idCell);
+                        List<Player> boxPlayers = getPlayersAtIndex(idCell);
 
                         // Inversione del controllo: passiamo l'altezza e i player,
                         // la Box sa cosa disegnare.
-                        System.out.print(this.boxes[idCell].draw(actualHeight, players));
+                        System.out.print(this.boxes[idCell].draw(actualHeight, boxPlayers));
                     } else {
                         // Siamo all'interno del tabellone
                         System.out.print(emptySpace);
@@ -112,14 +115,14 @@ public class Board {
     }
 
     // Getters
-    private char[] getSignsAtIndex(int index) {
-        StringBuilder sb = new StringBuilder();
+    private List<Player> getPlayersAtIndex(int index) {
+        List<Player> boxPlayers = new ArrayList<>();
         for (Player player : players) {
             if (player != null && player.getPosition() == index) {
-                sb.append(player.getSign());
+                boxPlayers.add(player);
             }
         }
-        return sb.toString().toCharArray();
+        return boxPlayers;
     }
 
     private int getBoxIndex(int row, int col) {

@@ -121,7 +121,6 @@ public class Game {
         int oldPos = player.getPosition();
         player.move(result.total());
         board.draw();
-        System.out.println(PropertyManager.getInstance().toString());
         int newPos = player.getPosition();
 
         // Logica Passaggio dal Via

@@ -1,11 +1,11 @@
 package ch.supsi.monopoly.board;
 
-import ch.supsi.monopoly.Bank;
-import ch.supsi.monopoly.Config;
-import ch.supsi.monopoly.Owner;
-import ch.supsi.monopoly.Player;
+import ch.supsi.monopoly.*;
 import ch.supsi.monopoly.cli.Color;
 import ch.supsi.monopoly.cli.Display;
+import ch.supsi.monopoly.cli.TextFormatter;
+
+import java.util.List;
 
 
 public abstract class Box {
@@ -69,22 +69,32 @@ public abstract class Box {
                 name, value, description);
     }
 
-    public String draw(int index, char[] players) {
+    public String draw(int index, List<Player> players) {
         if (index < 0 || index >= representation.length) {
             return "";
         }
 
-        // Se siamo alla riga PLAYER_ROW_HEIGHT e ci sono giocatori
-        if (index == PLAYER_ROW_HEIGHT && players != null && players.length > 0) {
-            StringBuilder sb = new StringBuilder();
-            for (char player : players) {
-                sb.append("[").append(player).append("] ");
+        // Gestione riga dei giocatori
+        if (index == PLAYER_ROW_HEIGHT && players != null && !players.isEmpty()) {
+            StringBuilder playersContent = new StringBuilder();
+            int visibleLength = 0;
+
+            for (Player player : players) {
+                String sign = "[" + player.getSign() + "] ";
+                Color color = (player.getStatus() == PlayerStatus.INACTIVE) ? Color.RED : Color.CYAN;
+
+                playersContent.append(TextFormatter.color(sign, color));
+                visibleLength += sign.length(); // Contiamo solo i caratteri che si vedono davvero
             }
-            // Restituisce la riga formattata con i giocatori
-            return String.format("|%-22s|", sb.toString().trim());
+
+            // Calcoliamo il padding manualmente per ignorare i codici colore
+            int totalWidth = 22;
+            int paddingNeeded = Math.max(0, totalWidth - visibleLength);
+            String padding = " ".repeat(paddingNeeded);
+
+            return "|" + playersContent.toString() + padding + "|";
         }
 
-        // Altrimenti restituisce la riga pre-calcolata nell'array representation
         return representation[index];
     }
 
