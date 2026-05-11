@@ -128,7 +128,7 @@ public class BoxProperty extends Box implements Taxable, Purchasable, Buildable 
                 Saldo attuale: %s""",
                 PropertyManager.getInstance().getNumberOfPropertiesByColorAndOwner(this.getColor(),player),
                 PropertyManager.getInstance().getNumberOfPropertiesByColor(this.getColor()),
-                this.toString(),
+                propertyDesc.toString(),
                 TextFormatter.color(TextFormatter.formatCurrency(player.getBalance()), balanceColor));
     }
 
